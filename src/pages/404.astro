@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="404 - Page Not Found | Brigitte Khayat - Immigration & Refugee Consulting"
+  description="The page you are looking for could not be found."
+  noIndex={true}
+>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <main
+    class="bg-background flex min-h-screen items-center justify-center px-6 py-20 text-center"
+    id="main"
+  >
+    <div class="max-w-2xl">
+      <p class="text-accent mb-4 text-sm font-semibold tracking-wide uppercase">
+        404 Error
+      </p>
+      <h1 class="text-primary mb-6 text-4xl font-bold md:text-5xl">
+        Page not found
+      </h1>
+      <p class="text-secondary mx-auto mb-8 max-w-xl text-lg leading-relaxed">
+        Sorry, the page you were looking for doesn&#39;t exist or may have been
+        moved.
+      </p>
+      <a
+        class="btn-primary inline-flex min-h-12 items-center justify-center rounded-lg border-2 border-transparent px-8 py-4 font-semibold text-white transition-all duration-200"
+        href="/"
+      >
+        Return home
+      </a>
+    </div>
+  </main>
+</BaseLayout>

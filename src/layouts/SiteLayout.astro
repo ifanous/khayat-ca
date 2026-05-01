@@ -1,0 +1,37 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import BaseLayout from "./BaseLayout.astro";
+
+interface ArticleMeta {
+  author?: string;
+  publishedTime?: string;
+  tags?: string[];
+}
+
+interface Props {
+  article?: ArticleMeta;
+  description: string;
+  ogType?: "article" | "website";
+  title: string;
+  noIndex?: boolean;
+}
+
+const { title, description, noIndex, ogType, article } = Astro.props as Props;
+---
+
+<BaseLayout
+  title={title}
+  article={article}
+  description={description}
+  noIndex={noIndex}
+  ogType={ogType}
+>
+  <!-- Skip Link -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <Header />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer />
+</BaseLayout>

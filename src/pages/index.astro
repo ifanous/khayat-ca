@@ -1,0 +1,111 @@
+---
+import Main from "../components/Main.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const siteUrl = "https://www.khayat.ca";
+
+const professionalServiceSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": `${siteUrl}/#business`,
+  name: "Brigitte Khayat - Immigration & Refugee Consulting",
+  url: siteUrl,
+  image: `${siteUrl}/og-image.png`,
+  logo: `${siteUrl}/favicon.svg`,
+  description:
+    "Licensed RCIC-IRB providing immigration and refugee consulting services for individuals and families across the Greater Toronto Area and beyond.",
+  founder: {
+    "@type": "Person",
+    name: "Brigitte Khayat",
+    jobTitle: "Regulated Canadian Immigration Consultant (RCIC-IRB)",
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "295 Robinson St Suite 100",
+    addressLocality: "Oakville",
+    addressRegion: "ON",
+    postalCode: "L6J 1G7",
+    addressCountry: "CA",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 43.447513194689826,
+    longitude: -79.66539470674623,
+  },
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Greater Toronto Area" },
+    { "@type": "City", name: "Toronto" },
+    { "@type": "City", name: "Mississauga" },
+    { "@type": "City", name: "Brampton" },
+    { "@type": "City", name: "Vaughan" },
+    { "@type": "City", name: "Markham" },
+    { "@type": "City", name: "Richmond Hill" },
+    { "@type": "City", name: "Oakville" },
+    { "@type": "City", name: "Milton" },
+    { "@type": "City", name: "Burlington" },
+  ],
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "https://schema.org/Monday",
+        "https://schema.org/Tuesday",
+        "https://schema.org/Wednesday",
+        "https://schema.org/Thursday",
+        "https://schema.org/Friday",
+      ],
+      opens: "09:00",
+      closes: "18:00",
+    },
+  ],
+  availableLanguage: ["English", "French", "Arabic", "Greek"],
+  sameAs: [
+    "https://www.facebook.com/BK.RCIC",
+    "https://www.instagram.com/bk_rcic/",
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Immigration Services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Permanent Residence",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Temporary Residence",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Citizenship",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Refugee Protection",
+        },
+      },
+    ],
+  },
+};
+
+const professionalServiceSchemaJson = JSON.stringify(professionalServiceSchema);
+---
+
+<SiteLayout
+  title="RCIC-IRB Immigration Consultant Serving the GTA | Brigitte Khayat"
+  description="Licensed RCIC-IRB immigration consultant serving clients across the GTA with help for PR, work permits, study permits, citizenship, and refugee matters."
+>
+  <script type="application/ld+json" set:html={professionalServiceSchemaJson} />
+  <Main />
+</SiteLayout>

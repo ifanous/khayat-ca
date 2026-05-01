@@ -1,0 +1,194 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<section class="bg-muted py-20" id="contact">
+  <div class="max-w-container mx-auto px-6">
+    <div class="mb-16 text-center">
+      <h2 class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl">
+        Ready to Start Your Journey?
+      </h2>
+      <p class="text-secondary mx-auto max-w-2xl text-xl">
+        Let's discuss your immigration goals and create a plan to achieve them
+      </p>
+    </div>
+
+    <div class="mx-auto max-w-3xl">
+      <form
+        class="glass bg-surface rounded-lg p-8 transition-all duration-300 hover:-translate-y-0.5"
+        id="contact-form"
+        name="contact-form"
+        method="POST"
+        data-netlify="true"
+        data-netlify-recaptcha="true"
+        netlify-honeypot="bot-field"
+      >
+        <div class="mb-8">
+          <h3 class="text-primary text-2xl font-semibold">Send a Message</h3>
+        </div>
+
+        <div class="hidden" aria-hidden="true">
+          <input
+            id="bot-field"
+            name="bot-field"
+            type="text"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+        <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div>
+            <label class="text-primary mb-2 block font-semibold" for="name"
+              >Full Name *</label
+            >
+            <input
+              class="border-border-custom bg-background text-primary focus:ring-accent min-h-12 w-full rounded-lg border px-4 py-4 transition-colors duration-150 focus:ring-2 focus:outline-none"
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+            />
+          </div>
+          <div>
+            <label class="text-primary mb-2 block font-semibold" for="email"
+              >Email Address *</label
+            >
+            <input
+              class="border-border-custom bg-background text-primary focus:ring-accent min-h-12 w-full rounded-lg border px-4 py-4 transition-colors duration-150 focus:ring-2 focus:outline-none"
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="text-primary mb-2 block font-semibold" for="service"
+            >Service Interest</label
+          >
+          <select
+            class="border-border-custom bg-background text-primary focus:ring-accent min-h-12 w-full rounded-lg border px-4 py-4 transition-colors duration-150 focus:ring-2 focus:outline-none"
+            id="service"
+            name="service"
+          >
+            <option value="">Select a service...</option>
+            <option value="permanent-residence"> Permanent Residence </option>
+            <option value="temporary-residence"> Temporary Residence </option>
+            <option value="citizenship">Citizenship</option>
+            <option value="refugee-protection">Refugee Protection</option>
+            <option value="consultation">General Consultation</option>
+          </select>
+        </div>
+
+        <div class="mb-6">
+          <label class="text-primary mb-2 block font-semibold" for="message"
+            >Tell us about your situation *</label
+          >
+          <textarea
+            class="border-border-custom bg-background text-primary focus:ring-accent min-h-30 w-full resize-y rounded-lg border px-4 py-4 transition-colors duration-150 focus:ring-2 focus:outline-none"
+            id="message"
+            name="message"
+            placeholder="Share your immigration goals and any questions you have..."
+            required
+            rows="5"></textarea>
+        </div>
+
+        <div data-netlify-recaptcha="true"></div>
+
+        <p
+          class="text-secondary mb-4 min-h-6 text-sm"
+          id="contact-form-status"
+          aria-atomic="true"
+          aria-live="polite"
+        >
+        </p>
+
+        <button
+          class="btn-primary inline-flex min-h-13 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-transparent px-4 py-4 font-semibold text-white transition-all duration-200"
+          id="submit-btn"
+          type="submit"
+        >
+          <span id="btn-text">Send Message</span>
+          <Icon
+            class="h-4.5 w-4.5 shrink-0"
+            name="lucide:send"
+            aria-hidden="true"
+          />
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const contactForm = document.querySelector<HTMLFormElement>("#contact-form");
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const submitButton = contactForm.querySelector<HTMLButtonElement>(
+        'button[type="submit"]',
+      );
+      const submitButtonText =
+        submitButton?.querySelector<HTMLSpanElement>("#btn-text");
+      const statusMessage = contactForm.querySelector<HTMLParagraphElement>(
+        "#contact-form-status",
+      );
+
+      if (!submitButton || !submitButtonText || !statusMessage) return;
+
+      const submitButtonOriginalText = submitButtonText.textContent;
+      const formData = new FormData(contactForm);
+
+      contactForm.setAttribute("aria-busy", "true");
+      submitButton.disabled = true;
+      submitButton.classList.add("opacity-70");
+      submitButtonText.textContent = "Sending...";
+      statusMessage.textContent = "Sending your message...";
+
+      try {
+        const response = await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(
+            Array.from(formData.entries()) as [string, string][],
+          ).toString(),
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `Form submission failed with status ${response.status}`,
+          );
+        }
+
+        submitButtonText.textContent = "Sent!";
+        submitButton.classList.remove("opacity-70");
+        contactForm.setAttribute("aria-busy", "false");
+        statusMessage.textContent = "Your message has been sent successfully.";
+
+        setTimeout(() => {
+          submitButtonText.textContent = submitButtonOriginalText;
+          submitButton.disabled = false;
+          contactForm.reset();
+          statusMessage.textContent = "";
+        }, 2000);
+      } catch {
+        submitButtonText.textContent = "Failed to send.";
+        submitButton.classList.remove("opacity-70");
+        contactForm.setAttribute("aria-busy", "false");
+        statusMessage.textContent =
+          "We couldn't send your message. Please try again.";
+
+        setTimeout(() => {
+          submitButtonText.textContent = submitButtonOriginalText;
+          submitButton.disabled = false;
+          statusMessage.textContent = "";
+        }, 3000);
+      }
+    });
+  }
+</script>

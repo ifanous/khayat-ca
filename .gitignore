@@ -1,0 +1,10 @@
+.agents/
+.astro/
+.netlify/
+.pi/
+*.pyc
+design-system/
+dist/
+node_modules/
+skills-lock.json
+src/data/google-reviews.json

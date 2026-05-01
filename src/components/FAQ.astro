@@ -1,0 +1,98 @@
+---
+import { Icon } from "astro-icon/components";
+
+const faqs = [
+  {
+    question: "What type of consultations do you offer?",
+    answer:
+      "Brigitte offers both in-person and virtual consultations. Clients who would like to meet in person are welcome to do so at her office in the GTA, while virtual consultations are available for clients elsewhere in Canada and abroad.",
+  },
+  {
+    question: "How do consultations work?",
+    answer:
+      "Consultations are one hour long. During the consultation, Brigitte takes the time to understand your situation, review the key details of your case, and explain the options that may be available to you. If you decide to move forward and sign a retainer for services, the consultation fee will be applied toward those services.",
+  },
+  {
+    question: "Why is the consultation paid?",
+    answer:
+      "Consultations are paid because they involve dedicated time to review your situation, understand the details of your case, and provide professional guidance tailored to your circumstances. The goal is to give you focused, meaningful advice from the outset rather than a general conversation. If you decide to move forward and retain Brigitte’s services, the consultation fee will be applied toward those services.",
+  },
+  {
+    question: "Do you offer consultations in multiple languages?",
+    answer:
+      "Yes. Consultations are available in English, French, Arabic, and Greek, helping clients feel more comfortable discussing important details of their case.",
+  },
+  {
+    question:
+      "Can you help if my case is complicated or I’ve had issues before?",
+    answer:
+      "Yes. Brigitte works with clients in a wide range of immigration and refugee matters, including cases that involve added complexity, prior issues, or important deadlines. The best way to understand your options is through a consultation based on your specific circumstances.",
+  },
+  {
+    question: "What should I prepare before a consultation?",
+    answer:
+      "It helps to have any relevant immigration documents, correspondence from IRCC or the IRB, timelines, prior applications, and a short summary of your situation ready in advance. This helps make the consultation more focused and productive.",
+  },
+];
+---
+
+<section class="bg-background py-20" id="faq" aria-labelledby="faq-heading">
+  <div class="max-w-container mx-auto px-6">
+    <div class="mx-auto mb-12 max-w-3xl text-center">
+      <h2
+        class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl"
+        id="faq-heading"
+      >
+        Frequently Asked Questions
+      </h2>
+      <p class="text-secondary text-lg leading-8 md:text-xl">
+        Quick answers to common questions about Brigitte’s immigration and
+        refugee consulting services.
+      </p>
+    </div>
+
+    <div class="mx-auto max-w-4xl space-y-4">
+      {
+        faqs.map((faq) => (
+          <details
+            class="group glass bg-surface border-border-custom overflow-hidden rounded-2xl border [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-clip details-content:[transition:height_300ms_ease,content-visibility_300ms_allow-discrete] [&[open]::details-content]:h-auto"
+            name="faq"
+          >
+            <summary class="text-primary focus-visible:ring-accent focus-visible:ring-offset-surface flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-6 py-5 text-left text-lg font-semibold transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
+              <span>{faq.question}</span>
+              <span
+                class="text-accent bg-muted flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+                aria-hidden="true"
+              >
+                <Icon
+                  class="h-4.5 w-4.5 transition-transform duration-300 ease-out group-open:rotate-180"
+                  name="lucide:chevron-down"
+                  aria-hidden="true"
+                />
+              </span>
+            </summary>
+            <div class="border-border-custom border-t px-6 pt-4 pb-6">
+              <p class="text-secondary m-0 text-base leading-8">{faq.answer}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  })}
+/>

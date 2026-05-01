@@ -1,0 +1,18 @@
+---
+import type { NavigationLinkVariant } from "../types/navigation";
+
+interface Props {
+  variant: NavigationLinkVariant;
+  href: string;
+  text: string;
+}
+
+const { variant, href, text } = Astro.props as Props;
+
+const navLinkClasses =
+  variant === "desktop"
+    ? "nav-link text-primary hover:text-accent hover:bg-muted rounded-lg px-4 py-2 font-medium transition-all duration-150"
+    : "nav-link text-secondary hover:text-accent hover:bg-muted rounded-lg px-4 py-3 text-base font-medium no-underline transition-all duration-200";
+---
+
+<a class={navLinkClasses} href={href}>{text}</a>

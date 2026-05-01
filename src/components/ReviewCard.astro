@@ -1,0 +1,72 @@
+---
+import type { Review } from "../types/reviews";
+import {
+  formatReviewDate,
+  getInitial,
+  splitReviewText,
+} from "../utils/reviews";
+
+interface Props {
+  review: Review;
+  excerptLength?: number;
+}
+
+const { review, excerptLength = 280 } = Astro.props;
+const { excerpt, remainder } = splitReviewText(review.text, excerptLength);
+---
+
+<li
+  class="glass bg-surface flex w-full shrink-0 snap-start flex-col rounded-lg p-8 transition-all duration-300 hover:-translate-y-1 md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)]"
+  role="group"
+  aria-roledescription="slide"
+>
+  <div class="mb-4 flex items-center gap-4">
+    <div
+      class="from-accent to-ao-cyan flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br text-xl font-semibold text-white"
+      aria-hidden="true"
+    >
+      {getInitial(review.authorName)}
+    </div>
+    <div>
+      <p class="text-primary font-semibold">
+        {review.authorName}
+      </p>
+      <p class="text-secondary text-xs">
+        {formatReviewDate(review.publishedAt)}
+      </p>
+      <div
+        class="text-star text-sm"
+        role="img"
+        aria-label={`Rated ${review.rating} out of 5 stars`}
+      >
+        {"★".repeat(review.rating)}
+      </div>
+    </div>
+  </div>
+
+  <blockquote
+    class="text-primary m-0 flex-1 leading-relaxed whitespace-pre-line italic"
+  >
+    &ldquo;{excerpt}<span class="review-ellipsis"
+      >{remainder ? "\u2026\u201D" : "\u201D"}</span
+    >{
+      remainder && (
+        <span class="review-overflow hidden">{remainder}&rdquo;</span>
+      )
+    }
+  </blockquote>
+
+  {
+    remainder && (
+      <div class="mt-6">
+        <button
+          class="review-toggle text-accent cursor-pointer font-semibold underline decoration-2 underline-offset-2"
+          type="button"
+          aria-expanded="false"
+        >
+          Read full review
+        </button>
+      </div>
+    )
+  }
+</li>

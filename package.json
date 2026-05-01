@@ -1,0 +1,90 @@
+{
+  "name": "khayat-ca",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "astro": "astro",
+    "build": "npm run build-reviews && astro build",
+    "build-reviews": "node scripts/build-google-reviews.ts",
+    "dev": "npm run build-reviews && astro dev",
+    "format": "prettier --write astro.config.mjs package.json src/. tsconfig.json scripts/build-google-reviews.ts",
+    "format-check": "prettier --check astro.config.mjs package.json src/. tsconfig.json scripts/build-google-reviews.ts",
+    "lint": "eslint src/.",
+    "preview": "astro preview",
+    "sort-package-json": "npx sort-package-json",
+    "type-check": "tsc --noEmit"
+  },
+  "prettier": {
+    "attributeGroups": [
+      "^(class|id|name)$",
+      "^(for|form|list)$",
+      "^(type|value|href|src|srcset|alt|title|rel|target|method|action|enctype)$",
+      "^data-",
+      "^role$",
+      "^aria-",
+      "^tabindex$",
+      "^(placeholder|readonly|disabled|required|autofocus|autocomplete|min|max|step|minlength|maxlength|pattern|multiple|checked|selected)$",
+      "^(width|height|controls|autoplay|loop|muted|preload|poster)$",
+      "^(contenteditable|draggable|hidden|spellcheck|translate|download|loading (lazy/eager)|async|defer)$",
+      "^property$",
+      "^content$",
+      "style",
+      "^on",
+      "$DEFAULT"
+    ],
+    "attributeSort": "ASC",
+    "cssDeclarationSorterOrder": "frakto",
+    "importOrder": [
+      "^astro(/|:)",
+      "",
+      "^@astrojs/",
+      "",
+      "<BUILTIN_MODULES>",
+      "",
+      "<THIRD_PARTY_MODULES>",
+      "",
+      "^(?!.*[.]css$)[./].*$",
+      "",
+      ".css$"
+    ],
+    "importOrderSafeSideEffects": [
+      ".css$"
+    ],
+    "importOrderTypeScriptVersion": "6.0.0",
+    "plugins": [
+      "prettier-plugin-astro",
+      "prettier-plugin-css-order",
+      "prettier-plugin-tailwindcss",
+      "@ianvs/prettier-plugin-sort-imports",
+      "@xeonlink/prettier-plugin-organize-attributes"
+    ]
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "@iconify-json/lucide": "^1.2.101",
+    "@iconify-json/simple-icons": "^1.2.76",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.4",
+    "astro-icon": "^1.1.5",
+    "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+    "@iconify-json/mdi": "^1.2.3",
+    "@typescript-eslint/parser": "^8.58.0",
+    "@xeonlink/prettier-plugin-organize-attributes": "^1.1.0",
+    "biome": "^0.3.3",
+    "eslint": "^10.2.0",
+    "eslint-plugin-astro": "^1.6.0",
+    "netlify-cli": "^24.10.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-css-order": "^2.2.0",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "sort-package-json": "^3.6.1"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

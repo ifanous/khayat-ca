@@ -1,0 +1,298 @@
+---
+import { Icon } from "astro-icon/components";
+
+import NavigationLink from "./NavigationLink.astro";
+
+const navItems = [
+  { href: "/#home", text: "Home" },
+  { href: "/#about", text: "About" },
+  { href: "/#services", text: "Services" },
+  { href: "/#reviews", text: "Reviews" },
+  { href: "/#contact", text: "Contact" },
+  { href: "/blog", text: "Blog" },
+];
+---
+
+<header
+  class="glass border-border-custom fixed top-0 right-0 left-0 z-1000 h-24 rounded-none border-b transition-all duration-200"
+>
+  <nav
+    class="max-w-container mx-auto flex h-24 items-center justify-between px-6"
+    aria-label="Primary navigation"
+  >
+    <!-- Logo -->
+    <a href="/" aria-label="Go to homepage">
+      <img
+        class="logo h-12 w-auto sm:h-14 lg:h-21"
+        alt="Brigitte Khayat Immigration & Refugee Consulting"
+        src="/logos/icon-text-left-horizontal.svg"
+      />
+    </a>
+
+    <!-- Desktop Navigation -->
+    <ul class="m-0 hidden list-none gap-8 p-0 lg:flex" id="nav-desktop">
+      {
+        navItems.map((item) => (
+          <li>
+            <NavigationLink
+              href={item.href}
+              text={item.text}
+              variant="desktop"
+            />
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-4">
+      <!-- Theme Toggle Group -->
+      <div
+        class="bg-surface border-border-custom flex gap-0.5 rounded-lg border p-0.5"
+        id="theme-toggle-group"
+        role="radiogroup"
+        aria-label="Theme selection"
+      >
+        <!-- Light -->
+        <button
+          class="theme-btn text-secondary hover:bg-muted hover:text-primary flex h-9 w-9 cursor-pointer items-center justify-center rounded border-none transition-all duration-150"
+          title="Light theme"
+          type="button"
+          data-theme="light"
+          role="radio"
+          aria-checked="false"
+          aria-label="Light theme"
+          tabindex="-1"
+        >
+          <Icon class="h-4.5 w-4.5" name="lucide:sun" aria-hidden="true" />
+        </button>
+        <!-- Dark -->
+        <button
+          class="theme-btn text-secondary hover:bg-muted hover:text-primary flex h-9 w-9 cursor-pointer items-center justify-center rounded border-none transition-all duration-150"
+          title="Dark theme"
+          type="button"
+          data-theme="dark"
+          role="radio"
+          aria-checked="false"
+          aria-label="Dark theme"
+          tabindex="-1"
+        >
+          <Icon class="h-4.5 w-4.5" name="lucide:moon" aria-hidden="true" />
+        </button>
+        <!-- System -->
+        <button
+          class="theme-btn text-secondary hover:bg-muted hover:text-primary flex h-9 w-9 cursor-pointer items-center justify-center rounded border-none transition-all duration-150"
+          title="System theme"
+          type="button"
+          data-theme="system"
+          role="radio"
+          aria-checked="true"
+          aria-label="System theme"
+          tabindex="0"
+        >
+          <Icon class="h-4.5 w-4.5" name="lucide:monitor" aria-hidden="true" />
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button
+        class="text-primary hover:bg-muted flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent transition-colors duration-200 lg:hidden"
+        id="mobile-menu-toggle"
+        type="button"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label="Toggle menu"
+      >
+        <Icon class="h-6 w-6" name="lucide:menu" aria-hidden="true" />
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div
+    class="bg-background border-border-custom hidden border-t px-6 pb-6 lg:hidden"
+    id="mobile-menu"
+    aria-hidden="true"
+  >
+    <nav class="flex flex-col gap-1 pt-4" aria-label="Mobile navigation">
+      {
+        navItems.map((item) => (
+          <NavigationLink href={item.href} text={item.text} variant="mobile" />
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<script>
+  import {
+    APPEARANCES,
+    applyTheme,
+    getStoredPreferredAppearance,
+    setStoredPreferredAppearance,
+  } from "../utils/theme";
+
+  // --- Theme Toggle ---
+  const preferredAppearance = getStoredPreferredAppearance();
+  const resolvedAppearance = APPEARANCES.includes(preferredAppearance)
+    ? preferredAppearance
+    : "system";
+
+  const themeButtons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>(".theme-btn"),
+  );
+
+  const updateThemeToggleState = (activeTheme: string): void => {
+    themeButtons.forEach((btn) => {
+      const isActive = btn.getAttribute("data-theme") === activeTheme;
+
+      btn.setAttribute("aria-checked", String(isActive));
+      btn.tabIndex = isActive ? 0 : -1;
+    });
+  };
+
+  applyTheme(resolvedAppearance);
+  updateThemeToggleState(resolvedAppearance);
+
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", () => {
+      if (getStoredPreferredAppearance() === "system") {
+        applyTheme("system");
+        updateThemeToggleState("system");
+      }
+    });
+
+  themeButtons.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      const theme = btn.getAttribute("data-theme");
+
+      if (theme) {
+        setStoredPreferredAppearance(theme);
+        applyTheme(theme);
+        updateThemeToggleState(theme);
+      }
+    });
+
+    btn.addEventListener("keydown", (event: KeyboardEvent) => {
+      const { key } = event;
+
+      if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(key)) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const nextIndex =
+        key === "ArrowLeft" || key === "ArrowUp"
+          ? (index - 1 + themeButtons.length) % themeButtons.length
+          : (index + 1) % themeButtons.length;
+
+      const nextButton = themeButtons[nextIndex];
+      const nextTheme = nextButton?.getAttribute("data-theme");
+
+      if (nextButton && nextTheme) {
+        nextButton.focus();
+        setStoredPreferredAppearance(nextTheme);
+        applyTheme(nextTheme);
+        updateThemeToggleState(nextTheme);
+      }
+    });
+  });
+
+  // --- Mobile Menu ---
+  const menu = document.querySelector<HTMLElement>("#mobile-menu");
+  const menuButton = document.querySelector<HTMLButtonElement>(
+    "#mobile-menu-toggle",
+  );
+
+  if (menu && menuButton) {
+    const closeMenu = (): void => {
+      menu.classList.add("hidden");
+      menu.setAttribute("aria-hidden", "true");
+      menuButton.setAttribute("aria-expanded", "false");
+    };
+
+    const openMenu = (): void => {
+      menu.classList.remove("hidden");
+      menu.setAttribute("aria-hidden", "false");
+      menuButton.setAttribute("aria-expanded", "true");
+      menu.querySelector<HTMLAnchorElement>("a")?.focus();
+    };
+
+    menuButton.addEventListener("click", () => {
+      menu.classList.contains("hidden") ? openMenu() : closeMenu();
+    });
+
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => closeMenu());
+    });
+
+    document.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !menu.classList.contains("hidden")) {
+        closeMenu();
+        menuButton.focus();
+      }
+    });
+  }
+
+  // --- Nav & Section references (shared by scroll + click) ---
+  const sections = document.querySelectorAll<HTMLElement>("section[id]");
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link");
+  const currentPathname = window.location.pathname;
+  const isHomePage = currentPathname === "/";
+  const isBlogRoute = currentPathname.startsWith("/blog");
+
+  const getLinkURL = (link: HTMLAnchorElement): URL =>
+    new URL(link.getAttribute("href") || link.href, window.location.origin);
+
+  const getLinkHash = (link: HTMLAnchorElement): string =>
+    getLinkURL(link).hash;
+
+  const isHomeSectionLink = (link: HTMLAnchorElement): boolean => {
+    const url = getLinkURL(link);
+    return url.pathname === "/" && url.hash.length > 1;
+  };
+
+  const setActiveLink = (
+    predicate: (link: HTMLAnchorElement) => boolean,
+  ): void => {
+    navLinks.forEach((link) => {
+      const isActive = predicate(link);
+
+      link.classList.toggle("active", isActive);
+
+      if (isActive) {
+        link.setAttribute("aria-current", "location");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  // --- Active Nav Link on Scroll (IntersectionObserver) ---
+  if (isHomePage && sections.length && navLinks.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute("id");
+
+            if (!id) return;
+
+            setActiveLink(
+              (link) =>
+                isHomeSectionLink(link) && getLinkHash(link) === `#${id}`,
+            );
+          }
+        });
+      },
+      { threshold: 0.3, rootMargin: "-80px 0px -40% 0px" },
+    );
+
+    for (const section of sections) {
+      observer.observe(section);
+    }
+  } else if (isBlogRoute && navLinks.length) {
+    setActiveLink((link) => getLinkURL(link).pathname === "/blog");
+  }
+</script>

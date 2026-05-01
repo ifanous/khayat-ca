@@ -1,0 +1,183 @@
+---
+import { Icon } from "astro-icon/components";
+
+import reviewsData from "../data/google-reviews.json";
+import type { ReviewsData } from "../types/reviews";
+import { byNewestFirst } from "../utils/reviews";
+import ReviewCard from "./ReviewCard.astro";
+
+const GOOGLE_REVIEWS_URL =
+  "https://www.google.com/search?q=Brigitte+Khayat+-+Immigration+%26+Refugee+Consulting+Inc.+Reviews";
+
+const { reviews, summary } = reviewsData as ReviewsData;
+
+/** All reviews sorted newest-first, rendered at build time. */
+const sortedReviews = [...reviews].sort(byNewestFirst);
+---
+
+<section
+  class="bg-background py-20"
+  id="reviews"
+  aria-labelledby="reviews-heading"
+>
+  <div class="max-w-container mx-auto px-6">
+    <div class="mb-16 text-center">
+      <h2
+        class="text-primary mb-8 text-3xl font-bold md:text-4xl lg:text-5xl"
+        id="reviews-heading"
+      >
+        What Clients Say
+      </h2>
+      <div
+        class="glass mt-8 inline-block rounded-lg p-6 transition-all duration-300 hover:-translate-y-0.5"
+      >
+        <div class="mb-4 flex items-center gap-4">
+          <div class="text-accent text-4xl font-bold" aria-hidden="true">
+            {summary.averageRating.toFixed(1)}
+          </div>
+          <div>
+            <div
+              class="text-star mb-1 text-2xl"
+              role="img"
+              aria-label={`Rated ${summary.averageRating.toFixed(1)} out of 5 stars`}
+            >
+              {"★".repeat(Math.round(summary.averageRating))}
+            </div>
+            <p class="text-secondary text-sm">
+              Based on {summary.reviewCount} Google reviews
+            </p>
+          </div>
+        </div>
+        <a
+          class="text-accent font-semibold underline decoration-2 underline-offset-2"
+          href={GOOGLE_REVIEWS_URL}
+          rel="noopener noreferrer"
+          target="_blank"
+          aria-label="View all reviews on Google (opens in a new tab)"
+        >
+          View All Reviews
+        </a>
+      </div>
+    </div>
+
+    <!-- Carousel -->
+    <div
+      class="relative"
+      role="region"
+      aria-label="Client reviews"
+      aria-roledescription="carousel"
+    >
+      <!-- Previous button -->
+      <button
+        class="glass text-primary hover:text-accent absolute top-1/2 left-0 z-10 hidden -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full p-2 transition-colors duration-200 disabled:pointer-events-none disabled:cursor-default disabled:opacity-30 md:block"
+        id="carousel-prev"
+        type="button"
+        aria-label="Previous reviews"
+        disabled
+      >
+        <Icon class="h-5 w-5" name="lucide:chevron-left" aria-hidden="true" />
+      </button>
+
+      <!-- Scroll track -->
+      <ul
+        class="scrollbar-none flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-smooth pb-4"
+        id="reviews-track"
+        aria-label="Reviews list"
+      >
+        {sortedReviews.map((review) => <ReviewCard review={review} />)}
+      </ul>
+
+      <!-- Next button -->
+      <button
+        class="glass text-primary hover:text-accent absolute top-1/2 right-0 z-10 hidden translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full p-2 transition-colors duration-200 disabled:pointer-events-none disabled:cursor-default disabled:opacity-30 md:block"
+        id="carousel-next"
+        type="button"
+        aria-label="Next reviews"
+      >
+        <Icon class="h-5 w-5" name="lucide:chevron-right" aria-hidden="true" />
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const reviewsTrack = document.getElementById(
+    "reviews-track",
+  ) as HTMLUListElement | null;
+  const previousReviewButton = document.getElementById(
+    "carousel-prev",
+  ) as HTMLButtonElement | null;
+  const nextReviewButton = document.getElementById(
+    "carousel-next",
+  ) as HTMLButtonElement | null;
+
+  if (reviewsTrack && previousReviewButton && nextReviewButton) {
+    // Re-bind to non-nullable consts so closures can use them safely
+    const track = reviewsTrack;
+    const prevBtn = previousReviewButton;
+    const nextBtn = nextReviewButton;
+
+    /** Scroll by one card width (first card measured). */
+    function getScrollAmount(): number {
+      const firstCard = track.querySelector("li");
+
+      if (!firstCard) return 300;
+
+      // Card width + gap (gap is 2rem = 32px at default font-size)
+      return firstCard.offsetWidth + 32;
+    }
+
+    function updateArrows(): void {
+      const { scrollLeft, scrollWidth, clientWidth } = track;
+
+      prevBtn.disabled = scrollLeft <= 1;
+      nextBtn.disabled = scrollLeft + clientWidth >= scrollWidth - 1;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      track.scrollBy({ left: -getScrollAmount(), behavior: "smooth" });
+    });
+
+    nextBtn.addEventListener("click", () => {
+      track.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
+    });
+
+    track.addEventListener("scroll", updateArrows, { passive: true });
+
+    window.addEventListener("resize", updateArrows, { passive: true });
+
+    // Initial state
+    updateArrows();
+
+    // Read-more toggle via event delegation
+    track.addEventListener("click", (e) => {
+      const btn = (e.target as HTMLElement).closest(
+        ".review-toggle",
+      ) as HTMLButtonElement | null;
+      if (!btn) return;
+
+      const card = btn.closest("li");
+      if (!card) return;
+
+      const overflow = card.querySelector(".review-overflow");
+      const ellipsis = card.querySelector(".review-ellipsis");
+      if (!overflow) return;
+
+      const isExpanded = btn.getAttribute("aria-expanded") === "true";
+
+      if (isExpanded) {
+        overflow.classList.add("hidden");
+        if (ellipsis) ellipsis.classList.remove("hidden");
+
+        btn.setAttribute("aria-expanded", "false");
+        btn.textContent = "Read full review";
+      } else {
+        overflow.classList.remove("hidden");
+        if (ellipsis) ellipsis.classList.add("hidden");
+
+        btn.setAttribute("aria-expanded", "true");
+        btn.textContent = "Show less";
+      }
+    });
+  }
+</script>

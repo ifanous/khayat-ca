@@ -1,0 +1,195 @@
+/* ── 1. Imports ───────────────────────────── */
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* ── 2. Theme Tokens (Tailwind v4) ────────
+   Maps CSS custom properties → Tailwind utility classes.
+   Values come from vars defined in base layer,
+   so they auto-switch when data-theme changes.
+   ─────────────────────────────────────────── */
+@theme {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  /* Semantic colors (resolve per-theme in base layer) */
+  --color-primary: var(--ao-fg);
+  --color-secondary: var(--ao-comment);
+  --color-accent: var(--ao-blue);
+  --color-success: var(--ao-green);
+  --color-warning: var(--ao-yellow);
+  --color-error: var(--ao-red);
+  --color-background: var(--ao-bg);
+  --color-surface: var(--ao-surface);
+  --color-muted: var(--ao-bg-alt);
+  --color-border-custom: var(--ao-border);
+
+  /* Direct Atom One palette colors (both themes) */
+  --color-ao-purple: var(--ao-purple);
+  --color-ao-cyan: var(--ao-cyan);
+  --color-ao-orange: var(--ao-orange);
+
+  --color-star: var(--ao-yellow);
+
+  --max-width-container: 1200px;
+}
+
+/* ── 3. Base Layer ────────────────────────── */
+@layer base {
+  /* --- Atom One Light --- */
+  :root,
+  [data-theme="light"] {
+    --ao-bg: #fafafa;
+    --ao-bg-alt: #f0f0f1;
+    --ao-surface: #ffffff;
+    --ao-fg: #383a42;
+    --ao-comment: #6b6c72;
+    --ao-border: #e1e4e8;
+    --ao-red: #e45649;
+    --ao-orange: #d19a66;
+    --ao-yellow: #946600;
+    --ao-green: #50a14f;
+    --ao-cyan: #0184bc;
+    --ao-blue: #4078f2;
+    --ao-purple: #a626a4;
+
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(56, 58, 66, 0.1);
+    --btn-shadow: 0 4px 15px rgba(64, 120, 242, 0.3);
+    --btn-shadow-hover: 0 6px 20px rgba(64, 120, 242, 0.4);
+
+    color-scheme: light;
+  }
+
+  /* --- Atom One Dark --- */
+  [data-theme="dark"] {
+    --ao-bg: #282c34;
+    --ao-bg-alt: #21252b;
+    --ao-surface: #21252b;
+    --ao-fg: #abb2bf;
+    --ao-comment: #90929a;
+    --ao-border: #3e4451;
+    --ao-red: #e06c75;
+    --ao-orange: #d19a66;
+    --ao-yellow: #e5c07b;
+    --ao-green: #98c379;
+    --ao-cyan: #56b6c2;
+    --ao-blue: #61afef;
+    --ao-purple: #c678dd;
+
+    --glass-bg: rgba(33, 37, 43, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    --btn-shadow: 0 4px 15px rgba(97, 175, 239, 0.3);
+    --btn-shadow-hover: 0 6px 20px rgba(97, 175, 239, 0.4);
+
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ── 4. Components Layer ──────────────────── */
+@layer components {
+  /* Skip link */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    z-index: 1000;
+    padding: 8px 16px;
+    color: #fff;
+    font-weight: 600;
+    background: var(--ao-blue);
+    border-radius: 4px;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus {
+    top: 8px;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Primary button — theme-aware shadow */
+  .btn-primary {
+    background-color: var(--ao-blue);
+    box-shadow: var(--btn-shadow);
+  }
+  .btn-primary:hover {
+    box-shadow: var(--btn-shadow-hover);
+    transform: translateY(-1px);
+  }
+
+  /* Light-only / Dark-only visibility */
+  .light-only {
+    display: block;
+  }
+  .dark-only {
+    display: none;
+  }
+  [data-theme="dark"] .light-only {
+    display: none;
+  }
+  [data-theme="dark"] .dark-only {
+    display: block;
+  }
+
+  /* Logo — invert in dark mode */
+  [data-theme="dark"] .logo,
+  [data-theme="dark"] .footer-logo {
+    filter: brightness(0) invert(1);
+  }
+}
+
+/* ── 5. Overrides (unlayered — beats utility layer) ── */
+
+/* Active nav link — must override text-primary utility */
+.nav-link.active {
+  color: var(--ao-blue);
+  background-color: var(--ao-bg-alt);
+  border-radius: 0.5rem;
+}
+
+/* Theme toggle active state — must override Tailwind utilities */
+.theme-btn.active {
+  color: #ffffff;
+  background-color: var(--ao-blue);
+}
+
+/* ── 6. Utilities ─────────────────────────── */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── 7. Reduced Motion ────────────────────── */
+/* biome-ignore-start lint/complexity/noImportantStyles: !important is required here to guarantee user preference overrides all component-level transitions and animations (standard WCAG / prefers-reduced-motion pattern). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* biome-ignore-end lint/complexity/noImportantStyles: end reduced-motion override */

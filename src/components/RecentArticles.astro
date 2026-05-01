@@ -1,0 +1,55 @@
+---
+import { getLatestBlogPosts } from "../utils/blog";
+import ArticleCard from "./ArticleCard.astro";
+
+const latestPosts = await getLatestBlogPosts(3);
+---
+
+<section class="bg-background py-20" aria-labelledby="latest-articles-heading">
+  <div class="max-w-container mx-auto px-6">
+    <div
+      class="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+    >
+      <div class="max-w-2xl">
+        <h2
+          class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl"
+          id="latest-articles-heading"
+        >
+          <span
+            class="text-accent mb-3 block text-sm font-semibold tracking-[0.12em] uppercase"
+          >
+            From Our Blog
+          </span>
+          Latest Immigration Updates
+        </h2>
+        <p class="text-secondary text-lg leading-8">
+          Practical updates and guidance to help you stay informed about
+          Canadian immigration changes.
+        </p>
+      </div>
+
+      <a
+        class="btn-primary inline-flex items-center justify-center rounded-lg px-6 py-3 font-semibold text-white no-underline transition-all duration-200"
+        href="/blog"
+      >
+        View all articles
+      </a>
+    </div>
+
+    {
+      latestPosts.length > 0 ? (
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+          {latestPosts.map((post) => (
+            <ArticleCard headingLevel="h3" post={post} />
+          ))}
+        </div>
+      ) : (
+        <div class="glass bg-surface rounded-2xl p-8">
+          <p class="text-secondary m-0 text-lg">
+            Articles are coming soon. Check back for immigration updates.
+          </p>
+        </div>
+      )
+    }
+  </div>
+</section>

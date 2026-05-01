@@ -1,0 +1,78 @@
+---
+import { Image } from "astro:assets";
+
+import type { BlogPostPreview, HeadingLevel } from "../types/blog";
+import { formatBlogDate, getBlogImageSource } from "../utils/blog";
+
+interface Props {
+  headingLevel?: HeadingLevel;
+  post: BlogPostPreview;
+}
+
+const { headingLevel = "h2", post } = Astro.props as Props;
+const publishedLabel = formatBlogDate(post.pubDate);
+const Heading = headingLevel;
+const imageSrc = getBlogImageSource(post.slug);
+---
+
+<article
+  class="card-article glass bg-surface relative flex h-full flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1"
+>
+  {
+    imageSrc && (
+      <div
+        class="border-border-custom h-56 overflow-hidden border-b"
+        aria-hidden="true"
+      >
+        <Image
+          class="h-full w-full object-cover"
+          alt=""
+          src={imageSrc}
+          decoding="async"
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          widths={[400, 600, 800]}
+        />
+      </div>
+    )
+  }
+
+  <div class="flex flex-1 flex-col p-6">
+    <p
+      class="text-secondary m-0 text-sm font-medium tracking-[0.08em] uppercase"
+    >
+      <time datetime={new Date(post.pubDate).toISOString()}
+        >{publishedLabel}</time
+      >
+    </p>
+
+    <Heading class="text-primary mt-3 mb-4 text-2xl leading-tight font-bold">
+      <a
+        class="card-link hover:text-accent no-underline transition-colors duration-150"
+        href={post.href}
+      >
+        {post.title}
+      </a>
+    </Heading>
+
+    <p class="text-secondary mb-6 flex-1 text-base leading-7">
+      {post.description}
+    </p>
+
+    <p
+      class="text-accent m-0 inline-flex items-center gap-2 font-semibold"
+      aria-hidden="true"
+    >
+      Read article
+      <span aria-hidden="true">→</span>
+    </p>
+  </div>
+</article>
+
+<style>
+  .card-link::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+  }
+</style>

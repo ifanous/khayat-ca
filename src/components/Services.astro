@@ -1,0 +1,70 @@
+---
+import Service from "./Service.astro";
+
+const services = [
+  {
+    name: "Permanent Residence",
+    description:
+      "Managing permanent residence pathways in Canada, including Express Entry, PNP, family sponsorship, PR card renewal, and related applications.",
+    features: [
+      "Express Entry & Provincial Nominee Program (PNP) applications",
+      "Spousal, family & parents/grandparents sponsorship",
+      "PR card renewal, PRTD & humanitarian applications",
+    ],
+    icon: "mdi:home",
+  },
+  {
+    name: "Temporary Residence",
+    description:
+      "Handling temporary residence matters in Canada, including visitor visas, super visas, study permits, PGWP applications, work permits, LMIA-based applications, and extensions.",
+    features: [
+      "Visitor visa, super visa & visitor record extensions",
+      "Study permit, PGWP & study permit extensions",
+      "Work permit, LMIA & open work permit applications",
+    ],
+    icon: "mdi:bag-checked",
+  },
+  {
+    name: "Citizenship",
+    description:
+      "Preparing and filing citizenship applications, citizenship certificates, proof of citizenship, passport applications, and IRCC follow-up in Canada.",
+    features: [
+      "Citizenship application preparation, submission & IRCC follow-up",
+      "Citizenship certificates, proof of citizenship & passport applications",
+      "Document review, application support & IRCC communication",
+    ],
+    icon: "mdi:passport-check",
+  },
+  {
+    name: "Refugee Protection",
+    description:
+      "Representing refugee claims in Canada, including claim preparation, IRB submissions, hearing support, protected person permanent residence, and travel documents.",
+    features: [
+      "Refugee claim preparation, filing & hearing support",
+      "Protected person permanent residence & travel documents",
+      "CBSA deferral requests, IRB/IRCC forms & evidence disclosure",
+    ],
+    icon: "mdi:shield-check",
+  },
+];
+---
+
+<section class="bg-muted py-20" id="services">
+  <div class="max-w-container mx-auto px-6">
+    <div class="mb-16 text-center">
+      <h2 class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl">
+        Immigration Services
+      </h2>
+      <p class="text-secondary mx-auto max-w-2xl text-xl">
+        Comprehensive support for all your Canadian immigration needs
+      </p>
+    </div>
+
+    <ul
+      class="grid grid-cols-1 gap-8 md:grid-cols-2"
+      aria-label="Immigration services"
+    >
+      {services.map((service) => <Service {...service} />)}
+    </ul>
+  </div>
+</section>

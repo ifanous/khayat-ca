@@ -1,0 +1,52 @@
+[env]
+_.path = ["{{config_root}}/node_modules/.bin"]
+
+[tasks.astro]
+run = "astro"
+
+[tasks.build]
+depends = ["build-reviews"]
+run = "astro build"
+
+[tasks.build-reviews]
+run = "node scripts/build-google-reviews.ts"
+
+[tasks.clean]
+run = "rm -fr .astro dist"
+
+[tasks.dev]
+depends = ["build-reviews"]
+run = "astro dev"
+
+[tasks.format-check]
+run = "prettier --check astro.config.mjs eslint.config.js package.json scripts/. src/. tsconfig.json"
+
+[tasks.format]
+run = "prettier --write astro.config.mjs eslint.config.js package.json scripts/. src/. tsconfig.json"
+
+[tasks.install-deps]
+run = "npm install --loglevel=verbose"
+
+[tasks.lint]
+run = "biome lint src/. && eslint src/."
+
+[tasks.netlify]
+run = "netlify"
+
+[tasks.preview]
+run = "astro preview"
+
+[tasks.sort-package-json]
+run = "sort-package-json"
+
+[tasks.type-check]
+run = "tsc --noEmit"
+
+[tasks.uninstall-deps]
+run = "npm uninstall --loglevel=verbose"
+
+[tasks.update-deps]
+run = "npm update --loglevel=verbose"
+
+[tools]
+node = "lts"

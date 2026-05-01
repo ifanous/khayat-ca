@@ -1,0 +1,53 @@
+---
+import ArticleCard from "../../components/ArticleCard.astro";
+import Contact from "../../components/Contact.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { getAllBlogPosts } from "../../utils/blog";
+
+const allPosts = await getAllBlogPosts();
+---
+
+<SiteLayout
+  title="Immigration Updates | Brigitte Khayat"
+  description="Canadian immigration updates, practical guidance, and blog articles from Brigitte Khayat Immigration & Refugee Consulting."
+>
+  <section class="bg-background py-20 pt-40" aria-labelledby="blog-heading">
+    <div class="max-w-container mx-auto px-6">
+      <div class="mx-auto mb-14 max-w-3xl text-center">
+        <h1
+          class="text-primary mb-6 text-4xl font-bold md:text-5xl lg:text-6xl"
+          id="blog-heading"
+        >
+          Immigration Updates
+        </h1>
+        <p class="text-secondary text-lg leading-8 md:text-xl">
+          Updates, insights, and practical guidance to help you navigate
+          Canadian immigration with confidence.
+        </p>
+      </div>
+
+      {
+        allPosts.length > 0 ? (
+          <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+            {allPosts.map((post) => (
+              <ArticleCard headingLevel="h2" post={post} />
+            ))}
+          </div>
+        ) : (
+          <div class="glass bg-surface mx-auto max-w-3xl rounded-2xl p-10 text-center">
+            <h2 class="text-primary mb-4 text-2xl font-bold">
+              Articles are coming soon
+            </h2>
+            <p class="text-secondary m-0 text-lg leading-8">
+              {
+                "We'll be publishing immigration updates and practical guidance here."
+              }
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <Contact />
+</SiteLayout>

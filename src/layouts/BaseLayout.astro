@@ -1,0 +1,136 @@
+---
+import { Font } from "astro:assets";
+
+import "../styles/global.css";
+
+interface ArticleMeta {
+  author?: string;
+  publishedTime?: string;
+  tags?: string[];
+}
+
+interface Props {
+  article?: ArticleMeta;
+  description: string;
+  ogType?: "article" | "website";
+  title: string;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  noIndex,
+  ogType = "website",
+  article,
+} = Astro.props as Props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <Font cssVariable="--font-inter" />
+    <link href={canonicalURL} rel="canonical" />
+    <link href="/favicon.ico" rel="icon" sizes="32x32" />
+    <link href="/favicon.svg" rel="icon" type="image/svg+xml" sizes="any" />
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="/sitemap-index.xml" rel="sitemap" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    {noIndex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#fafafa" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Open Graph (Facebook, LinkedIn, Slack, Discord, iMessage, etc.) -->
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL("/og-image.png", Astro.site)} />
+    <meta property="og:locale" content="en_CA" />
+    <meta
+      property="og:site_name"
+      content="Brigitte Khayat - Immigration & Refugee Consulting"
+    />
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content={ogType} />
+    {
+      ogType === "article" && article?.publishedTime && (
+        <meta
+          property="article:published_time"
+          content={article.publishedTime}
+        />
+      )
+    }
+    {
+      ogType === "article" && article?.author && (
+        <meta property="article:author" content={article.author} />
+      )
+    }
+    {
+      ogType === "article" &&
+        article?.tags?.map((tag) => (
+          <meta property="article:tag" content={tag} />
+        ))
+    }
+    <meta property="og:url" content={canonicalURL} />
+
+    <!-- Twitter/X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL("/og-image.png", Astro.site)} />
+    <meta name="twitter:title" content={title} />
+
+    <script
+      src="https://www.googletagmanager.com/gtag/js?id=G-P79R03N5WK"
+      async
+      is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag(...args) {
+        dataLayer.push(args);
+      }
+
+      gtag("js", new Date());
+      gtag("config", "G-P79R03N5WK");
+    </script>
+
+    <script is:inline>
+      (() => {
+        const ATOM_ONE_LIGHT_THEME_COLOR = "#fafafa";
+        const ATOM_ONE_DARK_THEME_COLOR = "#282c34";
+        const PREFERRED_APPEARANCE_KEY = "preferred-appearance";
+
+        const metaThemeColor = document.querySelector(
+          'meta[name="theme-color"]',
+        );
+        const preferredAppearance =
+          localStorage.getItem(PREFERRED_APPEARANCE_KEY) || "system";
+
+        const resolvedAppearance =
+          preferredAppearance === "system"
+            ? matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light"
+            : preferredAppearance;
+
+        document.documentElement.setAttribute("data-theme", resolvedAppearance);
+
+        if (metaThemeColor)
+          metaThemeColor.setAttribute(
+            "content",
+            resolvedAppearance === "dark"
+              ? ATOM_ONE_DARK_THEME_COLOR
+              : ATOM_ONE_LIGHT_THEME_COLOR,
+          );
+      })();
+    </script>
+  </head>
+  <body
+    class="bg-background text-primary font-sans transition-colors duration-200"
+  >
+    <slot />
+  </body>
+</html>
