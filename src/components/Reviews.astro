@@ -16,7 +16,11 @@ const sortedReviews = [...reviews].sort(byNewestFirst);
 const ratingRounded = Math.round(summary.averageRating);
 ---
 
-<section class="bg-muted py-20" id="reviews" aria-labelledby="reviews-heading">
+<section
+  class="bg-muted overflow-x-clip py-20"
+  id="reviews"
+  aria-labelledby="reviews-heading"
+>
   <div class="max-w-container mx-auto px-6">
     <div class="mb-16 text-center">
       <h2
@@ -66,44 +70,56 @@ const ratingRounded = Math.round(summary.averageRating);
 
     <!-- Carousel -->
     <div
-      class="relative"
+      class="relative flex flex-col"
       role="region"
       aria-label="Client reviews"
       aria-roledescription="carousel"
     >
-      <!-- Previous button -->
-      <button
-        class="surface-hairline focus-ring text-primary hover:text-accent hover:border-primary/20 absolute top-1/2 left-0 z-10 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full! transition-colors duration-200 disabled:pointer-events-none disabled:cursor-default disabled:opacity-30 md:flex"
-        id="carousel-prev"
-        type="button"
-        aria-label="Previous reviews"
-        disabled
-      >
-        <Icon class="h-5 w-5" name="lucide:chevron-left" aria-hidden="true" />
-      </button>
+      <!-- Controls come first in the tab order but render below the mobile track. -->
+      <div class="order-1 mt-4 flex justify-center gap-4 md:contents">
+        <button
+          class="surface-hairline focus-ring text-primary hover:text-accent hover:border-primary/20 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full! transition-colors duration-200 disabled:pointer-events-none disabled:cursor-default disabled:opacity-30 md:absolute md:top-1/2 md:left-0 md:z-10 md:-translate-x-1/2 md:-translate-y-1/2"
+          id="carousel-prev"
+          type="button"
+          aria-label="Previous reviews"
+          disabled
+        >
+          <Icon class="h-5 w-5" name="lucide:chevron-left" aria-hidden="true" />
+        </button>
+        <button
+          class="surface-hairline focus-ring text-primary hover:text-accent hover:border-primary/20 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full! transition-colors duration-200 disabled:pointer-events-none disabled:cursor-default disabled:opacity-30 md:absolute md:top-1/2 md:right-0 md:z-10 md:translate-x-1/2 md:-translate-y-1/2"
+          id="carousel-next"
+          type="button"
+          aria-label="Next reviews"
+        >
+          <Icon
+            class="h-5 w-5"
+            name="lucide:chevron-right"
+            aria-hidden="true"
+          />
+        </button>
+      </div>
 
       <!-- Scroll track -->
       <ul
-        class="flex snap-x snap-mandatory scrollbar-none gap-8 overflow-x-auto scroll-smooth pb-4"
+        class="flex min-w-0 snap-x snap-mandatory scrollbar-none gap-8 overflow-x-auto scroll-smooth pb-4"
         id="reviews-track"
         aria-label="Reviews list"
       >
-        {sortedReviews.map((review) => <ReviewCard review={review} />)}
+        {
+          sortedReviews.map((review, index) => (
+            <ReviewCard
+              index={index}
+              review={review}
+              total={sortedReviews.length}
+            />
+          ))
+        }
       </ul>
 
-      <!-- Next button -->
-      <button
-        class="surface-hairline focus-ring text-primary hover:text-accent hover:border-primary/20 absolute top-1/2 right-0 z-10 hidden h-11 w-11 translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full! transition-colors duration-200 disabled:pointer-events-none disabled:cursor-default disabled:opacity-30 md:flex"
-        id="carousel-next"
-        type="button"
-        aria-label="Next reviews"
-      >
-        <Icon class="h-5 w-5" name="lucide:chevron-right" aria-hidden="true" />
-      </button>
-
-      <!-- Mobile swipe hint (visible only when arrows aren't rendered). -->
+      <!-- Mobile swipe hint. -->
       <p
-        class="text-secondary mt-4 flex items-center justify-center gap-2 text-xs md:hidden"
+        class="text-secondary order-2 mt-4 flex items-center justify-center gap-2 text-xs md:hidden"
         aria-hidden="true"
       >
         <Icon

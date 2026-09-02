@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-02T20:01:17Z",
+  "generatedAt": "2026-09-02T20:33:42Z",
   "title": "Design System: Brigitte Khayat — Immigration & Refugee Consulting",
   "extensions": {
     "typographyMeta": {
@@ -156,9 +156,9 @@
       "name": "Review Card",
       "kind": "card",
       "refersTo": "card-hairline",
-      "description": "A sourced-review surface with the signature circular initial, rating stars, quiet metadata, and one of the system's two height-animated disclosure controls; the FAQ accordion is the other.",
-      "html": "<article class=\"ds-review\"><blockquote class=\"ds-review__quote\">“Brigitte was honest and careful with every detail.”</blockquote><div class=\"ds-review__meta\"><span class=\"ds-review__avatar\" aria-hidden=\"true\">J</span><span><strong>J. Client</strong><span class=\"ds-review__stars\" role=\"img\" aria-label=\"Rated 5 out of 5\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"/></svg></span></span></div></article>",
-      "css": ".ds-review { padding: 32px; color: var(--ao-fg); font-family: Inter, system-ui, sans-serif; background: var(--ao-surface); border: 1px solid var(--ao-border); border-radius: 8px; } .ds-review__quote { margin: 0; font-size: 1.125rem; font-style: italic; line-height: 1.6; } .ds-review__meta { display: flex; align-items: center; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--ao-border); } .ds-review__avatar { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; color: #ffffff; font-weight: 600; background: linear-gradient(to bottom right, var(--ao-blue), var(--ao-cyan)); border-radius: 9999px; } .ds-review__stars { display: flex; margin-top: 4px; color: var(--ao-yellow); }"
+      "description": "A sourced-review list item with screen-reader position context, the signature circular initial, rating stars, quiet metadata, and one of the system's two height-animated disclosure controls; the FAQ accordion is the other.",
+      "html": "<ol class=\"ds-review-list\" aria-label=\"Reviews list\"><li class=\"ds-review\"><span class=\"ds-review__position\">Review 1 of 51</span><blockquote class=\"ds-review__quote\">“Brigitte was honest and careful with every detail.”</blockquote><div class=\"ds-review__meta\"><span class=\"ds-review__avatar\" aria-hidden=\"true\">J</span><span><strong>J. Client</strong><span class=\"ds-review__stars\" role=\"img\" aria-label=\"Rated 5 out of 5\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"/></svg></span></span></div></li></ol>",
+      "css": ".ds-review-list { margin: 0; padding: 0; list-style: none; } .ds-review { padding: 32px; color: var(--ao-fg); font-family: Inter, system-ui, sans-serif; background: var(--ao-surface); border: 1px solid var(--ao-border); border-radius: 8px; } .ds-review__position { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; } .ds-review__quote { margin: 0; font-size: 1.125rem; font-style: italic; line-height: 1.6; } .ds-review__meta { display: flex; align-items: center; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--ao-border); } .ds-review__avatar { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; color: #ffffff; font-weight: 600; background: linear-gradient(to bottom right, var(--ao-blue), var(--ao-cyan)); border-radius: 9999px; } .ds-review__stars { display: flex; margin-top: 4px; color: var(--ao-yellow); }"
     },
     {
       "name": "Service Row",

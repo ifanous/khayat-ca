@@ -10,18 +10,21 @@ import {
 
 interface Props {
   review: Review;
+  index: number;
+  total: number;
   excerptLength?: number;
 }
 
-const { review, excerptLength = 280 } = Astro.props;
+const { review, index, total, excerptLength = 280 } = Astro.props;
 const { excerpt, remainder } = splitReviewText(review.text, excerptLength);
+const position = index + 1;
+const overflowId = `review-${position}-overflow`;
 ---
 
 <li
   class="surface-hairline hover:border-primary/20 flex w-full shrink-0 snap-start flex-col p-8 transition-colors duration-200 md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)]"
-  role="group"
-  aria-roledescription="slide"
 >
+  <span class="sr-only">Review {position} of {total}</span>
   <blockquote
     class="text-primary m-0 flex-1 text-lg leading-relaxed whitespace-pre-line italic"
   >
@@ -31,6 +34,7 @@ const { excerpt, remainder } = splitReviewText(review.text, excerptLength);
       remainder && (
         <span
           class="review-overflow ease-out-quart block h-0 overflow-clip transition-[height] duration-300 data-[state=expanded]:h-auto"
+          id={overflowId}
           data-state="collapsed"
           aria-hidden="true"
         >
@@ -46,6 +50,7 @@ const { excerpt, remainder } = splitReviewText(review.text, excerptLength);
         <button
           class="review-toggle text-accent focus-ring cursor-pointer text-sm font-semibold underline decoration-2 underline-offset-2"
           type="button"
+          aria-controls={overflowId}
           aria-expanded="false"
         >
           Read full review

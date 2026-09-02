@@ -289,7 +289,8 @@ One card material across the site. The `@utility surface-hairline` in `global.cs
 ### Review Card
 
 - Distinguishing signature: a 48px round avatar with the reviewer's initial on a linear-gradient from editor-blue to editor-cyan. This is the only place the system intentionally uses two accent colors together.
-- Horizontal scroll snap on mobile (snap-start), 2-up at `md`, 3-up at `lg`. Single scroll track with prev/next chevron controls above `md`. 8px radius, hairline on surface, 32px padding.
+- Horizontal scroll snap on mobile (snap-start), 2-up at `md`, 3-up at `lg`. Previous/next chevron controls sit together below the track on narrow screens and move to the track sides at `md`. 8px radius, hairline on surface, 32px padding.
+- The track preserves native list semantics. Each review includes screen-reader-only `Review X of Y` position text, and expandable text is connected to its disclosure button.
 - Star rating is `mdi:star` SVG in `text-star` (editor-yellow), not a Unicode glyph.
 - Read-more disclosure expands via a `height: 0 ↔ auto` transition using `interpolate-size: allow-keywords` (declared on `html` in `global.css`). Review and FAQ disclosures are the only height-animated controls in the system.
 
