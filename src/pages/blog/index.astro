@@ -8,21 +8,21 @@ const allPosts = await getAllBlogPosts();
 ---
 
 <SiteLayout
-  title="Immigration Updates | Brigitte Khayat"
-  description="Canadian immigration updates, practical guidance, and blog articles from Brigitte Khayat Immigration & Refugee Consulting."
+  title="Canadian Immigration News, Explained by an RCIC-IRB | Brigitte Khayat"
+  description="Notes on IRCC rule changes and IRB decisions from Brigitte Khayat, RCIC-IRB, an immigration consultant serving clients across the GTA, Canada, and abroad."
 >
-  <section class="bg-background py-20 pt-40" aria-labelledby="blog-heading">
+  <section class="bg-background pt-40 pb-20" aria-labelledby="blog-heading">
     <div class="max-w-container mx-auto px-6">
-      <div class="mx-auto mb-14 max-w-3xl text-center">
+      <div class="mx-auto mb-12 max-w-3xl text-center">
         <h1
           class="text-primary mb-6 text-4xl font-bold md:text-5xl lg:text-6xl"
           id="blog-heading"
         >
-          Immigration Updates
+          Canadian immigration news, explained by an RCIC-IRB
         </h1>
         <p class="text-secondary text-lg leading-8 md:text-xl">
-          Updates, insights, and practical guidance to help you navigate
-          Canadian immigration with confidence.
+          Notes on what's changing at IRCC and the IRB, and what it means for
+          your case.
         </p>
       </div>
 
@@ -34,14 +34,13 @@ const allPosts = await getAllBlogPosts();
             ))}
           </div>
         ) : (
-          <div class="glass bg-surface mx-auto max-w-3xl rounded-2xl p-10 text-center">
-            <h2 class="text-primary mb-4 text-2xl font-bold">
-              Articles are coming soon
+          <div class="surface-hairline mx-auto max-w-2xl p-8 md:p-10">
+            <h2 class="text-primary mb-3 text-2xl font-bold">
+              No articles here yet.
             </h2>
-            <p class="text-secondary m-0 text-lg leading-8">
-              {
-                "We'll be publishing immigration updates and practical guidance here."
-              }
+            <p class="text-primary m-0 text-lg leading-relaxed">
+              I post when immigration rules change in meaningful ways. If your
+              question won't wait, the form below will reach me.
             </p>
           </div>
         )

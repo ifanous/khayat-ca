@@ -1,95 +1,95 @@
 ---
+// About (live).
+//
+// Hero owns the name and the "handled personally" claim; Hero panel owns
+// the office, hours, and languages. About owns method and credentials.
+// The H2/H3 are method-forward so this section does not re-introduce
+// Brigitte or repeat the credential abbreviations carried above.
+
+import { Image } from "astro:assets";
+
 import { Icon } from "astro-icon/components";
+
+import portrait from "../assets/headshot/transparent.png";
+
+const credentials = [
+  {
+    text: "Licensed by CICC",
+  },
+  {
+    text: "Authorized to represent clients before the IRB",
+  },
+  { text: "Bound by strict ethical and professional standards" },
+  {
+    text: "Member of CAPIC",
+  },
+];
 ---
 
-<section class="bg-background py-20" id="about">
+<section
+  class="bg-background py-16 lg:py-20"
+  id="about"
+  aria-labelledby="about-heading"
+>
   <div class="max-w-container mx-auto px-6">
-    <div class="mb-16 text-center">
-      <h2 class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl">
-        Meet Brigitte Khayat
+    <div class="mb-12 text-center">
+      <h2
+        class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl"
+        id="about-heading"
+      >
+        How I work
       </h2>
       <p class="text-secondary mx-auto max-w-2xl text-xl">
-        Your trusted guide through the Canadian immigration process
+        Each file, on its own facts.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 items-start gap-16 lg:grid-cols-3">
-      <!-- Photo -->
-      <div class="text-center lg:col-span-1">
-        <div
-          class="glass rounded-lg p-8 text-center transition-all duration-300 hover:-translate-y-1"
-        >
-          <img
-            class="mx-auto w-full max-w-xs rounded-lg mix-blend-multiply dark:mix-blend-screen dark:brightness-95 dark:contrast-110"
-            alt="Portrait of Brigitte Khayat"
-            src="/headshot/transparent.png"
-            decoding="async"
-            loading="lazy"
-          />
-        </div>
-      </div>
+    <div
+      class="mx-auto grid max-w-5xl grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16"
+    >
+      <!-- Portrait -->
+      <figure class="lg:col-span-5">
+        <Image
+          class="mx-auto w-full max-w-xs rounded-lg lg:max-w-none"
+          alt="Portrait of Brigitte Khayat"
+          src={portrait}
+          decoding="async"
+          loading="eager"
+          sizes="(max-width: 1024px) 20rem, 26rem"
+          widths={[320, 480, 640, 800]}
+        />
+      </figure>
 
       <!-- Bio -->
-      <div class="lg:col-span-2">
-        <div
-          class="glass rounded-lg p-8 transition-all duration-300 hover:-translate-y-0.5"
-        >
-          <h3 class="text-primary mb-4 text-2xl font-semibold">
-            Licensed &amp; Experienced
-          </h3>
-          <p class="text-primary mb-8">
-            As a licensed Regulated Canadian Immigration Consultant (RCIC-IRB)
-            based in the GTA, I support clients in Canada and abroad with
-            thoughtful, personalized immigration and refugee consulting. My
-            approach combines professional expertise, careful preparation, and
-            attention to the unique details of every case.
+      <div class="lg:col-span-7">
+        <div class="text-primary space-y-5 text-lg leading-relaxed">
+          <p>
+            My practice covers permanent residence, temporary permits,
+            citizenship, and refugee matters. I work with individuals and
+            families across the GTA, elsewhere in Canada, and abroad.
           </p>
-
-          <ul class="mb-8 space-y-4">
-            <li class="flex items-start gap-3">
-              <div class="text-success h-6 w-6 shrink-0">
-                <Icon
-                  class="h-5 w-5"
-                  name="lucide:circle-check"
-                  aria-hidden="true"
-                />
-              </div>
-              <span class="text-primary"
-                >Licensed by CICC &amp; member of CAPIC</span
-              >
-            </li>
-            <li class="flex items-start gap-3">
-              <div class="text-success h-6 w-6 shrink-0">
-                <Icon
-                  class="h-5 w-5"
-                  name="lucide:circle-check"
-                  aria-hidden="true"
-                />
-              </div>
-              <span class="text-primary"
-                >Authorized to represent clients before IRB</span
-              >
-            </li>
-            <li class="flex items-start gap-3">
-              <div class="text-success h-6 w-6 shrink-0">
-                <Icon
-                  class="h-5 w-5"
-                  name="lucide:circle-check"
-                  aria-hidden="true"
-                />
-              </div>
-              <span class="text-primary"
-                >Strict ethical &amp; professional standards</span
-              >
-            </li>
-          </ul>
-
-          <p class="text-primary">
-            I strive to provide personalized, high-quality immigration and
-            refugee consulting services, helping you navigate the complex
-            Canadian immigration system with confidence and peace of mind.
+          <p>
+            Each file starts with a careful read of your facts. From there, I
+            prepare your application or submissions and keep you in the loop at
+            every step. Immigration decisions turn on detail, and detail is
+            where I spend most of my time.
           </p>
         </div>
+
+        <ul class="mt-10 space-y-3">
+          {
+            credentials.map((item) => (
+              <li class="flex items-start gap-3">
+                <Icon
+                  class="text-success mt-1 h-5 w-5 shrink-0"
+                  name="lucide:check"
+                  aria-hidden="true"
+                />
+                <span class="text-primary">{item.text}</span>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </div>
   </div>

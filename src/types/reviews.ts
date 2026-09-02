@@ -5,12 +5,12 @@ export interface Review {
   text: string;
 }
 
-export interface ReviewsSummary {
-  averageRating: number;
-  reviewCount: number;
-}
-
 export interface ReviewsData {
   reviews: Review[];
   summary: ReviewsSummary;
+}
+
+export interface ReviewsSummary {
+  averageRating: number;
+  reviewCount: number;
 }

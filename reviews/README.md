@@ -70,10 +70,10 @@ not exist in the repository. This is intentional: the raw Takeout files in
 `reviews/` are the source of truth, and the normalized JSON is a build
 artifact.
 
-Netlify runs `npm run build`, which is configured in `package.json` as:
+Netlify runs `pnpm run build`, which is configured in `package.json` as:
 
 ```json
-"build": "npm run build-reviews && astro build"
+"build": "pnpm run build-reviews && astro build"
 ```
 
 This means every Netlify deploy automatically:

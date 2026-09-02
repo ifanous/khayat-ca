@@ -1,12 +1,16 @@
 ---
 import Main from "../components/Main.astro";
+import reviewsData from "../data/google-reviews.json";
 import SiteLayout from "../layouts/SiteLayout.astro";
+import type { ReviewsData } from "../types/reviews";
 
-const siteUrl = "https://www.khayat.ca";
+const siteUrl = "https://khayat.ca";
+
+const { summary } = reviewsData as ReviewsData;
 
 const professionalServiceSchema = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
+  "@type": ["ProfessionalService", "LegalService"],
   "@id": `${siteUrl}/#business`,
   name: "Brigitte Khayat - Immigration & Refugee Consulting",
   url: siteUrl,
@@ -59,7 +63,25 @@ const professionalServiceSchema = {
     },
   ],
   availableLanguage: ["English", "French", "Arabic", "Greek"],
+  telephone: "+1-437-370-1850",
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: summary.averageRating,
+    ratingCount: summary.reviewCount,
+    bestRating: 5,
+    worstRating: 1,
+  },
   sameAs: [
+    // Official CICC public register entry for Brigitte. This is the
+    // single strongest E-E-A-T signal for a regulated profession: a
+    // verifiable link from the site to the regulator's own record.
+    "https://register.college-ic.ca/Public-Register-EN/Licensee/Profile.aspx?ID=15757",
+    // CAPIC publishes only a searchable member list (no per-member
+    // permalink), so we link to the active members list as proof of
+    // membership rather than a deep link.
+    "https://www.capic.ca/EN/ActiveMembersList",
+    // Canonical Google Business Profile URL (resolved from place_id).
+    "https://www.google.com/maps/place/?q=place_id:ChIJSyuuhA1vlKMRt1Pjpq8_qwg",
     "https://www.facebook.com/BK.RCIC",
     "https://www.instagram.com/bk_rcic/",
   ],
@@ -104,7 +126,7 @@ const professionalServiceSchemaJson = JSON.stringify(professionalServiceSchema);
 
 <SiteLayout
   title="RCIC-IRB Immigration Consultant Serving the GTA | Brigitte Khayat"
-  description="Licensed RCIC-IRB immigration consultant serving clients across the GTA with help for PR, work permits, study permits, citizenship, and refugee matters."
+  description="Licensed RCIC-IRB immigration consultant serving clients across the GTA, Canada, and abroad with help for PR, work permits, study permits, citizenship, and refugee matters."
 >
   <script type="application/ld+json" set:html={professionalServiceSchemaJson} />
   <Main />

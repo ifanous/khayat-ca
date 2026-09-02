@@ -14,23 +14,24 @@ const navItems = [
 ---
 
 <header
-  class="glass border-border-custom fixed top-0 right-0 left-0 z-1000 h-24 rounded-none border-b transition-all duration-200"
+  class="site-header fixed top-0 right-0 left-0 z-1000 h-24 rounded-none transition-colors duration-200"
+  id="site-header"
 >
   <nav
     class="max-w-container mx-auto flex h-24 items-center justify-between px-6"
     aria-label="Primary navigation"
   >
     <!-- Logo -->
-    <a href="/" aria-label="Go to homepage">
+    <a class="focus-ring" href="/" aria-label="Go to homepage">
       <img
-        class="logo h-12 w-auto sm:h-14 lg:h-21"
+        class="logo h-12 w-auto sm:h-14 xl:h-21"
         alt="Brigitte Khayat Immigration & Refugee Consulting"
         src="/logos/icon-text-left-horizontal.svg"
       />
     </a>
 
     <!-- Desktop Navigation -->
-    <ul class="m-0 hidden list-none gap-8 p-0 lg:flex" id="nav-desktop">
+    <ul class="m-0 hidden list-none gap-8 p-0 xl:flex" id="nav-desktop">
       {
         navItems.map((item) => (
           <li>
@@ -45,17 +46,14 @@ const navItems = [
     </ul>
 
     <div class="flex items-center gap-4">
-      <!-- Theme Toggle Group -->
+      <!-- Theme radiogroup (tablet & desktop): direct-pick light / dark / system -->
       <div
-        class="bg-surface border-border-custom flex gap-0.5 rounded-lg border p-0.5"
-        id="theme-toggle-group"
+        class="bg-surface border-border-custom hidden gap-0.5 rounded-lg border p-0.5 md:flex"
         role="radiogroup"
         aria-label="Theme selection"
       >
-        <!-- Light -->
         <button
-          class="theme-btn text-secondary hover:bg-muted hover:text-primary flex h-9 w-9 cursor-pointer items-center justify-center rounded border-none transition-all duration-150"
-          title="Light theme"
+          class="theme-btn focus-ring text-secondary hover:bg-muted hover:text-primary flex h-11 w-11 cursor-pointer items-center justify-center rounded border-none transition-colors duration-150"
           type="button"
           data-theme="light"
           role="radio"
@@ -65,10 +63,8 @@ const navItems = [
         >
           <Icon class="h-4.5 w-4.5" name="lucide:sun" aria-hidden="true" />
         </button>
-        <!-- Dark -->
         <button
-          class="theme-btn text-secondary hover:bg-muted hover:text-primary flex h-9 w-9 cursor-pointer items-center justify-center rounded border-none transition-all duration-150"
-          title="Dark theme"
+          class="theme-btn focus-ring text-secondary hover:bg-muted hover:text-primary flex h-11 w-11 cursor-pointer items-center justify-center rounded border-none transition-colors duration-150"
           type="button"
           data-theme="dark"
           role="radio"
@@ -78,10 +74,8 @@ const navItems = [
         >
           <Icon class="h-4.5 w-4.5" name="lucide:moon" aria-hidden="true" />
         </button>
-        <!-- System -->
         <button
-          class="theme-btn text-secondary hover:bg-muted hover:text-primary flex h-9 w-9 cursor-pointer items-center justify-center rounded border-none transition-all duration-150"
-          title="System theme"
+          class="theme-btn focus-ring text-secondary hover:bg-muted hover:text-primary flex h-11 w-11 cursor-pointer items-center justify-center rounded border-none transition-colors duration-150"
           type="button"
           data-theme="system"
           role="radio"
@@ -93,9 +87,37 @@ const navItems = [
         </button>
       </div>
 
+      <!-- Theme cycle button (phone only): one-tap cycle system → light → dark … -->
+      <button
+        class="theme-cycle-btn text-secondary hover:bg-muted hover:text-primary focus-ring flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent transition-colors duration-150 md:hidden"
+        id="theme-cycle-btn"
+        type="button"
+        data-current-theme="system"
+        aria-label="Theme: System. Click to switch to Light."
+      >
+        <Icon
+          class="theme-cycle-icon h-4.5 w-4.5"
+          name="lucide:sun"
+          data-theme-icon="light"
+          aria-hidden="true"
+        />
+        <Icon
+          class="theme-cycle-icon h-4.5 w-4.5"
+          name="lucide:moon"
+          data-theme-icon="dark"
+          aria-hidden="true"
+        />
+        <Icon
+          class="theme-cycle-icon h-4.5 w-4.5"
+          name="lucide:monitor"
+          data-theme-icon="system"
+          aria-hidden="true"
+        />
+      </button>
+
       <!-- Mobile Menu Toggle -->
       <button
-        class="text-primary hover:bg-muted flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent transition-colors duration-200 lg:hidden"
+        class="text-primary hover:bg-muted focus-ring flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent transition-colors duration-200 xl:hidden"
         id="mobile-menu-toggle"
         type="button"
         aria-controls="mobile-menu"
@@ -109,7 +131,7 @@ const navItems = [
 
   <!-- Mobile Menu -->
   <div
-    class="bg-background border-border-custom hidden border-t px-6 pb-6 lg:hidden"
+    class="bg-background border-border-custom hidden border-t px-6 pb-6 xl:hidden"
     id="mobile-menu"
     aria-hidden="true"
   >
@@ -131,46 +153,105 @@ const navItems = [
     setStoredPreferredAppearance,
   } from "../utils/theme";
 
-  // --- Theme Toggle ---
-  const preferredAppearance = getStoredPreferredAppearance();
-  const resolvedAppearance = APPEARANCES.includes(preferredAppearance)
-    ? preferredAppearance
-    : "system";
+  // --- Scroll-shadow on header ---
+  const siteHeader = document.getElementById("site-header");
+
+  if (siteHeader) {
+    let ticking = false;
+    const applyScrollClass = (): void => {
+      siteHeader.classList.toggle("is-scrolled", window.scrollY > 8);
+      ticking = false;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(applyScrollClass);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+    applyScrollClass();
+  }
+
+  // --- Theme controls: desktop radiogroup + mobile cycle button stay in sync. ---
+  const THEME_CYCLE = ["system", "light", "dark"] as const;
+
+  type ThemeName = (typeof THEME_CYCLE)[number];
+
+  const themeLabels: Record<ThemeName, string> = {
+    system: "System",
+    light: "Light",
+    dark: "Dark",
+  };
+
+  const isThemeName = (value: string): value is ThemeName =>
+    (THEME_CYCLE as readonly string[]).includes(value);
+
+  const nextThemeAfter = (theme: ThemeName): ThemeName => {
+    const i = THEME_CYCLE.indexOf(theme);
+
+    return THEME_CYCLE[(i + 1) % THEME_CYCLE.length] ?? "system";
+  };
 
   const themeButtons = Array.from(
     document.querySelectorAll<HTMLButtonElement>(".theme-btn"),
   );
+  const cycleButton =
+    document.querySelector<HTMLButtonElement>("#theme-cycle-btn");
 
-  const updateThemeToggleState = (activeTheme: string): void => {
+  const updateAllThemeUI = (theme: ThemeName): void => {
+    // Radiogroup (desktop): mark the matching radio, set roving tabindex.
     themeButtons.forEach((btn) => {
-      const isActive = btn.getAttribute("data-theme") === activeTheme;
+      const isActive = btn.getAttribute("data-theme") === theme;
 
       btn.setAttribute("aria-checked", String(isActive));
       btn.tabIndex = isActive ? 0 : -1;
     });
+
+    // Cycle button (mobile): swap icon and update aria-label.
+    if (cycleButton) {
+      cycleButton.setAttribute("data-current-theme", theme);
+
+      const next = nextThemeAfter(theme);
+
+      cycleButton.setAttribute(
+        "aria-label",
+        `Theme: ${themeLabels[theme]}. Click to switch to ${themeLabels[next]}.`,
+      );
+    }
   };
 
-  applyTheme(resolvedAppearance);
-  updateThemeToggleState(resolvedAppearance);
+  const setTheme = (theme: ThemeName, { persist }: { persist: boolean }) => {
+    if (persist) setStoredPreferredAppearance(theme);
+    applyTheme(theme);
+    updateAllThemeUI(theme);
+  };
+
+  const initialPreferred = getStoredPreferredAppearance();
+  const initialTheme: ThemeName =
+    APPEARANCES.includes(initialPreferred) && isThemeName(initialPreferred)
+      ? initialPreferred
+      : "system";
+
+  setTheme(initialTheme, { persist: false });
 
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", () => {
       if (getStoredPreferredAppearance() === "system") {
         applyTheme("system");
-        updateThemeToggleState("system");
       }
     });
 
-  themeButtons.forEach((btn, index) => {
+  // Desktop radiogroup: click + arrow-key navigation, scoped to its group.
+  themeButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const theme = btn.getAttribute("data-theme");
 
-      if (theme) {
-        setStoredPreferredAppearance(theme);
-        applyTheme(theme);
-        updateThemeToggleState(theme);
-      }
+      if (theme && isThemeName(theme)) setTheme(theme, { persist: true });
     });
 
     btn.addEventListener("keydown", (event: KeyboardEvent) => {
@@ -182,21 +263,36 @@ const navItems = [
 
       event.preventDefault();
 
+      const group = btn.closest<HTMLElement>('[role="radiogroup"]');
+
+      if (!group) return;
+
+      const groupButtons = Array.from(
+        group.querySelectorAll<HTMLButtonElement>(".theme-btn"),
+      );
+      const currentIndex = groupButtons.indexOf(btn);
       const nextIndex =
         key === "ArrowLeft" || key === "ArrowUp"
-          ? (index - 1 + themeButtons.length) % themeButtons.length
-          : (index + 1) % themeButtons.length;
+          ? (currentIndex - 1 + groupButtons.length) % groupButtons.length
+          : (currentIndex + 1) % groupButtons.length;
 
-      const nextButton = themeButtons[nextIndex];
+      const nextButton = groupButtons[nextIndex];
       const nextTheme = nextButton?.getAttribute("data-theme");
 
-      if (nextButton && nextTheme) {
+      if (nextButton && nextTheme && isThemeName(nextTheme)) {
         nextButton.focus();
-        setStoredPreferredAppearance(nextTheme);
-        applyTheme(nextTheme);
-        updateThemeToggleState(nextTheme);
+        setTheme(nextTheme, { persist: true });
       }
     });
+  });
+
+  // Mobile cycle button: one-tap advance through system → light → dark.
+  cycleButton?.addEventListener("click", () => {
+    const current = cycleButton.getAttribute("data-current-theme");
+    const currentTheme: ThemeName =
+      current && isThemeName(current) ? current : "system";
+
+    setTheme(nextThemeAfter(currentTheme), { persist: true });
   });
 
   // --- Mobile Menu ---
@@ -227,8 +323,8 @@ const navItems = [
       link.addEventListener("click", () => closeMenu());
     });
 
-    document.addEventListener("keydown", (e: KeyboardEvent) => {
-      if (e.key === "Escape" && !menu.classList.contains("hidden")) {
+    document.addEventListener("keydown", (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !menu.classList.contains("hidden")) {
         closeMenu();
         menuButton.focus();
       }
@@ -250,6 +346,7 @@ const navItems = [
 
   const isHomeSectionLink = (link: HTMLAnchorElement): boolean => {
     const url = getLinkURL(link);
+
     return url.pathname === "/" && url.hash.length > 1;
   };
 

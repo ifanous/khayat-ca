@@ -11,26 +11,41 @@ interface Props {
 const { icon, name, description, features } = Astro.props as Props;
 ---
 
-<li
-  class="glass bg-surface rounded-lg p-8 transition-all duration-300 hover:-translate-y-1.5"
->
-  <div class="text-accent mb-4 h-12 w-12">
-    <Icon class="h-12 w-12" name={icon} aria-hidden="true" />
+<li class="border-border-custom border-b py-10 lg:py-14">
+  <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
+    <!-- Icon -->
+    <div class="lg:col-span-3">
+      <span
+        class="text-accent inline-flex h-12 w-12 items-center justify-center"
+      >
+        <Icon class="h-12 w-12" name={icon} aria-hidden="true" />
+      </span>
+    </div>
+
+    <!-- Name + description -->
+    <div class="lg:col-span-5">
+      <h3 class="text-primary mb-4 text-2xl font-semibold md:text-3xl">
+        {name}
+      </h3>
+      <p class="text-secondary max-w-prose text-base leading-relaxed">
+        {description}
+      </p>
+    </div>
+
+    <!-- Features -->
+    <ul class="m-0 list-none space-y-3 p-0 lg:col-span-4">
+      {
+        features.map((feature) => (
+          <li class="text-primary flex items-start gap-2.5 text-sm leading-relaxed">
+            <Icon
+              class="text-success mt-0.5 h-4 w-4 shrink-0"
+              name="lucide:check"
+              aria-hidden="true"
+            />
+            <span>{feature}</span>
+          </li>
+        ))
+      }
+    </ul>
   </div>
-  <h3 class="text-primary mb-4 text-2xl font-semibold">{name}</h3>
-  <p class="text-secondary mb-6">
-    {description}
-  </p>
-  <ul class="m-0 list-none space-y-2 p-0">
-    {
-      features.map((feature) => (
-        <li class="text-secondary flex items-start gap-2">
-          <span class="text-success font-semibold" aria-hidden="true">
-            ✓
-          </span>
-          <span>{feature}</span>
-        </li>
-      ))
-    }
-  </ul>
 </li>

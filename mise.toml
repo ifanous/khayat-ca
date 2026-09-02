@@ -4,6 +4,9 @@ _.path = ["{{config_root}}/node_modules/.bin"]
 [tasks.astro]
 run = "astro"
 
+[tasks.check]
+depends = ["format-check", "type-check", "lint"]
+
 [tasks.build]
 depends = ["build-reviews"]
 run = "astro build"
@@ -18,17 +21,32 @@ run = "rm -fr .astro dist"
 depends = ["build-reviews"]
 run = "astro dev"
 
+[tasks.fallow]
+depends = ["fallow-dead-code", "fallow-dupes"]
+
+[tasks.fallow-dead-code]
+run = "fallow dead-code"
+
 [tasks.format-check]
-run = "prettier --check astro.config.mjs eslint.config.js package.json scripts/. src/. tsconfig.json"
+run = "prettier --check astro.config.mjs eslint.config.mjs package.json scripts/. src/. tsconfig.json"
+
+[tasks.fallow-dupes]
+run = "fallow dupes"
 
 [tasks.format]
-run = "prettier --write astro.config.mjs eslint.config.js package.json scripts/. src/. tsconfig.json"
+run = "prettier --write astro.config.mjs eslint.config.mjs package.json scripts/. src/. tsconfig.json"
 
 [tasks.install-deps]
-run = "npm install --loglevel=verbose"
+run = "pnpm add --save-prod"
+
+[tasks.install-dev-deps]
+run = "pnpm add --save-dev"
 
 [tasks.lint]
-run = "biome lint src/. && eslint src/."
+run = "biome lint astro.config.mjs eslint.config.mjs scripts/. src/. && eslint astro.config.mjs eslint.config.mjs scripts/. src/."
+
+[tasks.lint-fix]
+run = "biome lint astro.config.mjs eslint.config.mjs scripts/. src/. --fix && eslint astro.config.mjs eslint.config.mjs scripts/. src/. --fix"
 
 [tasks.netlify]
 run = "netlify"
@@ -43,10 +61,10 @@ run = "sort-package-json"
 run = "tsc --noEmit"
 
 [tasks.uninstall-deps]
-run = "npm uninstall --loglevel=verbose"
+run = "pnpm remove"
 
 [tasks.update-deps]
-run = "npm update --loglevel=verbose"
+run = "pnpm update"
 
 [tools]
-node = "lts"
+node = "24.14.0"

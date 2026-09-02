@@ -1,0 +1,92 @@
+---
+import { Icon } from "astro-icon/components";
+
+const faqs = [
+  {
+    question: "What type of consultations do you offer?",
+    answer:
+      "Both in-person and virtual. In-person consultations happen at my office in the GTA. Virtual consultations work for clients elsewhere in Canada and abroad, and are the norm for most of my files.",
+  },
+  {
+    question: "How do consultations work?",
+    answer:
+      "A consultation runs one hour. I review the key facts of your case, look at the options that actually apply to your situation, and walk you through what each one involves. If we decide to move forward and you retain my services, the consultation fee is applied toward those services.",
+  },
+  {
+    question: "Why is the consultation paid?",
+    answer:
+      "A consultation is real work. For an hour, I review your documents, think through your options under current IRCC rules and case law, and give you advice specific to your situation. That kind of focused review takes time and professional judgment, which is what you are paying for. If you retain my services afterward, the consultation fee is applied to the retainer.",
+  },
+  {
+    question: "Do you offer consultations in multiple languages?",
+    answer:
+      "Yes. I consult in English, French, Arabic, and Greek. Many clients find it easier to discuss the details of their case in their first language.",
+  },
+  {
+    question:
+      "Can you help if my case is complicated or I've had issues before?",
+    answer:
+      "Often, yes. A significant part of my practice involves files with prior refusals, procedural history, humanitarian considerations, or tight deadlines. Each one gets a careful review on its own facts. A consultation is the right place to understand what is possible in your specific situation.",
+  },
+  {
+    question: "What should I prepare before a consultation?",
+    answer:
+      "Any relevant immigration documents, recent correspondence from IRCC or the IRB, a timeline of key dates, prior applications, and a short written summary of your situation. The clearer the facts going in, the more we can accomplish in an hour.",
+  },
+];
+---
+
+<section class="bg-background py-20" id="faq" aria-labelledby="faq-heading">
+  <div class="max-w-container mx-auto px-6">
+    <div class="mx-auto mb-12 max-w-3xl text-center">
+      <h2
+        class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl"
+        id="faq-heading"
+      >
+        Frequently asked questions
+      </h2>
+      <p class="text-secondary text-lg leading-8 md:text-xl">
+        Quick answers to what I'm most often asked before a consultation.
+      </p>
+    </div>
+
+    <div class="mx-auto max-w-4xl space-y-3">
+      {
+        faqs.map((faq) => (
+          <details
+            class="group surface-hairline overflow-hidden [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-clip details-content:[transition:height_300ms_ease,content-visibility_300ms_allow-discrete] [&[open]::details-content]:h-auto"
+            name="faq"
+          >
+            <summary class="text-primary focus-visible:ring-accent focus-visible:ring-offset-surface flex cursor-pointer list-none items-center justify-between gap-4 rounded-lg px-6 py-5 text-left text-lg font-semibold transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
+              <span>{faq.question}</span>
+              <Icon
+                class="text-secondary h-5 w-5 shrink-0 transition-transform duration-300 ease-out group-open:rotate-180"
+                name="lucide:chevron-down"
+                aria-hidden="true"
+              />
+            </summary>
+            <div class="border-border-custom border-t px-6 pt-4 pb-6">
+              <p class="text-secondary m-0 text-base leading-8">{faq.answer}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  })}
+/>

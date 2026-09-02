@@ -11,7 +11,7 @@ const services = [
       "Spousal, family & parents/grandparents sponsorship",
       "PR card renewal, PRTD & humanitarian applications",
     ],
-    icon: "mdi:home",
+    icon: "lucide:home",
   },
   {
     name: "Temporary Residence",
@@ -22,7 +22,7 @@ const services = [
       "Study permit, PGWP & study permit extensions",
       "Work permit, LMIA & open work permit applications",
     ],
-    icon: "mdi:bag-checked",
+    icon: "lucide:plane",
   },
   {
     name: "Citizenship",
@@ -33,7 +33,7 @@ const services = [
       "Citizenship certificates, proof of citizenship & passport applications",
       "Document review, application support & IRCC communication",
     ],
-    icon: "mdi:passport-check",
+    icon: "lucide:badge-check",
   },
   {
     name: "Refugee Protection",
@@ -44,27 +44,35 @@ const services = [
       "Protected person permanent residence & travel documents",
       "CBSA deferral requests, IRB/IRCC forms & evidence disclosure",
     ],
-    icon: "mdi:shield-check",
+    icon: "lucide:shield",
   },
 ];
 ---
 
-<section class="bg-muted py-20" id="services">
+<section
+  class="bg-background py-20 lg:py-28"
+  id="services"
+  aria-labelledby="services-heading"
+>
   <div class="max-w-container mx-auto px-6">
     <div class="mb-16 text-center">
-      <h2 class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl">
-        Immigration Services
+      <h2
+        class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl"
+        id="services-heading"
+      >
+        What I work on
       </h2>
       <p class="text-secondary mx-auto max-w-2xl text-xl">
-        Comprehensive support for all your Canadian immigration needs
+        A focused practice across the four main areas of Canadian immigration. I
+        handle the files myself, from intake to outcome.
       </p>
     </div>
 
-    <ul
-      class="grid grid-cols-1 gap-8 md:grid-cols-2"
+    <ol
+      class="border-border-custom mx-auto max-w-5xl list-none border-t p-0"
       aria-label="Immigration services"
     >
       {services.map((service) => <Service {...service} />)}
-    </ul>
+    </ol>
   </div>
 </section>

@@ -7,6 +7,7 @@ const blogImages = import.meta.glob<{ default: ImageMetadata }>(
 
 export const getBlogImageSource = (slug: string): ImageMetadata | undefined => {
   const key = `/src/assets/blog/${slug}.webp`;
+
   return blogImages[key]?.default;
 };
 
@@ -23,8 +24,8 @@ interface MarkdownModule {
 
 const blogModules = import.meta.glob<MarkdownModule>("/src/pages/blog/*.md");
 
-const byNewestFirst = (a: BlogPostPreview, b: BlogPostPreview): number =>
-  new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime();
+const byNewestFirst = (left: BlogPostPreview, right: BlogPostPreview): number =>
+  new Date(right.pubDate).getTime() - new Date(left.pubDate).getTime();
 
 let cachedPosts: BlogPostPreview[] | null = null;
 
@@ -49,6 +50,7 @@ const loadBlogPosts = async (): Promise<BlogPostPreview[]> => {
   );
 
   cachedPosts = entries.sort(byNewestFirst);
+
   return cachedPosts;
 };
 
@@ -59,5 +61,6 @@ export const getLatestBlogPosts = async (
   limit: number,
 ): Promise<BlogPostPreview[]> => {
   const posts = await loadBlogPosts();
+
   return posts.slice(0, limit);
 };

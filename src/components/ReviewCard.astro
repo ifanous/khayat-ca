@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+
 import type { Review } from "../types/reviews";
 import {
   formatReviewDate,
@@ -16,51 +18,33 @@ const { excerpt, remainder } = splitReviewText(review.text, excerptLength);
 ---
 
 <li
-  class="glass bg-surface flex w-full shrink-0 snap-start flex-col rounded-lg p-8 transition-all duration-300 hover:-translate-y-1 md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)]"
+  class="surface-hairline hover:border-primary/20 flex w-full shrink-0 snap-start flex-col p-8 transition-colors duration-200 md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)]"
   role="group"
   aria-roledescription="slide"
 >
-  <div class="mb-4 flex items-center gap-4">
-    <div
-      class="from-accent to-ao-cyan flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br text-xl font-semibold text-white"
-      aria-hidden="true"
-    >
-      {getInitial(review.authorName)}
-    </div>
-    <div>
-      <p class="text-primary font-semibold">
-        {review.authorName}
-      </p>
-      <p class="text-secondary text-xs">
-        {formatReviewDate(review.publishedAt)}
-      </p>
-      <div
-        class="text-star text-sm"
-        role="img"
-        aria-label={`Rated ${review.rating} out of 5 stars`}
-      >
-        {"★".repeat(review.rating)}
-      </div>
-    </div>
-  </div>
-
   <blockquote
-    class="text-primary m-0 flex-1 leading-relaxed whitespace-pre-line italic"
+    class="text-primary m-0 flex-1 text-lg leading-relaxed whitespace-pre-line italic"
   >
     &ldquo;{excerpt}<span class="review-ellipsis"
       >{remainder ? "\u2026\u201D" : "\u201D"}</span
     >{
       remainder && (
-        <span class="review-overflow hidden">{remainder}&rdquo;</span>
+        <span
+          class="review-overflow ease-out-quart block h-0 overflow-clip transition-[height] duration-300 data-[state=expanded]:h-auto"
+          data-state="collapsed"
+          aria-hidden="true"
+        >
+          {remainder}&rdquo;
+        </span>
       )
     }
   </blockquote>
 
   {
     remainder && (
-      <div class="mt-6">
+      <div class="mt-4">
         <button
-          class="review-toggle text-accent cursor-pointer font-semibold underline decoration-2 underline-offset-2"
+          class="review-toggle text-accent focus-ring cursor-pointer text-sm font-semibold underline decoration-2 underline-offset-2"
           type="button"
           aria-expanded="false"
         >
@@ -69,4 +53,34 @@ const { excerpt, remainder } = splitReviewText(review.text, excerptLength);
       </div>
     )
   }
+
+  <div class="border-border-custom mt-6 flex items-center gap-3 border-t pt-5">
+    <div
+      class="from-accent to-ao-cyan flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-linear-to-br text-base font-semibold text-white"
+      aria-hidden="true"
+    >
+      {getInitial(review.authorName)}
+    </div>
+    <div class="min-w-0 flex-1">
+      <p class="text-primary m-0 truncate text-sm font-semibold">
+        {review.authorName}
+      </p>
+      <div class="mt-0.5 flex items-center gap-2">
+        <div
+          class="text-star flex gap-0.5"
+          role="img"
+          aria-label={`Rated ${review.rating} out of 5 stars`}
+        >
+          {
+            Array.from({ length: review.rating }).map(() => (
+              <Icon class="h-3 w-3" name="mdi:star" aria-hidden="true" />
+            ))
+          }
+        </div>
+        <span class="text-secondary text-xs">
+          {formatReviewDate(review.publishedAt)}
+        </span>
+      </div>
+    </div>
+  </div>
 </li>

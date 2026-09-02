@@ -11,26 +11,36 @@
 @theme {
   --font-sans: var(--font-inter), system-ui, sans-serif;
 
-  /* Semantic colors (resolve per-theme in base layer) */
+  /* Semantic colors (resolve per-theme in base layer).
+     Only the roles actually consumed by utilities ship here. Red /
+     orange / purple / warning exist in the base palette for DESIGN.md
+     record-keeping but have no active class users; re-export them when
+     a component first needs them. */
   --color-primary: var(--ao-fg);
-  --color-secondary: var(--ao-comment);
+  /* Canonical Atom One comment colors are palette references, not
+     accessible normal-text colors. Secondary copy uses foreground and
+     relies on type scale, weight, and spacing for hierarchy. */
+  --color-secondary: var(--ao-fg);
   --color-accent: var(--ao-blue);
   --color-success: var(--ao-green);
-  --color-warning: var(--ao-yellow);
-  --color-error: var(--ao-red);
   --color-background: var(--ao-bg);
   --color-surface: var(--ao-surface);
   --color-muted: var(--ao-bg-alt);
   --color-border-custom: var(--ao-border);
 
-  /* Direct Atom One palette colors (both themes) */
-  --color-ao-purple: var(--ao-purple);
+  /* Cyan is used as the gradient partner on review avatars. */
   --color-ao-cyan: var(--ao-cyan);
-  --color-ao-orange: var(--ao-orange);
 
+  /* Star glyph color. Yellow's only active role today. */
   --color-star: var(--ao-yellow);
 
   --max-width-container: 1200px;
+
+  /* The project's motion language. DESIGN.md specifies exponential
+     ease-out curves; this is the canonical one (ease-out-quart).
+     Defining it here exposes `ease-out-quart` as a Tailwind utility
+     and as `var(--ease-out-quart)` for any rule that needs it. */
+  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ── 3. Base Layer ────────────────────────── */
@@ -42,19 +52,16 @@
     --ao-bg-alt: #f0f0f1;
     --ao-surface: #ffffff;
     --ao-fg: #383a42;
-    --ao-comment: #6b6c72;
+    --ao-comment: #a0a1a7;
     --ao-border: #e1e4e8;
     --ao-red: #e45649;
     --ao-orange: #d19a66;
-    --ao-yellow: #946600;
+    --ao-yellow: #c18401;
     --ao-green: #50a14f;
     --ao-cyan: #0184bc;
     --ao-blue: #4078f2;
     --ao-purple: #a626a4;
 
-    --glass-bg: rgba(255, 255, 255, 0.8);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --glass-shadow: 0 8px 32px 0 rgba(56, 58, 66, 0.1);
     --btn-shadow: 0 4px 15px rgba(64, 120, 242, 0.3);
     --btn-shadow-hover: 0 6px 20px rgba(64, 120, 242, 0.4);
 
@@ -67,7 +74,7 @@
     --ao-bg-alt: #21252b;
     --ao-surface: #21252b;
     --ao-fg: #abb2bf;
-    --ao-comment: #90929a;
+    --ao-comment: #5c6370;
     --ao-border: #3e4451;
     --ao-red: #e06c75;
     --ao-orange: #d19a66;
@@ -77,9 +84,6 @@
     --ao-blue: #61afef;
     --ao-purple: #c678dd;
 
-    --glass-bg: rgba(33, 37, 43, 0.8);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     --btn-shadow: 0 4px 15px rgba(97, 175, 239, 0.3);
     --btn-shadow-hover: 0 6px 20px rgba(97, 175, 239, 0.4);
 
@@ -88,7 +92,10 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 96px;
+    scroll-padding-top: 7rem;
+    /* Enable height: 0 ↔ auto transitions site-wide.
+       Required by review-overflow expand/collapse and similar. */
+    interpolate-size: allow-keywords;
   }
 
   body {
@@ -116,16 +123,7 @@
     top: 8px;
   }
 
-  /* Glassmorphism */
-  .glass {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-
-  /* Primary button — theme-aware shadow */
+  /* Primary button, theme-aware shadow. */
   .btn-primary {
     background-color: var(--ao-blue);
     box-shadow: var(--btn-shadow);
@@ -149,26 +147,68 @@
     display: block;
   }
 
-  /* Logo — invert in dark mode */
+  /* Logo, inverted in dark mode. */
   [data-theme="dark"] .logo,
   [data-theme="dark"] .footer-logo {
     filter: brightness(0) invert(1);
   }
 }
 
-/* ── 5. Overrides (unlayered — beats utility layer) ── */
+/* ---- 5. Unlayered rules ----
+   Two kinds live here, both intentionally outside @layer so they beat
+   Tailwind utilities without relying on arbitrary-variant ordering:
+   (a) active-state overrides for nav + theme-toggle buttons whose base
+       state is painted by utilities; (b) the fixed site header, which
+       needs its own background / border / shadow vocabulary that no
+       utility on the element sets. */
 
-/* Active nav link — must override text-primary utility */
+/* Active nav link. Must override text-primary utility. */
 .nav-link.active {
   color: var(--ao-blue);
   background-color: var(--ao-bg-alt);
   border-radius: 0.5rem;
 }
 
-/* Theme toggle active state — must override Tailwind utilities */
+/* Theme radiogroup active state (desktop). Overrides Tailwind utilities. */
 .theme-btn.active {
   color: #ffffff;
   background-color: var(--ao-blue);
+}
+
+/* Theme cycle button (mobile): show only the icon for the current theme.
+   Driven by data-current-theme on #theme-cycle-btn. */
+.theme-cycle-btn .theme-cycle-icon {
+  display: none;
+}
+.theme-cycle-btn[data-current-theme="light"]
+  .theme-cycle-icon[data-theme-icon="light"],
+.theme-cycle-btn[data-current-theme="dark"]
+  .theme-cycle-icon[data-theme-icon="dark"],
+.theme-cycle-btn[data-current-theme="system"]
+  .theme-cycle-icon[data-theme-icon="system"] {
+  display: block;
+}
+
+/* Netlify reCAPTCHA v2 widget: Google injects a 304×78px iframe inside
+   <div data-netlify-recaptcha="true">. On narrow phones the fixed width
+   overflows the form. Scale the widget proportionally and compensate the
+   reserved height so transform doesn't leave dead space below. */
+.g-recaptcha div:first-child {
+  margin: 0 auto;
+}
+@media (max-width: 390px) {
+  .g-recaptcha {
+    height: calc(78px * 0.95);
+    transform: scale(0.95);
+    transform-origin: 0 0;
+  }
+}
+@media (max-width: 350px) {
+  .g-recaptcha {
+    height: calc(78px * 0.85);
+    transform: scale(0.85);
+    transform-origin: 0 0;
+  }
 }
 
 /* ── 6. Utilities ─────────────────────────── */
@@ -178,6 +218,213 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Keyboard-focus ring for non-form interactive elements. Matches the
+   accent-blue halo used on form inputs, but via `outline` so it doesn't
+   collide with box-shadow on buttons. The outline inherits the element's
+   own border-radius in all modern browsers, so round buttons stay round
+   when focused; do not reset border-radius inside :focus-visible. */
+@utility focus-ring {
+  outline: none;
+  &:focus-visible {
+    outline: 2px solid var(--ao-blue);
+    outline-offset: 2px;
+  }
+}
+
+/* Default content surface for the landing page.
+   Hairline 1px border on solid surface. No shadow at rest.
+   Hover variant (border darken) is opt-in via hover:border-primary/20
+   or equivalent. Not every hairline surface is interactive. */
+@utility surface-hairline {
+  background-color: var(--ao-surface);
+  border: 1px solid var(--ao-border);
+  border-radius: 8px;
+}
+
+/* Stretched-link: makes a child anchor's hit area cover its nearest
+   positioned ancestor. Apply to the <a>; the ancestor must be
+   `position: relative` (Tailwind's `relative` is enough). Used by
+   ArticleCard so the whole card is clickable without nesting block
+   elements inside the anchor. */
+@utility link-overlay {
+  &::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+  }
+}
+
+/* Scroll-lifted header: solid surface, hairline border, soft shadow after 8px of scroll.
+   The .is-scrolled class is toggled from Header.astro via a passive scroll listener. */
+.site-header {
+  background-color: var(--ao-surface);
+  border-bottom: 1px solid var(--ao-border);
+  transition:
+    box-shadow 200ms var(--ease-out-quart),
+    background-color 200ms ease;
+}
+.site-header.is-scrolled {
+  box-shadow: 0 2px 8px 0 rgba(56, 58, 66, 0.06);
+}
+[data-theme="dark"] .site-header.is-scrolled {
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* ── 6b. Article content typography ───────
+   Styles for markdown-rendered article bodies. Targets bare elements
+   (h2, p, a, code, pre, etc.) because markdown emits no classes, so
+   utility classes cannot reach these nodes. Used by BlogPostLayout
+   and any future surface that renders markdown content (legal pages,
+   MDX). Lives at the file's root specificity so it sits above the
+   tag defaults but does not fight utilities (no utility targets bare
+   tags inside .article-content anyway). */
+.article-content > :first-child {
+  margin-top: 0;
+}
+
+.article-content > :last-child {
+  margin-bottom: 0;
+}
+
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+  color: var(--ao-fg);
+  text-wrap: pretty;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  scroll-margin-top: 7rem;
+}
+
+.article-content h2 {
+  margin: 3rem 0 1rem;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
+}
+
+.article-content h3 {
+  margin: 2rem 0 0.75rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.article-content h4 {
+  margin: 1.75rem 0 0.5rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.article-content p,
+.article-content ul,
+.article-content ol,
+.article-content blockquote,
+.article-content pre {
+  margin: 1.25rem 0;
+}
+
+.article-content ul,
+.article-content ol {
+  padding-left: 1.5rem;
+}
+
+.article-content ul {
+  list-style: disc;
+}
+
+.article-content ol {
+  list-style: decimal;
+}
+
+.article-content li + li {
+  margin-top: 0.75rem;
+}
+
+.article-content a {
+  color: var(--ao-blue);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+  transition: text-underline-offset 150ms ease;
+}
+
+.article-content a:hover {
+  /* Single-accent rule: the link color does not change on hover.
+     The underline drops slightly, which lifts the word off the
+     baseline enough to read as an interactive state without
+     reaching for a second hue. */
+  text-underline-offset: 0.24em;
+}
+
+/* Match the site-wide focus-ring utility. Inline links cannot use
+   the utility class directly (markdown emits bare <a> tags), so the
+   ring is reapplied here with the same 2px / 2px-offset shape. */
+.article-content a:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--ao-blue);
+  outline-offset: 2px;
+}
+
+.article-content strong {
+  color: var(--ao-fg);
+  font-weight: 700;
+}
+
+/* Typographic pull-quote: no box, no stripe, no background. */
+.article-content blockquote {
+  margin: 2rem 0 2rem 1.5rem;
+  padding: 0;
+  color: var(--ao-fg);
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  background: transparent;
+  border: 0;
+}
+
+.article-content blockquote p {
+  margin: 0.75rem 0;
+}
+
+.article-content hr {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1px solid var(--ao-border);
+}
+
+.article-content code {
+  padding: 0.15rem 0.4rem;
+  font-size: 0.9em;
+  background: var(--ao-bg-alt);
+  border: 1px solid var(--ao-border);
+  border-radius: 0.5rem;
+}
+
+.article-content pre {
+  padding: 1rem 1.25rem;
+  background: var(--ao-bg-alt);
+  border: 1px solid var(--ao-border);
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+.article-content pre code {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+/* In-body images (rare, most posts have none). If a post embeds an
+   image via markdown, it renders at 8px radius, hairline-framed, no
+   shadow. Matches ArticleCard's material. */
+.article-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  border: 1px solid var(--ao-border);
+  border-radius: 0.5rem;
 }
 
 /* ── 7. Reduced Motion ────────────────────── */

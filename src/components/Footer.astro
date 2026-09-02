@@ -1,61 +1,69 @@
 ---
+import { Image } from "astro:assets";
+
 import { Icon } from "astro-icon/components";
+
+import capicLogo from "../assets/credentials/capic-logo.png";
+import rcicDark from "../assets/credentials/rcic-dark.png";
+import rcicLight from "../assets/credentials/rcic-light.png";
 
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-background py-16 pb-8">
+<footer class="bg-background pt-20 pb-8">
   <div class="max-w-container mx-auto px-6">
-    <div
-      class="glass mb-12 grid grid-cols-1 gap-12 rounded-lg p-8 transition-all duration-300 hover:-translate-y-0.5 md:grid-cols-2 lg:grid-cols-4"
-    >
+    <div class="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
       <!-- Brand -->
       <div class="col-span-1 md:col-span-2 lg:col-span-2">
-        <a href="/#home" aria-label="Go to home section">
+        <a
+          class="focus-ring inline-block"
+          href="/#home"
+          aria-label="Go to home section"
+        >
           <img
             class="footer-logo mb-4 h-16 w-auto sm:h-20 lg:h-24"
             alt="Brigitte Khayat Immigration Consulting"
             src="/logos/icon-text-left-horizontal.svg"
           />
         </a>
-        <p class="text-secondary mb-6">
-          Licensed immigration consultant helping individuals and families
-          achieve their Canadian goals with professional expertise and personal
-          care.
+        <p class="text-secondary max-w-md">
+          I'm a licensed RCIC-IRB based in Oakville, working with individuals
+          and families across the GTA, elsewhere in Canada, and abroad on
+          Canadian immigration and refugee matters.
         </p>
       </div>
 
       <!-- Quick Links -->
       <nav aria-label="Footer navigation">
-        <h4 class="text-primary mb-4 text-lg font-semibold">Quick Links</h4>
+        <h2 class="text-primary mb-4 text-lg font-semibold">Quick links</h2>
         <ul class="list-none space-y-2 p-0">
           <li>
             <a
-              class="text-secondary hover:text-accent no-underline transition-colors duration-150"
+              class="text-secondary hover:text-accent focus-ring no-underline transition-colors duration-150"
               href="/#about">About Brigitte</a
             >
           </li>
           <li>
             <a
-              class="text-secondary hover:text-accent no-underline transition-colors duration-150"
+              class="text-secondary hover:text-accent focus-ring no-underline transition-colors duration-150"
               href="/#services">Services</a
             >
           </li>
           <li>
             <a
-              class="text-secondary hover:text-accent no-underline transition-colors duration-150"
+              class="text-secondary hover:text-accent focus-ring no-underline transition-colors duration-150"
               href="/#reviews">Client Reviews</a
             >
           </li>
           <li>
             <a
-              class="text-secondary hover:text-accent no-underline transition-colors duration-150"
+              class="text-secondary hover:text-accent focus-ring no-underline transition-colors duration-150"
               href="/#contact">Contact Us</a
             >
           </li>
           <li>
             <a
-              class="text-secondary hover:text-accent no-underline transition-colors duration-150"
+              class="text-secondary hover:text-accent focus-ring no-underline transition-colors duration-150"
               href="/blog">Immigration Blog</a
             >
           </li>
@@ -64,10 +72,10 @@ const currentYear = new Date().getFullYear();
 
       <!-- Connect -->
       <div>
-        <h4 class="text-primary mb-4 text-lg font-semibold">Connect</h4>
+        <h2 class="text-primary mb-4 text-lg font-semibold">Connect</h2>
         <div class="mb-4 flex gap-4">
           <a
-            class="bg-muted border-border-custom text-secondary hover:bg-accent flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-200 hover:-translate-y-0.5 hover:text-white"
+            class="bg-muted border-border-custom text-secondary hover:bg-accent focus-ring flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-200 hover:text-white"
             href="https://www.facebook.com/BK.RCIC"
             rel="noopener noreferrer"
             target="_blank"
@@ -80,7 +88,7 @@ const currentYear = new Date().getFullYear();
             />
           </a>
           <a
-            class="bg-muted border-border-custom text-secondary hover:bg-accent flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-200 hover:-translate-y-0.5 hover:text-white"
+            class="bg-muted border-border-custom text-secondary hover:bg-accent focus-ring flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-200 hover:text-white"
             href="https://www.instagram.com/bk_rcic/"
             rel="noopener noreferrer"
             target="_blank"
@@ -96,27 +104,36 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
 
-    <!-- Footer Bottom — Badges &amp; Copyright -->
+    <!-- Footer Bottom: Badges & Copyright. -->
     <div
-      class="border-border-custom flex flex-col items-center justify-between gap-6 border-t pt-8 lg:flex-row"
+      class="border-border-custom mt-8 flex flex-col items-center justify-between gap-8 border-t pt-10 lg:flex-row lg:items-end"
     >
-      <div class="flex flex-col items-center gap-6 sm:flex-row sm:gap-8">
-        <!-- RCIC Insignia -->
-        <img
+      <div class="flex flex-col items-center gap-8 sm:flex-row sm:gap-10">
+        <!-- RCIC Insignia (theme-swapped: light variant for light theme, dark for dark) -->
+        <Image
           class="light-only h-20 w-auto object-contain"
           alt="RCIC Certified"
-          src="/rcic-insignia/light.png"
+          src={rcicLight}
+          decoding="async"
+          densities={[1, 2]}
+          loading="lazy"
         />
-        <img
+        <Image
           class="dark-only h-20 w-auto object-contain"
           alt="RCIC Certified"
-          src="/rcic-insignia/dark.png"
+          src={rcicDark}
+          decoding="async"
+          densities={[1, 2]}
+          loading="lazy"
         />
         <!-- CAPIC logo -->
-        <img
+        <Image
           class="h-20 w-auto object-contain"
           alt="CAPIC Member"
-          src="/capic/logo.png"
+          src={capicLogo}
+          decoding="async"
+          densities={[1, 2]}
+          loading="lazy"
         />
       </div>
       <div class="text-center lg:text-right">
@@ -124,9 +141,9 @@ const currentYear = new Date().getFullYear();
           &copy; {currentYear} Brigitte Khayat - Immigration &amp; Refugee Consulting.
           All rights reserved.
         </p>
-        <p class="text-secondary/80 m-0 mt-2 text-xs">
+        <p class="text-secondary m-0 mt-2 text-xs">
           Site built by <a
-            class="hover:text-accent underline-offset-2 hover:underline"
+            class="hover:text-accent focus-ring underline-offset-2 hover:underline"
             href="https://www.ifanous.com"
             rel="noopener noreferrer"
             target="_blank"

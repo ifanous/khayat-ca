@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+
 import { getLatestBlogPosts } from "../utils/blog";
 import ArticleCard from "./ArticleCard.astro";
 
@@ -7,48 +9,45 @@ const latestPosts = await getLatestBlogPosts(3);
 
 <section class="bg-background py-20" aria-labelledby="latest-articles-heading">
   <div class="max-w-container mx-auto px-6">
-    <div
-      class="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
-    >
-      <div class="max-w-2xl">
-        <h2
-          class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl"
-          id="latest-articles-heading"
-        >
-          <span
-            class="text-accent mb-3 block text-sm font-semibold tracking-[0.12em] uppercase"
-          >
-            From Our Blog
-          </span>
-          Latest Immigration Updates
-        </h2>
-        <p class="text-secondary text-lg leading-8">
-          Practical updates and guidance to help you stay informed about
-          Canadian immigration changes.
-        </p>
-      </div>
-
-      <a
-        class="btn-primary inline-flex items-center justify-center rounded-lg px-6 py-3 font-semibold text-white no-underline transition-all duration-200"
-        href="/blog"
+    <div class="mx-auto mb-12 max-w-3xl text-center">
+      <h2
+        class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl"
+        id="latest-articles-heading"
       >
-        View all articles
-      </a>
+        Latest immigration updates
+      </h2>
+      <p class="text-secondary text-lg leading-8">
+        What's changing at IRCC and the IRB, and what it means for your case.
+      </p>
     </div>
 
     {
       latestPosts.length > 0 ? (
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {latestPosts.map((post) => (
-            <ArticleCard headingLevel="h3" post={post} />
-          ))}
-        </div>
+        <>
+          <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+            {latestPosts.map((post) => (
+              <ArticleCard headingLevel="h3" post={post} />
+            ))}
+          </div>
+
+          <div class="mt-10 flex justify-center md:justify-end">
+            <a
+              class="text-accent focus-ring group inline-flex items-center gap-2 font-semibold no-underline"
+              href="/blog"
+            >
+              View all articles
+              <Icon
+                class="ease-out-quart h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+                name="lucide:arrow-right"
+                aria-hidden="true"
+              />
+            </a>
+          </div>
+        </>
       ) : (
-        <div class="glass bg-surface rounded-2xl p-8">
-          <p class="text-secondary m-0 text-lg">
-            Articles are coming soon. Check back for immigration updates.
-          </p>
-        </div>
+        <p class="text-secondary m-0 text-lg">
+          Articles are coming soon. Check back for immigration updates.
+        </p>
       )
     }
   </div>

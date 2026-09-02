@@ -11,8 +11,8 @@ const { variant, href, text } = Astro.props as Props;
 
 const navLinkClasses =
   variant === "desktop"
-    ? "nav-link text-primary hover:text-accent hover:bg-muted rounded-lg px-4 py-2 font-medium transition-all duration-150"
-    : "nav-link text-secondary hover:text-accent hover:bg-muted rounded-lg px-4 py-3 text-base font-medium no-underline transition-all duration-200";
+    ? "nav-link focus-ring text-primary hover:text-accent hover:bg-muted rounded-lg px-4 py-2 font-medium transition-colors duration-150"
+    : "nav-link focus-ring text-secondary hover:text-accent hover:bg-muted rounded-lg px-4 py-3 text-base font-medium no-underline transition-colors duration-200";
 ---
 
 <a class={navLinkClasses} href={href}>{text}</a>

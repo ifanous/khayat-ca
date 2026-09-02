@@ -4,15 +4,10 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
-    "build": "npm run build-reviews && astro build",
+    "build": "pnpm run build-reviews && astro build",
     "build-reviews": "node scripts/build-google-reviews.ts",
-    "dev": "npm run build-reviews && astro dev",
-    "format": "prettier --write astro.config.mjs package.json src/. tsconfig.json scripts/build-google-reviews.ts",
-    "format-check": "prettier --check astro.config.mjs package.json src/. tsconfig.json scripts/build-google-reviews.ts",
-    "lint": "eslint src/.",
-    "preview": "astro preview",
-    "sort-package-json": "npx sort-package-json",
-    "type-check": "tsc --noEmit"
+    "dev": "pnpm run build-reviews && astro dev",
+    "preview": "astro preview"
   },
   "prettier": {
     "attributeGroups": [
@@ -60,30 +55,35 @@
     ]
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.2",
-    "@iconify-json/lucide": "^1.2.101",
-    "@iconify-json/simple-icons": "^1.2.76",
-    "@tailwindcss/vite": "^4.2.2",
-    "astro": "^6.1.4",
+    "@iconify-json/lucide": "^1.2.107",
+    "@iconify-json/simple-icons": "^1.2.82",
+    "astro": "^6.3.3",
     "astro-icon": "^1.1.5",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.10",
+    "@astrojs/sitemap": "^3.7.2",
+    "@biomejs/biome": "^2.4.15",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@iconify-json/mdi": "^1.2.3",
-    "@typescript-eslint/parser": "^8.58.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@tailwindcss/vite": "^4.3.0",
     "@xeonlink/prettier-plugin-organize-attributes": "^1.1.0",
-    "biome": "^0.3.3",
-    "eslint": "^10.2.0",
-    "eslint-plugin-astro": "^1.6.0",
-    "netlify-cli": "^24.10.0",
-    "prettier": "^3.8.1",
+    "eslint": "^10.4.0",
+    "eslint-plugin-astro": "^1.7.0",
+    "eslint-plugin-perfectionist": "^5.9.0",
+    "eslint-plugin-unicorn": "^64.0.0",
+    "fallow": "^2.74.0",
+    "netlify-cli": "^24.11.3",
+    "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-css-order": "^2.2.0",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "sort-package-json": "^3.6.1"
+    "prettier-plugin-tailwindcss": "^0.7.4",
+    "sharp": "^0.34.5",
+    "sort-package-json": "^3.6.1",
+    "typescript-eslint": "^8.59.3"
   },
+  "packageManager": "pnpm@11.24.0",
   "engines": {
     "node": ">=22.12.0"
   }

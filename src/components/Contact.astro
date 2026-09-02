@@ -2,20 +2,20 @@
 import { Icon } from "astro-icon/components";
 ---
 
-<section class="bg-muted py-20" id="contact">
+<section class="bg-muted py-20" id="contact" aria-labelledby="contact-heading">
   <div class="max-w-container mx-auto px-6">
     <div class="mb-16 text-center">
-      <h2 class="text-primary mb-4 text-3xl font-bold md:text-4xl lg:text-5xl">
-        Ready to Start Your Journey?
+      <h2
+        class="text-primary text-3xl font-bold md:text-4xl lg:text-5xl"
+        id="contact-heading"
+      >
+        Request a consultation
       </h2>
-      <p class="text-secondary mx-auto max-w-2xl text-xl">
-        Let's discuss your immigration goals and create a plan to achieve them
-      </p>
     </div>
 
     <div class="mx-auto max-w-3xl">
       <form
-        class="glass bg-surface rounded-lg p-8 transition-all duration-300 hover:-translate-y-0.5"
+        class="surface-hairline p-5 sm:p-8"
         id="contact-form"
         name="contact-form"
         method="POST"
@@ -24,7 +24,7 @@ import { Icon } from "astro-icon/components";
         netlify-honeypot="bot-field"
       >
         <div class="mb-8">
-          <h3 class="text-primary text-2xl font-semibold">Send a Message</h3>
+          <h3 class="text-primary text-2xl font-semibold">Send a message</h3>
         </div>
 
         <div class="hidden" aria-hidden="true">
@@ -66,32 +66,33 @@ import { Icon } from "astro-icon/components";
         </div>
 
         <div class="mb-6">
-          <label class="text-primary mb-2 block font-semibold" for="service"
-            >Service Interest</label
-          >
+          <label class="text-primary mb-2 block font-semibold" for="service">
+            Service Interest{" "}
+            <span class="text-secondary font-normal">(optional)</span>
+          </label>
           <select
             class="border-border-custom bg-background text-primary focus:ring-accent min-h-12 w-full rounded-lg border px-4 py-4 transition-colors duration-150 focus:ring-2 focus:outline-none"
             id="service"
             name="service"
           >
             <option value="">Select a service...</option>
-            <option value="permanent-residence"> Permanent Residence </option>
-            <option value="temporary-residence"> Temporary Residence </option>
-            <option value="citizenship">Citizenship</option>
-            <option value="refugee-protection">Refugee Protection</option>
-            <option value="consultation">General Consultation</option>
+            <option value="Permanent Residence">Permanent Residence</option>
+            <option value="Temporary Residence">Temporary Residence</option>
+            <option value="Citizenship">Citizenship</option>
+            <option value="Refugee Protection">Refugee Protection</option>
+            <option value="General Consultation">General Consultation</option>
           </select>
         </div>
 
         <div class="mb-6">
           <label class="text-primary mb-2 block font-semibold" for="message"
-            >Tell us about your situation *</label
+            >Tell me about your situation *</label
           >
           <textarea
             class="border-border-custom bg-background text-primary focus:ring-accent min-h-30 w-full resize-y rounded-lg border px-4 py-4 transition-colors duration-150 focus:ring-2 focus:outline-none"
             id="message"
             name="message"
-            placeholder="Share your immigration goals and any questions you have..."
+            placeholder="Share where you are in the process, your timeline, and what you're hoping to sort out."
             required
             rows="5"></textarea>
         </div>
@@ -107,9 +108,10 @@ import { Icon } from "astro-icon/components";
         </p>
 
         <button
-          class="btn-primary inline-flex min-h-13 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-transparent px-4 py-4 font-semibold text-white transition-all duration-200"
+          class="btn-primary focus-ring inline-flex min-h-13 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-transparent px-4 py-4 font-semibold text-white transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60"
           id="submit-btn"
           type="submit"
+          disabled
         >
           <span id="btn-text">Send Message</span>
           <Icon
@@ -124,22 +126,90 @@ import { Icon } from "astro-icon/components";
 </section>
 
 <script>
+  type Grecaptcha = {
+    getResponse: (widgetId?: number) => string;
+    reset: (widgetId?: number) => void;
+  };
+
   const contactForm = document.querySelector<HTMLFormElement>("#contact-form");
 
   if (contactForm) {
+    const submitButton = contactForm.querySelector<HTMLButtonElement>(
+      'button[type="submit"]',
+    );
+    const submitButtonText =
+      submitButton?.querySelector<HTMLSpanElement>("#btn-text");
+    const statusMessage = contactForm.querySelector<HTMLParagraphElement>(
+      "#contact-form-status",
+    );
+
+    const getCaptchaResponse = (): string => {
+      const grecaptcha = (window as unknown as { grecaptcha?: Grecaptcha })
+        .grecaptcha;
+
+      if (grecaptcha && typeof grecaptcha.getResponse === "function") {
+        try {
+          return grecaptcha.getResponse() ?? "";
+        } catch {
+          // Widget not yet rendered; fall through to DOM lookup.
+        }
+      }
+
+      const responseField = contactForm.querySelector<HTMLTextAreaElement>(
+        'textarea[name="g-recaptcha-response"]',
+      );
+
+      return responseField?.value ?? "";
+    };
+
+    const setSubmitEnabled = (enabled: boolean) => {
+      if (!submitButton) return;
+      submitButton.disabled = !enabled;
+    };
+
+    // Watch for the captcha response field appearing and changing.
+    const wireCaptchaObserver = () => {
+      const responseField = contactForm.querySelector<HTMLTextAreaElement>(
+        'textarea[name="g-recaptcha-response"]',
+      );
+
+      if (!responseField) return false;
+
+      const sync = () => setSubmitEnabled(getCaptchaResponse().length > 0);
+
+      sync();
+
+      const observer = new MutationObserver(sync);
+
+      observer.observe(responseField, {
+        attributes: true,
+        attributeFilter: ["value"],
+        characterData: true,
+        childList: true,
+        subtree: true,
+      });
+
+      window.setInterval(sync, 1000);
+
+      return true;
+    };
+
+    if (!wireCaptchaObserver()) {
+      const readyPoll = window.setInterval(() => {
+        if (wireCaptchaObserver()) window.clearInterval(readyPoll);
+      }, 300);
+    }
+
     contactForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      const submitButton = contactForm.querySelector<HTMLButtonElement>(
-        'button[type="submit"]',
-      );
-      const submitButtonText =
-        submitButton?.querySelector<HTMLSpanElement>("#btn-text");
-      const statusMessage = contactForm.querySelector<HTMLParagraphElement>(
-        "#contact-form-status",
-      );
-
       if (!submitButton || !submitButtonText || !statusMessage) return;
+
+      if (!getCaptchaResponse()) {
+        setSubmitEnabled(false);
+
+        return;
+      }
 
       const submitButtonOriginalText = submitButtonText.textContent;
       const formData = new FormData(contactForm);
@@ -172,9 +242,19 @@ import { Icon } from "astro-icon/components";
 
         setTimeout(() => {
           submitButtonText.textContent = submitButtonOriginalText;
-          submitButton.disabled = false;
           contactForm.reset();
+
+          const grecaptcha = (window as unknown as { grecaptcha?: Grecaptcha })
+            .grecaptcha;
+
+          try {
+            grecaptcha?.reset();
+          } catch {
+            // ignore — widget may not be ready
+          }
+
           statusMessage.textContent = "";
+          setSubmitEnabled(false);
         }, 2000);
       } catch {
         submitButtonText.textContent = "Failed to send.";
@@ -185,7 +265,7 @@ import { Icon } from "astro-icon/components";
 
         setTimeout(() => {
           submitButtonText.textContent = submitButtonOriginalText;
-          submitButton.disabled = false;
+          setSubmitEnabled(getCaptchaResponse().length > 0);
           statusMessage.textContent = "";
         }, 3000);
       }

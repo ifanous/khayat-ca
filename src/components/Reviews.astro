@@ -13,35 +13,34 @@ const { reviews, summary } = reviewsData as ReviewsData;
 
 /** All reviews sorted newest-first, rendered at build time. */
 const sortedReviews = [...reviews].sort(byNewestFirst);
+const ratingRounded = Math.round(summary.averageRating);
 ---
 
-<section
-  class="bg-background py-20"
-  id="reviews"
-  aria-labelledby="reviews-heading"
->
+<section class="bg-muted py-20" id="reviews" aria-labelledby="reviews-heading">
   <div class="max-w-container mx-auto px-6">
     <div class="mb-16 text-center">
       <h2
         class="text-primary mb-8 text-3xl font-bold md:text-4xl lg:text-5xl"
         id="reviews-heading"
       >
-        What Clients Say
+        What clients say
       </h2>
-      <div
-        class="glass mt-8 inline-block rounded-lg p-6 transition-all duration-300 hover:-translate-y-0.5"
-      >
+      <div class="surface-hairline mt-8 inline-block p-6">
         <div class="mb-4 flex items-center gap-4">
           <div class="text-accent text-4xl font-bold" aria-hidden="true">
             {summary.averageRating.toFixed(1)}
           </div>
           <div>
             <div
-              class="text-star mb-1 text-2xl"
+              class="text-star mb-1 flex gap-0.5"
               role="img"
               aria-label={`Rated ${summary.averageRating.toFixed(1)} out of 5 stars`}
             >
-              {"★".repeat(Math.round(summary.averageRating))}
+              {
+                Array.from({ length: ratingRounded }).map(() => (
+                  <Icon class="h-5 w-5" name="mdi:star" aria-hidden="true" />
+                ))
+              }
             </div>
             <p class="text-secondary text-sm">
               Based on {summary.reviewCount} Google reviews
@@ -49,13 +48,18 @@ const sortedReviews = [...reviews].sort(byNewestFirst);
           </div>
         </div>
         <a
-          class="text-accent font-semibold underline decoration-2 underline-offset-2"
+          class="text-accent focus-ring inline-flex items-center gap-1.5 font-semibold underline decoration-2 underline-offset-2"
           href={GOOGLE_REVIEWS_URL}
           rel="noopener noreferrer"
           target="_blank"
           aria-label="View all reviews on Google (opens in a new tab)"
         >
-          View All Reviews
+          View all reviews
+          <Icon
+            class="h-4 w-4"
+            name="lucide:external-link"
+            aria-hidden="true"
+          />
         </a>
       </div>
     </div>
@@ -69,7 +73,7 @@ const sortedReviews = [...reviews].sort(byNewestFirst);
     >
       <!-- Previous button -->
       <button
-        class="glass text-primary hover:text-accent absolute top-1/2 left-0 z-10 hidden -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full p-2 transition-colors duration-200 disabled:pointer-events-none disabled:cursor-default disabled:opacity-30 md:block"
+        class="surface-hairline focus-ring text-primary hover:text-accent hover:border-primary/20 absolute top-1/2 left-0 z-10 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full! transition-colors duration-200 disabled:pointer-events-none disabled:cursor-default disabled:opacity-30 md:flex"
         id="carousel-prev"
         type="button"
         aria-label="Previous reviews"
@@ -80,7 +84,7 @@ const sortedReviews = [...reviews].sort(byNewestFirst);
 
       <!-- Scroll track -->
       <ul
-        class="scrollbar-none flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-smooth pb-4"
+        class="flex snap-x snap-mandatory scrollbar-none gap-8 overflow-x-auto scroll-smooth pb-4"
         id="reviews-track"
         aria-label="Reviews list"
       >
@@ -89,13 +93,26 @@ const sortedReviews = [...reviews].sort(byNewestFirst);
 
       <!-- Next button -->
       <button
-        class="glass text-primary hover:text-accent absolute top-1/2 right-0 z-10 hidden translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full p-2 transition-colors duration-200 disabled:pointer-events-none disabled:cursor-default disabled:opacity-30 md:block"
+        class="surface-hairline focus-ring text-primary hover:text-accent hover:border-primary/20 absolute top-1/2 right-0 z-10 hidden h-11 w-11 translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full! transition-colors duration-200 disabled:pointer-events-none disabled:cursor-default disabled:opacity-30 md:flex"
         id="carousel-next"
         type="button"
         aria-label="Next reviews"
       >
         <Icon class="h-5 w-5" name="lucide:chevron-right" aria-hidden="true" />
       </button>
+
+      <!-- Mobile swipe hint (visible only when arrows aren't rendered). -->
+      <p
+        class="text-secondary mt-4 flex items-center justify-center gap-2 text-xs md:hidden"
+        aria-hidden="true"
+      >
+        <Icon
+          class="h-3.5 w-3.5"
+          name="lucide:move-horizontal"
+          aria-hidden="true"
+        />
+        Swipe to see more
+      </p>
     </div>
   </div>
 </section>
@@ -150,31 +167,45 @@ const sortedReviews = [...reviews].sort(byNewestFirst);
     updateArrows();
 
     // Read-more toggle via event delegation
-    track.addEventListener("click", (e) => {
-      const btn = (e.target as HTMLElement).closest(
+    track.addEventListener("click", (event) => {
+      const btn = (event.target as HTMLElement).closest(
         ".review-toggle",
       ) as HTMLButtonElement | null;
+
       if (!btn) return;
 
       const card = btn.closest("li");
+
       if (!card) return;
 
       const overflow = card.querySelector(".review-overflow");
       const ellipsis = card.querySelector(".review-ellipsis");
+
       if (!overflow) return;
 
       const isExpanded = btn.getAttribute("aria-expanded") === "true";
+      const COLLAPSE_DURATION = 300;
 
       if (isExpanded) {
-        overflow.classList.add("hidden");
-        if (ellipsis) ellipsis.classList.remove("hidden");
-
+        // Collapsing: start the height transition immediately, but delay
+        // the ellipsis re-appearance and button label swap until the
+        // collapse finishes. Otherwise the eye reads it as instant.
+        overflow.setAttribute("data-state", "collapsed");
+        overflow.setAttribute("aria-hidden", "true");
         btn.setAttribute("aria-expanded", "false");
-        btn.textContent = "Read full review";
-      } else {
-        overflow.classList.remove("hidden");
-        if (ellipsis) ellipsis.classList.add("hidden");
+        btn.disabled = true;
 
+        window.setTimeout(() => {
+          if (ellipsis) ellipsis.classList.remove("hidden");
+          btn.textContent = "Read full review";
+          btn.disabled = false;
+        }, COLLAPSE_DURATION);
+      } else {
+        // Expanding: hide the ellipsis immediately so the text reads
+        // as one continuous quote while the remainder slides into view.
+        if (ellipsis) ellipsis.classList.add("hidden");
+        overflow.setAttribute("data-state", "expanded");
+        overflow.setAttribute("aria-hidden", "false");
         btn.setAttribute("aria-expanded", "true");
         btn.textContent = "Show less";
       }

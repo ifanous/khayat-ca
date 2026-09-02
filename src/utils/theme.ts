@@ -2,7 +2,8 @@ const ATOM_ONE_LIGHT_THEME_COLOR = "#fafafa";
 const ATOM_ONE_DARK_THEME_COLOR = "#282c34";
 
 export const APPEARANCES = ["light", "system", "dark"];
-export const PREFERRED_APPEARANCE_KEY = "preferred-appearance";
+
+const PREFERRED_APPEARANCE_KEY = "preferred-appearance";
 
 export function applyTheme(preferredAppearance: string): void {
   const metaThemeColor = document.querySelector<HTMLMetaElement>(
@@ -24,11 +25,14 @@ export function applyTheme(preferredAppearance: string): void {
     );
   }
 
+  // Sync the desktop radiogroup's visual active state. The matching
+  // aria-checked + tabindex updates live in Header.astro, which owns
+  // the radiogroup's interaction model; this hook only paints .active
+  // so the highlight survives a system-preference change while on "system".
   document.querySelectorAll<HTMLButtonElement>(".theme-btn").forEach((btn) => {
     const isActive = btn.getAttribute("data-theme") === preferredAppearance;
 
     btn.classList.toggle("active", isActive);
-    btn.setAttribute("aria-checked", String(isActive));
   });
 }
 
@@ -40,16 +44,16 @@ export function getStoredPreferredAppearance(): string {
   }
 }
 
-export function getSystemAppearance(): string {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
-
 export function setStoredPreferredAppearance(pref: string): void {
   try {
     localStorage.setItem(PREFERRED_APPEARANCE_KEY, pref);
   } catch {
     // localStorage unavailable
   }
+}
+
+function getSystemAppearance(): string {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }

@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/fallow/schema.json",
+  "ignoreDependencies": [
+    "@iconify-json/lucide",
+    "@iconify-json/mdi",
+    "@iconify-json/simple-icons",
+    "netlify-cli",
+    "sort-package-json"
+  ]
+}

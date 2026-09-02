@@ -16,6 +16,10 @@
 import fs from "node:fs";
 import path from "node:path";
 
+interface GoogleTakeoutFile {
+  reviews?: GoogleTakeoutReview[];
+}
+
 interface GoogleTakeoutReview {
   comment?: string;
   createTime?: string;
@@ -25,10 +29,6 @@ interface GoogleTakeoutReview {
   updateTime?: string;
 }
 
-interface GoogleTakeoutFile {
-  reviews?: GoogleTakeoutReview[];
-}
-
 interface NormalizedReview {
   authorName: string;
   publishedAt: string;
@@ -36,7 +36,7 @@ interface NormalizedReview {
   text: string;
 }
 
-const rootDir = path.resolve(import.meta.dirname!, "..");
+const rootDir = path.resolve(import.meta.dirname, "..");
 const reviewsDir = path.join(rootDir, "reviews");
 const outputPath = path.join(rootDir, "src", "data", "google-reviews.json");
 
@@ -63,13 +63,21 @@ function dedupeReviews(reviews: GoogleTakeoutReview[]): GoogleTakeoutReview[] {
   return [...new Map(reviews.map((review) => [review.name, review])).values()];
 }
 
+function hasKnownStarRating(
+  review: GoogleTakeoutReview,
+): review is GoogleTakeoutReview & { starRating: keyof typeof STAR_RATINGS } {
+  return Boolean(review.starRating && review.starRating in STAR_RATINGS);
+}
+
 function normalizeReview(review: GoogleTakeoutReview): NormalizedReview | null {
   const text = review.comment?.trim() ?? "";
+
   if (text.length === 0) return null;
 
   const rating = review.starRating
     ? STAR_RATINGS[review.starRating]
     : undefined;
+
   if (rating === undefined) return null;
 
   return {
@@ -111,13 +119,13 @@ const normalizedReviews = uniqueReviews
   .filter((review): review is NormalizedReview => review !== null)
   .sort(byNewestFirst);
 
-const ratedReviews = uniqueReviews.filter(
-  (r) => r.starRating && r.starRating in STAR_RATINGS,
-);
+const ratedReviews = uniqueReviews.filter(hasKnownStarRating);
 const averageRating =
   ratedReviews.length > 0
-    ? ratedReviews.reduce((sum, r) => sum + STAR_RATINGS[r.starRating!], 0) /
-      ratedReviews.length
+    ? ratedReviews.reduce(
+        (sum, ratedReview) => sum + STAR_RATINGS[ratedReview.starRating],
+        0,
+      ) / ratedReviews.length
     : 0;
 
 const output = {
@@ -131,6 +139,6 @@ const output = {
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, `${JSON.stringify(output, null, 2)}\n`);
 
-console.log(
-  `Wrote ${normalizedReviews.length} text reviews (${uniqueReviews.length} total) to ${path.relative(rootDir, outputPath)}`,
+process.stdout.write(
+  `Wrote ${normalizedReviews.length} text reviews (${uniqueReviews.length} total) to ${path.relative(rootDir, outputPath)}\n`,
 );

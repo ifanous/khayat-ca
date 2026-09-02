@@ -17,7 +17,7 @@ export default defineConfig({
     },
   ],
   integrations: [icon(), sitemap()],
-  site: "https://test.khayat.ca",
+  site: "https://khayat.ca",
   vite: {
     plugins: [tailwindcss()],
   },

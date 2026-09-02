@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 
+import { Icon } from "astro-icon/components";
+
 import type { BlogPostPreview, HeadingLevel } from "../types/blog";
 import { formatBlogDate, getBlogImageSource } from "../utils/blog";
 
@@ -11,12 +13,15 @@ interface Props {
 
 const { headingLevel = "h2", post } = Astro.props as Props;
 const publishedLabel = formatBlogDate(post.pubDate);
+// Astro requires the component variable to start with a capital letter
+// so the renderer treats it as a dynamic tag, not an HTML element.
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const Heading = headingLevel;
 const imageSrc = getBlogImageSource(post.slug);
 ---
 
 <article
-  class="card-article glass bg-surface relative flex h-full flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1"
+  class="surface-hairline hover:border-primary/20 group relative flex h-full flex-col overflow-hidden transition-colors duration-200"
 >
   {
     imageSrc && (
@@ -48,7 +53,7 @@ const imageSrc = getBlogImageSource(post.slug);
 
     <Heading class="text-primary mt-3 mb-4 text-2xl leading-tight font-bold">
       <a
-        class="card-link hover:text-accent no-underline transition-colors duration-150"
+        class="link-overlay hover:text-accent no-underline transition-colors duration-150"
         href={post.href}
       >
         {post.title}
@@ -60,19 +65,15 @@ const imageSrc = getBlogImageSource(post.slug);
     </p>
 
     <p
-      class="text-accent m-0 inline-flex items-center gap-2 font-semibold"
+      class="text-accent ease-out-quart m-0 inline-flex items-center gap-2 font-semibold transition-transform duration-200 group-hover:translate-x-0.5"
       aria-hidden="true"
     >
       Read article
-      <span aria-hidden="true">→</span>
+      <Icon
+        class="ease-out-quart h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+        name="lucide:arrow-right"
+        aria-hidden="true"
+      />
     </p>
   </div>
 </article>
-
-<style>
-  .card-link::after {
-    position: absolute;
-    inset: 0;
-    content: "";
-  }
-</style>

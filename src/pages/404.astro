@@ -1,35 +1,87 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const nextDoors = [
+  {
+    href: "/#services",
+    label: "What I work on",
+    hint: "Permanent residence, temporary permits, citizenship, and refugee matters.",
+  },
+  {
+    href: "/blog",
+    label: "Immigration updates",
+    hint: "Notes on IRCC and IRB changes, and what they mean for real cases.",
+  },
+  {
+    href: "/#about",
+    label: "About Brigitte",
+    hint: "Licensed RCIC-IRB based in Oakville, working with clients across Canada and abroad.",
+  },
+];
 ---
 
-<BaseLayout
-  title="404 - Page Not Found | Brigitte Khayat - Immigration & Refugee Consulting"
-  description="The page you are looking for could not be found."
+<SiteLayout
+  title="Page not found | Brigitte Khayat"
+  description="This page isn't on Brigitte Khayat's site anymore. Start with services, the blog, or a consultation."
   noIndex={true}
 >
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <section class="bg-background pt-40 pb-20">
+    <div class="max-w-container mx-auto px-6">
+      <div class="mx-auto max-w-2xl">
+        <h1
+          class="text-primary mb-6 text-4xl font-bold tracking-[-0.01em] text-balance md:text-5xl"
+        >
+          Page not found.
+        </h1>
+        <p class="text-primary mb-10 text-lg leading-relaxed md:text-xl">
+          This page isn't here. It may have moved, or the link may be out of
+          date.
+        </p>
 
-  <main
-    class="bg-background flex min-h-screen items-center justify-center px-6 py-20 text-center"
-    id="main"
-  >
-    <div class="max-w-2xl">
-      <p class="text-accent mb-4 text-sm font-semibold tracking-wide uppercase">
-        404 Error
-      </p>
-      <h1 class="text-primary mb-6 text-4xl font-bold md:text-5xl">
-        Page not found
-      </h1>
-      <p class="text-secondary mx-auto mb-8 max-w-xl text-lg leading-relaxed">
-        Sorry, the page you were looking for doesn&#39;t exist or may have been
-        moved.
-      </p>
-      <a
-        class="btn-primary inline-flex min-h-12 items-center justify-center rounded-lg border-2 border-transparent px-8 py-4 font-semibold text-white transition-all duration-200"
-        href="/"
-      >
-        Return home
-      </a>
+        <nav aria-label="Primary actions">
+          <a
+            class="btn-primary focus-ring inline-flex min-h-12 cursor-pointer items-center justify-center rounded-lg border-2 border-transparent px-8 py-4 font-semibold text-white transition-all duration-200"
+            href="/#contact"
+          >
+            Request a Consultation
+          </a>
+        </nav>
+
+        <nav class="mt-16" aria-labelledby="next-doors-heading">
+          <h2
+            class="text-primary mb-6 text-lg font-semibold"
+            id="next-doors-heading"
+          >
+            What's on the site
+          </h2>
+          <ul class="list-none space-y-6 p-0">
+            {
+              nextDoors.map((door) => (
+                <li class="border-border-custom border-t pt-6">
+                  <a
+                    class="focus-ring group inline-flex items-baseline gap-2 no-underline"
+                    href={door.href}
+                  >
+                    <span class="text-accent text-lg font-semibold">
+                      {door.label}
+                    </span>
+                    <Icon
+                      class="text-accent ease-out-quart h-4 w-4 self-center transition-transform duration-200 group-hover:translate-x-1"
+                      name="lucide:arrow-right"
+                      aria-hidden="true"
+                    />
+                  </a>
+                  <p class="text-secondary mt-2 text-base leading-relaxed">
+                    {door.hint}
+                  </p>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
     </div>
-  </main>
-</BaseLayout>
+  </section>
+</SiteLayout>

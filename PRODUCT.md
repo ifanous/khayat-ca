@@ -20,8 +20,8 @@ everyone's.
 3. **The referral.** Someone told them "talk to Brigitte." They just need to
    confirm she's legit and find the contact form quickly.
 
-All three share one job-to-be-done: *decide whether to trust Brigitte with a
-life-changing, expensive, high-stakes decision.*
+All three share one job-to-be-done: _decide whether to trust Brigitte with a
+life-changing, expensive, high-stakes decision._
 
 ## Product Purpose
 
@@ -82,9 +82,9 @@ real sourcing, not as marketing collateral.
 
 **The two category reflexes to avoid.**
 
-1. *Immigration-category reflex:* red + white + Canadian flag + navy +
+1. _Immigration-category reflex:_ red + white + Canadian flag + navy +
    "pathway" language.
-2. *Professional-services reflex:* law-firm navy-and-gold, heavy serifs, marble
+2. _Professional-services reflex:_ law-firm navy-and-gold, heavy serifs, marble
    lobby vibe. Brigitte is not a white-shoe firm.
 
 Neither is the right register. The target is closer to a trusted senior

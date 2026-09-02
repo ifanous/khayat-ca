@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-02T15:14:38.297551Z",
+  "title": "Design System: Brigitte Khayat — Immigration & Refugee Consulting",
+  "extensions": {
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero H1 only. One per page."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section H2s across the site."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card and subsection H3s."
+      },
+      "body-lead": {
+        "displayName": "Body Lead",
+        "purpose": "Hero subtitle and section introductions."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default paragraph and card copy."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Form labels, navigation, and metadata."
+      }
+    },
+    "shadows": [
+      {
+        "name": "button-glow-light",
+        "value": "0 4px 15px rgba(64, 120, 242, 0.3)",
+        "purpose": "Primary button resting glow in light mode."
+      },
+      {
+        "name": "button-glow-light-hover",
+        "value": "0 6px 20px rgba(64, 120, 242, 0.4)",
+        "purpose": "Primary button hover glow in light mode."
+      },
+      {
+        "name": "button-glow-dark",
+        "value": "0 4px 15px rgba(97, 175, 239, 0.3)",
+        "purpose": "Primary button resting glow in dark mode."
+      },
+      {
+        "name": "button-glow-dark-hover",
+        "value": "0 6px 20px rgba(97, 175, 239, 0.4)",
+        "purpose": "Primary button hover glow in dark mode."
+      },
+      {
+        "name": "header-scroll-light",
+        "value": "0 2px 8px 0 rgba(56, 58, 66, 0.06)",
+        "purpose": "Header shadow after the page scrolls in light mode."
+      },
+      {
+        "name": "header-scroll-dark",
+        "value": "0 2px 8px 0 rgba(0, 0, 0, 0.35)",
+        "purpose": "Header shadow after the page scrolls in dark mode."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-quart",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Shared deceleration curve for component state changes."
+      },
+      {
+        "name": "duration-fast",
+        "value": "150ms",
+        "purpose": "Color-only transitions."
+      },
+      {
+        "name": "duration-medium",
+        "value": "200ms",
+        "purpose": "Buttons, borders, and header transitions."
+      },
+      {
+        "name": "duration-slow",
+        "value": "300ms",
+        "purpose": "Review and FAQ disclosure transitions."
+      },
+      {
+        "name": "reduced-motion-duration",
+        "value": "0.01ms",
+        "purpose": "Reduced-motion fallback for transitions and animations."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "container-max",
+        "value": "1200px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The primary consultation action with the theme-aware Editor Blue fill and glow.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Request a Consultation</button>",
+      "css": ".ds-btn-primary { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 16px 32px; color: #ffffff; font: 600 1rem/1.2 Inter, system-ui, sans-serif; background: var(--ao-blue); border: 2px solid transparent; border-radius: 8px; box-shadow: var(--btn-shadow); cursor: pointer; transition: transform 200ms var(--ease-out-quart), box-shadow 200ms var(--ease-out-quart); } .ds-btn-primary:hover { box-shadow: var(--btn-shadow-hover); transform: translateY(-1px); } .ds-btn-primary:focus-visible { outline: 2px solid var(--ao-blue); outline-offset: 2px; }"
+    },
+    {
+      "name": "Hairline Card",
+      "kind": "card",
+      "refersTo": "card-hairline",
+      "description": "The single card material: solid theme surface, one-pixel rule, and no resting shadow.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card__title\">Permanent Residence</h3><p class=\"ds-card__body\">Applications are prepared and reviewed by Brigitte personally.</p></article>",
+      "css": ".ds-card { padding: 32px; color: var(--ao-fg); font-family: Inter, system-ui, sans-serif; background: var(--ao-surface); border: 1px solid var(--ao-border); border-radius: 8px; } .ds-card__title { margin: 0 0 16px; font-size: 1.5rem; font-weight: 600; line-height: 1.25; } .ds-card__body { margin: 0; font-size: 1rem; line-height: 1.6; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "A recessed form field inside a hairline surface with the shared blue focus treatment.",
+      "html": "<label class=\"ds-field-label\" for=\"ds-name\">Full Name *</label><input class=\"ds-field\" id=\"ds-name\" type=\"text\">",
+      "css": ".ds-field-label { display: block; margin-bottom: 8px; color: var(--ao-fg); font: 600 1rem/1.2 Inter, system-ui, sans-serif; } .ds-field { display: block; width: 100%; min-height: 48px; padding: 16px; color: var(--ao-fg); font: 400 1rem/1.6 Inter, system-ui, sans-serif; background: var(--ao-bg); border: 1px solid var(--ao-border); border-radius: 8px; transition: border-color 150ms ease, box-shadow 150ms ease; } .ds-field:focus { border-color: var(--ao-blue); outline: none; box-shadow: 0 0 0 2px var(--ao-blue); }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "nav-header",
+      "description": "The fixed header navigation with a solid surface, hairline edge, and restrained active state.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Primary navigation\"><a class=\"ds-nav__brand\" href=\"/\">Brigitte Khayat</a><ul class=\"ds-nav__list\"><li><a class=\"ds-nav__link ds-nav__link--active\" href=\"/#home\">Home</a></li><li><a class=\"ds-nav__link\" href=\"/#about\">About</a></li><li><a class=\"ds-nav__link\" href=\"/#contact\">Contact</a></li></ul></nav>",
+      "css": ".ds-nav { display: flex; min-height: 96px; align-items: center; justify-content: space-between; padding: 0 24px; color: var(--ao-fg); font-family: Inter, system-ui, sans-serif; background: var(--ao-surface); border-bottom: 1px solid var(--ao-border); } .ds-nav__brand { color: var(--ao-fg); font-weight: 700; text-decoration: none; } .ds-nav__list { display: flex; gap: 32px; margin: 0; padding: 0; list-style: none; } .ds-nav__link { display: inline-flex; padding: 8px 16px; color: var(--ao-fg); font-weight: 500; text-decoration: none; border-radius: 8px; transition: color 150ms ease, background-color 150ms ease; } .ds-nav__link:hover { color: var(--ao-blue); background: var(--ao-bg-alt); } .ds-nav__link--active { color: var(--ao-blue); background: var(--ao-bg-alt); } .ds-nav__link:focus-visible { outline: 2px solid var(--ao-blue); outline-offset: 2px; }"
+    },
+    {
+      "name": "Theme Toggle",
+      "kind": "custom",
+      "refersTo": "nav-header",
+      "description": "The three-state light, dark, and system appearance control used from tablet widths upward.",
+      "html": "<div class=\"ds-theme\" role=\"radiogroup\" aria-label=\"Theme selection\"><button class=\"ds-theme__button\" type=\"button\" data-theme=\"light\" role=\"radio\" aria-checked=\"false\" aria-label=\"Light theme\" tabindex=\"-1\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41\"/></svg></button><button class=\"ds-theme__button\" type=\"button\" data-theme=\"dark\" role=\"radio\" aria-checked=\"false\" aria-label=\"Dark theme\" tabindex=\"-1\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"/></svg></button><button class=\"ds-theme__button ds-theme__button--active\" type=\"button\" data-theme=\"system\" role=\"radio\" aria-checked=\"true\" aria-label=\"System theme\" tabindex=\"0\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"2\"/><path d=\"M8 21h8M12 17v4\"/></svg></button></div>",
+      "css": ".ds-theme { display: inline-flex; gap: 2px; padding: 2px; background: var(--ao-surface); border: 1px solid var(--ao-border); border-radius: 8px; } .ds-theme__button { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; padding: 0; color: var(--ao-fg); background: transparent; border: 0; border-radius: 4px; cursor: pointer; transition: color 150ms ease, background-color 150ms ease; } .ds-theme__button:hover { background: var(--ao-bg-alt); } .ds-theme__button--active { color: #ffffff; background: var(--ao-blue); } .ds-theme__button:focus-visible { outline: 2px solid var(--ao-blue); outline-offset: 2px; }"
+    },
+    {
+      "name": "Review Card",
+      "kind": "card",
+      "refersTo": "card-hairline",
+      "description": "A sourced-review surface with the signature circular initial, rating stars, quiet metadata, and one of the system's two height-animated disclosure controls; the FAQ accordion is the other.",
+      "html": "<article class=\"ds-review\"><blockquote class=\"ds-review__quote\">“Brigitte was honest and careful with every detail.”</blockquote><div class=\"ds-review__meta\"><span class=\"ds-review__avatar\" aria-hidden=\"true\">J</span><span><strong>J. Client</strong><span class=\"ds-review__stars\" role=\"img\" aria-label=\"Rated 5 out of 5\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"/></svg></span></span></div></article>",
+      "css": ".ds-review { padding: 32px; color: var(--ao-fg); font-family: Inter, system-ui, sans-serif; background: var(--ao-surface); border: 1px solid var(--ao-border); border-radius: 8px; } .ds-review__quote { margin: 0; font-size: 1.125rem; font-style: italic; line-height: 1.6; } .ds-review__meta { display: flex; align-items: center; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--ao-border); } .ds-review__avatar { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; color: #ffffff; font-weight: 600; background: linear-gradient(to bottom right, var(--ao-blue), var(--ao-cyan)); border-radius: 9999px; } .ds-review__stars { display: flex; margin-top: 4px; color: var(--ao-yellow); }"
+    },
+    {
+      "name": "Service Row",
+      "kind": "custom",
+      "refersTo": "card-hairline",
+      "description": "The services treatment uses shared horizontal rules rather than separate boxed cards.",
+      "html": "<article class=\"ds-service\"><svg class=\"ds-service__icon\" viewBox=\"0 0 24 24\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z\"/></svg><div><h3 class=\"ds-service__title\">Permanent Residence</h3><p class=\"ds-service__body\">Express Entry, provincial nominations, and family sponsorship applications.</p></div></article>",
+      "css": ".ds-service { display: grid; grid-template-columns: 48px 1fr; gap: 24px; padding: 32px 0; color: var(--ao-fg); font-family: Inter, system-ui, sans-serif; border-top: 1px solid var(--ao-border); border-bottom: 1px solid var(--ao-border); } .ds-service__icon { color: var(--ao-blue); } .ds-service__title { margin: 0 0 8px; font-size: 1.5rem; font-weight: 600; line-height: 1.25; } .ds-service__body { margin: 0; font-size: 1rem; line-height: 1.6; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Developer's Notary.",
+    "overview": "The system as it stands today is the Atom One syntax-highlighting palette pressed into service as a professional-credentials site. Inter at every size. 8-pixel rounded corners everywhere. Cards sit on pure-white (light) or deep-slate (dark) surfaces with a 1-pixel hairline border — no shadow at rest, no backdrop blur. Hover states are built from color shifts, not material shifts: cards darken their border on hover, arrow CTAs slide their chevron 2–4 pixels, the primary button lifts one pixel and intensifies a blue glow. The fixed header is transparent-adjacent at the top of the page and picks up a soft hairline shadow after 8 pixels of scroll. One blue does all the work of a CTA; green ticks mark credentials; amber fills star ratings.\n\nThe surface reads as clean, restrained, and text-forward — quieter than a typical SaaS marketing page, closer to a senior practitioner's site that respects the reader's time. It is legible, accessible in contrast, and matches PRODUCT.md's \"calm over conversion\" principle. It remains aesthetically borrowed at the palette level — Atom One was built as a code editor theme, not for this brand — which is the main surviving tension below.\n\nThis file captures what exists today so the system is legible to future agents. The **Known Tensions** below flag where the current system still pulls against PRODUCT.md, and the **Don'ts** section encodes guardrails that apply when new surfaces are built or existing ones revised.",
+    "keyCharacteristics": [
+      "Atom One Light / Atom One Dark as the two color moods — developer-editor neutrals and one blue accent.",
+      "Inter for every role, weight contrast (400 / 600 / 700) carrying hierarchy.",
+      "Hairline-bordered surfaces on warm neutrals as the default card material across About, Services, Reviews, Contact, Footer, Hero panel, and 404.",
+      "One accent blue used at ≤10% of pixel area — the Restrained color strategy.",
+      "8px radius, uniformly.",
+      "Hover vocabulary is color-first: border-color shift on cards, chevron `translateX` on arrow CTAs, `translateY(-1px)` + shadow-intensify on the primary button only. No hover-lift on cards."
+    ],
+    "rules": [
+      {
+        "name": "The One-Accent Rule",
+        "body": "Editor Blue is the only saturated color on the site. It signals action, attention, and active state. If a new surface needs to highlight something, the answer is weight, scale, or space — not a second accent color. Reaching for purple/orange/cyan as decorative accents is prohibited.",
+        "section": "colors"
+      },
+      {
+        "name": "The Canonical-Hue Rule",
+        "body": "Base hues must come from the Atom One palette. Opacity variants of those tokens are allowed for borders, shadows, and interaction states, including Tailwind modifiers such as `border-primary/20`. They must not replace accessible solid colors for readable text.",
+        "section": "colors"
+      },
+      {
+        "name": "The Secondary-Text Rule",
+        "body": "Canonical Atom One comment colors remain available as palette references but fail normal-text contrast in both themes. `text-secondary` therefore resolves to the theme foreground color. Secondary hierarchy comes from type size, weight, spacing, and placement rather than a noncanonical gray.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warm-Neutral Rule",
+        "body": "No `#000`, no `#fff` as backgrounds. Light mode backgrounds tint slightly warm (fog-paper `#fafafa` over pure `#ffffff`). Dark mode backgrounds use Atom's slate-blue, not true black. If a surface looks absolutely neutral, it is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Scale-Over-Style Rule",
+        "body": "Because there is one family, the hierarchy must not collapse. The weight ratio between adjacent steps is a minimum of 400 → 600 → 700. Never set a card H3 in 500 or hero copy in 300 — the hierarchy stops reading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Measure Rule",
+        "body": "Body copy is capped at 65–75 characters per line. The About bio, FAQ answers, and blog body already respect this via `max-w-2xl` and `prose`-style constraints. New long-form surfaces inherit this.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Serif Default",
+        "body": "The system is single-family sans. Introducing a serif display face is a major visual decision, not a tweak — it belongs to a `shape` pass, not an ad-hoc edit.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Shadow-At-Rest Rule",
+        "body": "Cards, form blocks, and container surfaces do not carry ambient shadows. Depth comes from the 1-pixel hairline edge plus the surface-vs-page contrast. Reaching for a drop shadow to make a card \"pop\" is a violation — the discipline is that cards don't pop.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Purposeful-Motion Rule",
+        "body": "Prefer transforms and opacity for decorative motion so state changes stay smooth without disturbing document flow. Do not animate layout properties casually. Disclosure controls may transition height when the motion communicates expanded state, preserves flow, uses the implemented `interpolate-size` approach, and respects reduced-motion preferences.",
+        "section": "elevation"
+      },
+      {
+        "name": "The One-Material Rule",
+        "body": "There is one card material (hairline on surface) and one elevated element (the primary button, which earns its glow because it is the one action the page is asking the reader to take). Do not introduce a third surface material for \"featured,\" \"premium,\" or \"highlighted\" cards. Emphasis comes from type weight, position, and space — not from a new material.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** use `#4078f2` (light) / `#61afef` (dark) as the single accent. Action, focus, active state, links — one color.",
+      "**Do** cap body copy at 65–75ch measure.",
+      "**Do** use a 400 → 600 → 700 Inter weight ladder for hierarchy; never collapse the contrast.",
+      "**Do** keep every radius at 8px unless the element is a pill / circle (social discs, avatars).",
+      "**Do** keep interactive cards stationary on hover and signal state through the implemented border-color treatment. Reserve translation for contained affordances such as chevrons and the primary button.",
+      "**Do** keep the warm neutrals: fog-paper over pure white in light, atom-slate over true black in dark.",
+      "**Do** give the RCIC + CAPIC credential badges structural weight — 80px min, footer-anchored, never decorative.",
+      "**Do** respect `prefers-reduced-motion` — the global.css override zeros animation durations; new components inherit this automatically if they use CSS transitions.",
+      "**Do** use SVG icons only: Lucide for UI and service categories, `mdi:star` for the star glyph in reviews, Simple Icons for socials. Never Unicode glyphs for structural icons.",
+      "**Do** invite the reader. Copy can be warm, first-person, and human (\"I take care of both,\" \"I work with clients in English, French, Arabic, and Greek\"). Warmth is not marketing theatre — faceless distance is.",
+      "**Do** pair a primary CTA with a calm secondary path **only when the second door is genuinely elsewhere**. A secondary button that scrolls to the section directly underneath the hero is furniture, not a UX affordance — the reader scrolls past it for free. Reserve secondary CTAs for links off-page, to later sections, or to content the next scroll would not reveal.",
+      "**Do** ground claims in specifics. Office location, languages, license number, the exact tribunals Brigitte appears before. Specificity is the warmth — it's how a real practitioner sounds, not a firm. Put each specific where it actually earns the pixels: the Hero carries a single quiet fact (languages, because they affect the whole engagement — not just the consultation); the office and service area live in Contact and the footer, where a reader asking \"where is she?\" is actually asking."
+    ],
+    "donts": [
+      "**Don't** introduce a second accent color. Reaching for purple, orange, or cyan to \"add life\" is prohibited. The one-accent discipline is the discipline.",
+      "**Don't** use `#000` or `#fff` as backgrounds. The neutrals are tinted on purpose.",
+      "**Don't** add a third surface material or a card drop-shadow at rest. Hairline-on-surface is the one card material. Emphasis comes from type weight, position, and space, not from a new material or a raised elevation tier. No \"featured\" shadow, no overlay, no modal.",
+      "**Don't** animate layout properties casually. Prefer transforms and opacity for decorative motion; reserve height transitions for disclosure controls that communicate expanded state, preserve flow, use `interpolate-size`, and respect reduced-motion preferences.",
+      "**Don't** ship bounce or elastic easing. The system is `ease-out`; motion decelerates into rest, never overshoots.",
+      "**Don't** stack card materials. A hairline card inside a hairline card is prohibited — if a region inside a card needs visual separation, use a hairline `border-t` divider or a nested `bg-muted` block, not a second bordered container.",
+      "**Don't** introduce border-left > 1px as a colored stripe on cards, callouts, or list items. Full borders, tinted backgrounds, or no border.",
+      "**Don't** use `background-clip: text` with a gradient. The single-accent rule covers text color too. Gradient text is banned regardless.",
+      "**Don't** write hero copy in the form \"Your Journey to Canada Starts Here,\" \"We make your Canadian dream come true,\" \"Your pathway starts here,\" or any phrasing that promises or implies an outcome Brigitte cannot control. The ban is on **outcome-language and pathway-cliché**, not on inviting the reader; \"Meet Brigitte\" and \"Request a Consultation\" are correct.",
+      "**Don't** add manufactured-urgency elements — countdowns, \"X spots left,\" \"act now before rules change.\" PRODUCT.md rules these out absolutely.",
+      "**Don't** use stock immigration imagery: airport-arrivals families, maple leaves, red-and-white flag flourishes, Toronto-skyline-at-sunset, passport-in-hand. Banned site-wide.",
+      "**Don't** build testimonial walls of identical 5-star cards. Reviews render as real Google reviews with real metadata (author, date, sourced rating) — never as marketing collateral.",
+      "**Don't** reach for law-firm navy-and-gold, serifs, or marble-lobby visual vocabulary. Brigitte is not a white-shoe firm.",
+      "**Don't** collapse the faceless-consultancy \"we\" voice in. Copy reads in the first person (\"I\") when Brigitte is speaking."
+    ]
+  }
+}
