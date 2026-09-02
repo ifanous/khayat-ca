@@ -110,31 +110,47 @@ const currentYear = new Date().getFullYear();
     >
       <div class="flex flex-col items-center gap-8 sm:flex-row sm:gap-10">
         <!-- RCIC Insignia (theme-swapped: light variant for light theme, dark for dark) -->
-        <Image
-          class="light-only h-20 w-auto object-contain"
-          alt="RCIC Certified"
-          src={rcicLight}
-          decoding="async"
-          densities={[1, 2]}
-          loading="lazy"
-        />
-        <Image
-          class="dark-only h-20 w-auto object-contain"
-          alt="RCIC Certified"
-          src={rcicDark}
-          decoding="async"
-          densities={[1, 2]}
-          loading="lazy"
-        />
+        <a
+          class="focus-ring inline-flex"
+          href="https://register.college-ic.ca/Public-Register-EN/Licensee/Profile.aspx?ID=15757"
+          rel="noopener noreferrer"
+          target="_blank"
+          aria-label="Verify CICC licence R533681 (opens in a new tab)"
+        >
+          <Image
+            class="light-only h-20 w-auto object-contain"
+            alt="RCIC Certified"
+            src={rcicLight}
+            decoding="async"
+            densities={[1, 2]}
+            loading="lazy"
+          />
+          <Image
+            class="dark-only h-20 w-auto object-contain"
+            alt="RCIC Certified"
+            src={rcicDark}
+            decoding="async"
+            densities={[1, 2]}
+            loading="lazy"
+          />
+        </a>
         <!-- CAPIC logo -->
-        <Image
-          class="h-20 w-auto object-contain"
-          alt="CAPIC Member"
-          src={capicLogo}
-          decoding="async"
-          densities={[1, 2]}
-          loading="lazy"
-        />
+        <a
+          class="focus-ring inline-flex"
+          href="https://www.capic.ca/EN/ActiveMembersList"
+          rel="noopener noreferrer"
+          target="_blank"
+          aria-label="Verify CAPIC membership (opens in a new tab)"
+        >
+          <Image
+            class="h-20 w-auto object-contain"
+            alt="CAPIC Member"
+            src={capicLogo}
+            decoding="async"
+            densities={[1, 2]}
+            loading="lazy"
+          />
+        </a>
       </div>
       <div class="text-center lg:text-right">
         <p class="text-secondary m-0 text-sm">

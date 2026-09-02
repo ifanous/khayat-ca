@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-02T20:33:42Z",
+  "generatedAt": "2026-09-02T21:30:51Z",
   "title": "Design System: Brigitte Khayat — Immigration & Refugee Consulting",
   "extensions": {
     "typographyMeta": {
@@ -239,7 +239,7 @@
       "**Do** keep every radius at 8px unless the element is a pill / circle (social discs, avatars).",
       "**Do** keep interactive cards stationary on hover and signal state through the implemented border-color treatment. Reserve translation for contained affordances such as chevrons and the primary button.",
       "**Do** keep the warm neutrals: fog-paper over pure white in light, atom-slate over true black in dark.",
-      "**Do** give the RCIC + CAPIC credential badges structural weight — 80px min, footer-anchored, never decorative.",
+      "**Do** give the RCIC + CAPIC credential badges structural weight — 80px min, footer-anchored, linked to official verification sources, never decorative.",
       "**Do** respect `prefers-reduced-motion` — the global.css override zeros animation durations; new components inherit this automatically if they use CSS transitions.",
       "**Do** use SVG icons only: Lucide for UI and service categories, `mdi:star` for the star glyph in reviews, Simple Icons for socials. Never Unicode glyphs for structural icons.",
       "**Do** invite the reader. Copy can be warm, first-person, and human (\"I take care of both,\" \"I work with clients in English, French, Arabic, and Greek\"). Warmth is not marketing theatre — faceless distance is.",

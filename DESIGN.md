@@ -300,7 +300,7 @@ One card material across the site. The `@utility surface-hairline` in `global.cs
 
 ### Signature Component: The Credential Footer
 
-The footer's bottom bar shows the RCIC insignia (theme-swapped color/B&W via `.light-only` / `.dark-only`) and the CAPIC logo at 80px height, above copyright. This is load-bearing for PRODUCT.md's "Credentials do the selling" principle and should never be demoted, compressed, or moved above the fold as mere ornament.
+The footer's bottom bar shows the RCIC insignia (theme-swapped color/B&W via `.light-only` / `.dark-only`) and the CAPIC logo at 80px height, above copyright. Both badges link to their official verification sources. This is load-bearing for PRODUCT.md's "Credentials do the selling" principle and should never be demoted, compressed, or moved above the fold as mere ornament.
 
 ## 6. Do's and Don'ts
 
@@ -316,7 +316,7 @@ Concrete guardrails for new surfaces and revisions. Carries PRODUCT.md's anti-re
 - **Do** keep every radius at 8px unless the element is a pill / circle (social discs, avatars).
 - **Do** keep interactive cards stationary on hover and signal state through the implemented border-color treatment. Reserve translation for contained affordances such as chevrons and the primary button.
 - **Do** keep the warm neutrals: fog-paper over pure white in light, atom-slate over true black in dark.
-- **Do** give the RCIC + CAPIC credential badges structural weight — 80px min, footer-anchored, never decorative.
+- **Do** give the RCIC + CAPIC credential badges structural weight — 80px min, footer-anchored, linked to official verification sources, never decorative.
 - **Do** respect `prefers-reduced-motion` — the global.css override zeros animation durations; new components inherit this automatically if they use CSS transitions.
 - **Do** use SVG icons only: Lucide for UI and service categories, `mdi:star` for the star glyph in reviews, Simple Icons for socials. Never Unicode glyphs for structural icons.
 - **Do** invite the reader. Copy can be warm, first-person, and human ("I take care of both," "I work with clients in English, French, Arabic, and Greek"). Warmth is not marketing theatre — faceless distance is.
