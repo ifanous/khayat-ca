@@ -27,6 +27,7 @@
   --color-surface: var(--ao-surface);
   --color-muted: var(--ao-bg-alt);
   --color-border-custom: var(--ao-border);
+  --color-field-border: var(--ao-field-border);
 
   /* Cyan is used as the gradient partner on review avatars. */
   --color-ao-cyan: var(--ao-cyan);
@@ -54,6 +55,7 @@
     --ao-fg: #383a42;
     --ao-comment: #a0a1a7;
     --ao-border: #e1e4e8;
+    --ao-field-border: rgba(56, 58, 66, 0.6);
     --ao-red: #e45649;
     --ao-orange: #d19a66;
     --ao-yellow: #c18401;
@@ -76,6 +78,7 @@
     --ao-fg: #abb2bf;
     --ao-comment: #5c6370;
     --ao-border: #3e4451;
+    --ao-field-border: rgba(171, 178, 191, 0.6);
     --ao-red: #e06c75;
     --ao-orange: #d19a66;
     --ao-yellow: #e5c07b;

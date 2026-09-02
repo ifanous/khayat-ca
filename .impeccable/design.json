@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-02T15:14:38.297551Z",
+  "generatedAt": "2026-09-02T20:01:17Z",
   "title": "Design System: Brigitte Khayat — Immigration & Refugee Consulting",
   "extensions": {
     "typographyMeta": {
@@ -134,7 +134,7 @@
       "refersTo": "input-field",
       "description": "A recessed form field inside a hairline surface with the shared blue focus treatment.",
       "html": "<label class=\"ds-field-label\" for=\"ds-name\">Full Name *</label><input class=\"ds-field\" id=\"ds-name\" type=\"text\">",
-      "css": ".ds-field-label { display: block; margin-bottom: 8px; color: var(--ao-fg); font: 600 1rem/1.2 Inter, system-ui, sans-serif; } .ds-field { display: block; width: 100%; min-height: 48px; padding: 16px; color: var(--ao-fg); font: 400 1rem/1.6 Inter, system-ui, sans-serif; background: var(--ao-bg); border: 1px solid var(--ao-border); border-radius: 8px; transition: border-color 150ms ease, box-shadow 150ms ease; } .ds-field:focus { border-color: var(--ao-blue); outline: none; box-shadow: 0 0 0 2px var(--ao-blue); }"
+      "css": ".ds-field-label { display: block; margin-bottom: 8px; color: var(--ao-fg); font: 600 1rem/1.2 Inter, system-ui, sans-serif; } .ds-field { display: block; width: 100%; min-height: 48px; padding: 16px; color: var(--ao-fg); font: 400 1rem/1.6 Inter, system-ui, sans-serif; background: var(--ao-bg); border: 1px solid var(--ao-field-border); border-radius: 8px; transition: border-color 150ms ease, box-shadow 150ms ease; } .ds-field:focus { border-color: var(--ao-blue); outline: none; box-shadow: 0 0 0 2px var(--ao-blue); }"
     },
     {
       "name": "Header Navigation",

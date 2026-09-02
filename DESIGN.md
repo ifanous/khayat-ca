@@ -9,6 +9,7 @@ colors:
   graphite-ink: "#383a42" # primary text (light)
   ash-comment: "#a0a1a7" # canonical Atom One comment color; palette reference, not normal text
   fog-rule: "#e1e4e8" # borders/dividers (light)
+  field-border-light: "rgba(56, 58, 66, 0.6)" # 60% graphite-ink; form-control boundary (light)
   # Atom One accents (shared vocabulary, values shift per theme)
   editor-blue: "#4078f2" # primary accent / CTA (light)
   editor-green: "#50a14f" # success / credential tick (light)
@@ -24,6 +25,7 @@ colors:
   atom-fog: "#abb2bf" # primary text (dark)
   atom-ash: "#5c6370" # canonical Atom One comment color; palette reference, not normal text
   atom-rule: "#3e4451" # borders/dividers (dark)
+  field-border-dark: "rgba(171, 178, 191, 0.6)" # 60% atom-fog; form-control boundary (dark)
   atom-blue: "#61afef" # primary accent / CTA (dark)
   atom-green: "#98c379" # success (dark)
   atom-yellow: "#e5c07b" # stars / warning (dark)
@@ -100,6 +102,7 @@ components:
   input-field:
     backgroundColor: "{colors.fog-paper}"
     textColor: "{colors.graphite-ink}"
+    borderColor: "{colors.field-border-light}"
     rounded: "{rounded.md}"
     padding: "16px"
     height: "48px"
@@ -158,7 +161,8 @@ A two-theme system. Light mode uses warm-leaning near-white surfaces against dee
 - **Pure Surface** (`#ffffff`): Card interiors, header bar, form focus target. Every card is pure white with a 1px `fog-rule` border (the `surface-hairline` utility). Form fields themselves sit on `fog-paper`, not pure surface, so the field reads as a recess within the card.
 - **Graphite Ink** (`#383a42`): Primary body and heading color. Slightly warm, never true black.
 - **Ash Comment** (`#a0a1a7`): Canonical Atom One Light comment color. At about 2.47:1 on fog-paper, it does not meet WCAG AA for normal text and is retained only as a palette reference. The semantic `text-secondary` role maps to Graphite Ink; size, weight, spacing, and placement provide secondary hierarchy.
-- **Fog Rule** (`#e1e4e8`): Borders, dividers, form-input strokes.
+- **Fog Rule** (`#e1e4e8`): Hairline borders and dividers.
+- **Field Border Light** (`rgba(56, 58, 66, 0.6)`): A 60%-opacity derivative of canonical Graphite Ink used only for resting form-control boundaries. Against Fog Paper it exceeds the WCAG 2.2 non-text contrast minimum of 3:1.
 
 ### Neutral (dark mode)
 
@@ -166,7 +170,8 @@ A two-theme system. Light mode uses warm-leaning near-white surfaces against dee
 - **Atom Slate Deep** (`#21252b`): Surface + alt-muted background — intentionally identical for "surface" and "muted" roles, which flattens the card/page contrast.
 - **Atom Fog** (`#abb2bf`): Primary text.
 - **Atom Ash** (`#5c6370`): Canonical Atom One Dark comment color. At about 2.32:1 on atom-slate, it does not meet WCAG AA for normal text and is retained only as a palette reference. The semantic `text-secondary` role maps to Atom Fog.
-- **Atom Rule** (`#3e4451`): Borders.
+- **Atom Rule** (`#3e4451`): Hairline borders and dividers.
+- **Field Border Dark** (`rgba(171, 178, 191, 0.6)`): A 60%-opacity derivative of canonical Atom Fog used only for resting form-control boundaries. Against Atom Slate it exceeds the WCAG 2.2 non-text contrast minimum of 3:1.
 
 ### Semantic Accents
 
@@ -270,7 +275,7 @@ One card material across the site. The `@utility surface-hairline` in `global.cs
 
 - **Shape:** 8px radius.
 - **Background:** Fog-paper in light, atom-slate in dark — explicitly not `pure-surface`, so the field reads as a recess within the white hairline card it sits inside.
-- **Border:** 1px fog-rule.
+- **Border:** 1px field-border: 60% canonical foreground (`graphite-ink` in light, `atom-fog` in dark). It remains within the Atom One palette and provides at least 3:1 contrast against the field background for WCAG 2.2 non-text contrast.
 - **Height:** 48px minimum (touch target).
 - **Focus:** border becomes editor-blue, 3px blue-at-10%-opacity halo via `box-shadow`. No border-width change (no layout shift).
 - **Textareas:** same treatment, `resize-y` permitted.
