@@ -261,7 +261,7 @@ import { Icon } from "astro-icon/components";
         submitButton.classList.remove("opacity-70");
         contactForm.setAttribute("aria-busy", "false");
         statusMessage.textContent =
-          "We couldn't send your message. Please try again.";
+          "Your message wasn't sent. Please try again.";
 
         setTimeout(() => {
           submitButtonText.textContent = submitButtonOriginalText;
