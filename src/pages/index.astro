@@ -8,9 +8,9 @@ const siteUrl = "https://khayat.ca";
 
 const { summary } = reviewsData as ReviewsData;
 
-const professionalServiceSchema = {
+const legalServiceSchema = {
   "@context": "https://schema.org",
-  "@type": ["ProfessionalService", "LegalService"],
+  "@type": "LegalService",
   "@id": `${siteUrl}/#business`,
   name: "Brigitte Khayat - Immigration & Refugee Consulting Inc.",
   url: siteUrl,
@@ -121,13 +121,13 @@ const professionalServiceSchema = {
   },
 };
 
-const professionalServiceSchemaJson = JSON.stringify(professionalServiceSchema);
+const legalServiceSchemaJson = JSON.stringify(legalServiceSchema);
 ---
 
 <SiteLayout
   title="RCIC-IRB Immigration Consultant Serving the GTA | Brigitte Khayat"
   description="Licensed RCIC-IRB immigration consultant serving clients across the GTA, Canada, and abroad with help for PR, work permits, study permits, citizenship, and refugee matters."
 >
-  <script type="application/ld+json" set:html={professionalServiceSchemaJson} />
+  <script type="application/ld+json" set:html={legalServiceSchemaJson} />
   <Main />
 </SiteLayout>
