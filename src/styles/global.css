@@ -192,25 +192,40 @@
   display: block;
 }
 
-/* Netlify reCAPTCHA v2 widget: Google injects a 304×78px iframe inside
-   <div data-netlify-recaptcha="true">. On narrow phones the fixed width
-   overflows the form. Scale the widget proportionally and compensate the
-   reserved height so transform doesn't leave dead space below. */
-.g-recaptcha div:first-child {
+/* Netlify reCAPTCHA v2 widget: Google injects a 304×78px child inside
+   <div data-netlify-recaptcha="true">. Narrow-phone scales account for
+   the section padding, form border, and form padding. Scaling the centered
+   child keeps the widget centered; the wrapper height removes transform gap. */
+.g-recaptcha > div:first-child {
   margin: 0 auto;
 }
-@media (max-width: 390px) {
+@media (max-width: 393px) {
   .g-recaptcha {
-    height: calc(78px * 0.95);
-    transform: scale(0.95);
-    transform-origin: 0 0;
+    --recaptcha-scale: 0.92;
+
+    display: grid;
+    height: calc(78px * var(--recaptcha-scale));
+    place-items: start center;
+  }
+  .g-recaptcha > div:first-child {
+    margin: 0;
+    transform: scale(var(--recaptcha-scale));
+    transform-origin: top center;
+  }
+}
+@media (max-width: 370px) {
+  .g-recaptcha {
+    --recaptcha-scale: 0.85;
   }
 }
 @media (max-width: 350px) {
   .g-recaptcha {
-    height: calc(78px * 0.85);
-    transform: scale(0.85);
-    transform-origin: 0 0;
+    --recaptcha-scale: 0.79;
+  }
+}
+@media (max-width: 330px) {
+  .g-recaptcha {
+    --recaptcha-scale: 0.75;
   }
 }
 
