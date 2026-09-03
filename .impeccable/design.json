@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-02T21:30:51Z",
+  "generatedAt": "2026-09-03T02:14:47Z",
   "title": "Design System: Brigitte Khayat — Immigration & Refugee Consulting",
   "extensions": {
     "typographyMeta": {
@@ -19,6 +19,10 @@
       "body-lead": {
         "displayName": "Body Lead",
         "purpose": "Hero subtitle and section introductions."
+      },
+      "body-large": {
+        "displayName": "Body Large",
+        "purpose": "Long-form article text and author bridge; pull quotes and subordinate article headings reuse its size."
       },
       "body": {
         "displayName": "Body",

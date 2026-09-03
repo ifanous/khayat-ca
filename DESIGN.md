@@ -57,6 +57,12 @@ typography:
     fontWeight: 400
     lineHeight: 1.6
     letterSpacing: "normal"
+  body-large:
+    fontFamily: "Inter, system-ui, sans-serif"
+    fontSize: "1.125rem"
+    fontWeight: 400
+    lineHeight: 1.7
+    letterSpacing: "normal"
   body:
     fontFamily: "Inter, system-ui, sans-serif"
     fontSize: "1rem"
@@ -202,6 +208,7 @@ A two-theme system. Light mode uses warm-leaning near-white surfaces against dee
 - **Headline** (700, `clamp(1.875rem, 4vw, 3rem)`, line-height 1.15): Section H2s — About, Services, Reviews, FAQ, Contact.
 - **Title** (600, 1.5rem, line-height 1.25): Card H3s — service names, form section titles, footer column heads.
 - **Body Lead** (400, 1.25rem, line-height 1.6): Hero subtitle and section-intro copy. Caps around 55–60ch naturally via `max-w-2xl`.
+- **Body Large** (400, 1.125rem, line-height 1.7): Long-form article text and the author bridge. Pull quotes and subordinate article headings reuse this size; italic or 600 weight and local line-height differences distinguish their roles.
 - **Body** (400, 1rem, line-height 1.6): Card body, form labels, default paragraph copy. Should cap at 65–75ch.
 - **Label** (600, 0.875rem, line-height 1.2): Form labels, nav links, footer metadata.
 
