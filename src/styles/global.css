@@ -376,9 +376,9 @@
 
 /* Match the site-wide focus-ring utility. Inline links cannot use
    the utility class directly (markdown emits bare <a> tags), so the
-   ring is reapplied here with the same 2px / 2px-offset shape. */
+   ring is reapplied here with the 4px small radius and 2px outline. */
 .article-content a:focus-visible {
-  border-radius: 2px;
+  border-radius: 4px;
   outline: 2px solid var(--ao-blue);
   outline-offset: 2px;
 }
