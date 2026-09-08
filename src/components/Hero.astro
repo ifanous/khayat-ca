@@ -1,8 +1,9 @@
 ---
 // Home hero (live).
 //
-// Composition: left column carries the claim, subtitle, CTA, and demoted
-// credential row, and nothing else. The right column is a quiet
+// Composition: left column reads claim → promise → verification → action:
+// H1, lead sentence, a two-line verification block (name + credential
+// row), and the CTA as the column's endpoint — nothing else. The right column is a quiet
 // surface-hairline panel carrying three real facts (office, hours, and
 // working languages), so the first screen also answers "where is she?"
 // and "can I reach her today?". No portrait here; the portrait lives
@@ -15,35 +16,34 @@
       <div
         class="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16"
       >
-        <!-- Left column: claim, byline, subtitle, CTA, demoted credential row. -->
+        <!-- Left column: claim, promise, verification block, CTA. -->
         <div class="lg:col-span-7">
           <h1
-            class="text-primary mb-3 text-4xl leading-[1.1] font-bold tracking-[-0.01em] text-balance md:text-5xl lg:text-6xl"
+            class="text-primary mb-6 text-4xl leading-[1.1] font-bold tracking-[-0.01em] text-balance md:text-5xl lg:text-6xl"
           >
             Your Canadian immigration case, handled personally.
           </h1>
-
-          <p class="text-secondary mb-10 text-base md:text-lg">
-            Brigitte Khayat, RCIC-IRB
-          </p>
 
           <p class="text-primary max-w-2xl text-xl leading-relaxed md:text-2xl">
             I prepare every application myself. Every time.
           </p>
 
-          <nav class="mt-12" aria-label="Primary actions">
+          <div class="mt-10">
+            <p class="text-primary text-base font-semibold">
+              Brigitte Khayat, RCIC-IRB
+            </p>
+            <p class="text-secondary mt-1 text-base">
+              CICC-Licensed <span aria-hidden="true">·</span> IRB-Authorized
+              <span aria-hidden="true">·</span> CAPIC Member
+            </p>
+          </div>
+
+          <nav class="mt-10" aria-label="Primary actions">
             <a
               class="btn-primary focus-ring inline-flex min-h-12 cursor-pointer items-center justify-center rounded-lg border-2 border-transparent px-8 py-4 font-semibold text-white transition-all duration-200"
               href="/#contact">Request a Consultation</a
             >
           </nav>
-
-          <p
-            class="text-secondary mt-8 text-xs font-semibold tracking-[0.18em] uppercase md:text-sm"
-          >
-            CICC-Licensed <span aria-hidden="true">·</span> IRB-Authorized
-            <span aria-hidden="true">·</span> CAPIC Member
-          </p>
         </div>
 
         <aside
