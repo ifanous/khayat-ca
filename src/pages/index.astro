@@ -1,12 +1,8 @@
 ---
 import Main from "../components/Main.astro";
-import reviewsData from "../data/google-reviews.json";
 import SiteLayout from "../layouts/SiteLayout.astro";
-import type { ReviewsData } from "../types/reviews";
 
 const siteUrl = "https://khayat.ca";
-
-const { summary } = reviewsData as ReviewsData;
 
 const legalServiceSchema = {
   "@context": "https://schema.org",
@@ -64,13 +60,6 @@ const legalServiceSchema = {
   ],
   availableLanguage: ["English", "French", "Arabic", "Greek"],
   telephone: "+1-437-370-1850",
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: summary.averageRating,
-    ratingCount: summary.reviewCount,
-    bestRating: 5,
-    worstRating: 1,
-  },
   sameAs: [
     // Official CICC public register entry for Brigitte. This is the
     // single strongest E-E-A-T signal for a regulated profession: a
