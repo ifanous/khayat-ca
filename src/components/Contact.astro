@@ -167,8 +167,12 @@ import { Icon } from "astro-icon/components";
       submitButton.disabled = !enabled;
     };
 
+    let captchaWired = false;
+
     // Watch for the captcha response field appearing and changing.
     const wireCaptchaObserver = () => {
+      if (captchaWired) return true;
+
       const responseField = contactForm.querySelector<HTMLTextAreaElement>(
         'textarea[name="g-recaptcha-response"]',
       );
@@ -189,14 +193,21 @@ import { Icon } from "astro-icon/components";
         subtree: true,
       });
 
-      window.setInterval(sync, 1000);
+      contactForm.addEventListener("click", sync);
+      contactForm.addEventListener("focusout", sync);
+      captchaWired = true;
 
       return true;
     };
 
     if (!wireCaptchaObserver()) {
+      let readyPollAttempts = 0;
       const readyPoll = window.setInterval(() => {
-        if (wireCaptchaObserver()) window.clearInterval(readyPoll);
+        readyPollAttempts += 1;
+
+        if (wireCaptchaObserver() || readyPollAttempts >= 30) {
+          window.clearInterval(readyPoll);
+        }
       }, 300);
     }
 
