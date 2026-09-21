@@ -4,7 +4,7 @@ description: >-
   Bill C-12 changes refugee-claim eligibility, deadlines, and asylum procedures
   in Canada.
 pubDate: 2026-04-20
-image: /src/assets/blog/bill-c-12-canada-asylum-system-changes/image.jpg
+image: /src/assets/blog/bill-c-12-canada-asylum-system-changes/image.webp
 imageAlt: >-
   Canadian flag in front of the Parliament Buildings in Victoria, British
   Columbia
