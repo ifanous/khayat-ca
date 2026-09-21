@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 import type { BlogPostPreview, HeadingLevel } from "../types/blog";
-import { formatBlogDate, getBlogImageSource } from "../utils/blog";
+import { formatBlogDate } from "../utils/blog";
 
 interface Props {
   headingLevel?: HeadingLevel;
@@ -17,22 +17,21 @@ const publishedLabel = formatBlogDate(post.pubDate);
 // so the renderer treats it as a dynamic tag, not an HTML element.
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Heading = headingLevel;
-const imageSrc = getBlogImageSource(post.slug);
 ---
 
 <article
   class="surface-hairline hover:border-primary/20 group relative flex h-full flex-col overflow-hidden transition-colors duration-200"
 >
   {
-    imageSrc && (
+    post.image && (
       <div
         class="border-border-custom h-56 overflow-hidden border-b"
         aria-hidden="true"
       >
         <Image
           class="h-full w-full object-cover"
-          alt=""
-          src={imageSrc}
+          alt={post.imageAlt ?? ""}
+          src={post.image}
           decoding="async"
           loading="lazy"
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"

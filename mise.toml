@@ -28,13 +28,13 @@ depends = ["fallow-dead-code", "fallow-dupes"]
 run = "fallow dead-code"
 
 [tasks.format-check]
-run = "prettier --check astro.config.mjs eslint.config.mjs package.json scripts/. src/. tsconfig.json"
+run = "prettier --check astro.config.mjs eslint.config.mjs keystatic.config.ts package.json pnpm-workspace.yaml scripts/. src/. tsconfig.json"
 
 [tasks.fallow-dupes]
 run = "fallow dupes"
 
 [tasks.format]
-run = "prettier --write astro.config.mjs eslint.config.mjs package.json scripts/. src/. tsconfig.json"
+run = "prettier --write astro.config.mjs eslint.config.mjs keystatic.config.ts package.json pnpm-workspace.yaml scripts/. src/. tsconfig.json"
 
 [tasks.install-deps]
 run = "pnpm add --save-prod"
@@ -43,16 +43,16 @@ run = "pnpm add --save-prod"
 run = "pnpm add --save-dev"
 
 [tasks.lint]
-run = "biome lint astro.config.mjs eslint.config.mjs scripts/. src/. && eslint astro.config.mjs eslint.config.mjs scripts/. src/."
+run = "biome lint astro.config.mjs eslint.config.mjs keystatic.config.ts scripts/. src/. && eslint astro.config.mjs eslint.config.mjs keystatic.config.ts scripts/. src/."
 
 [tasks.lint-fix]
-run = "biome lint astro.config.mjs eslint.config.mjs scripts/. src/. --fix && eslint astro.config.mjs eslint.config.mjs scripts/. src/. --fix"
+run = "biome lint astro.config.mjs eslint.config.mjs keystatic.config.ts scripts/. src/. --fix && eslint astro.config.mjs eslint.config.mjs keystatic.config.ts scripts/. src/. --fix"
 
 [tasks.netlify]
 run = "netlify"
 
 [tasks.preview]
-run = "astro preview"
+run = "netlify dev --dir=dist --offline --no-open --port 4321"
 
 [tasks.sort-package-json]
 run = "sort-package-json"

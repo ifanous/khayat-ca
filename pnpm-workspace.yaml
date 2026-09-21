@@ -1,5 +1,8 @@
+overrides:
+  lightningcss: 1.32.0
+
 allowBuilds:
-  '@parcel/watcher': true
+  "@parcel/watcher": true
   core-js: true
   esbuild: true
   fallow: true

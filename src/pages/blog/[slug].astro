@@ -1,0 +1,21 @@
+---
+import { getCollection, render } from "astro:content";
+
+import BlogPostLayout from "../../layouts/BlogPostLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+// Astro components use PascalCase when rendered in a template.
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const { Content } = await render(post);
+---
+
+<BlogPostLayout post={post}><Content /></BlogPostLayout>
