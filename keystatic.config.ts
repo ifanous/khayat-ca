@@ -1,9 +1,13 @@
 import { collection, config, fields } from "@keystatic/core";
 
-const isDev = process.env.NODE_ENV === "development";
+// Local storage in `astro dev` unless KEYSTATIC_STORAGE=github is set (used
+// once to run Keystatic's GitHub App onboarding, which only works in dev).
+const useLocal =
+  process.env.NODE_ENV === "development" &&
+  process.env.KEYSTATIC_STORAGE !== "github";
 
 export default config({
-  storage: isDev
+  storage: useLocal
     ? { kind: "local" }
     : { kind: "github", repo: "ifanous/khayat-ca" },
   ui: { brand: { name: "Khayat.ca" } },
