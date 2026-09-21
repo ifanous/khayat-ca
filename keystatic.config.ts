@@ -1,10 +1,11 @@
 import { collection, config, fields } from "@keystatic/core";
 
-// Local storage in `astro dev` unless KEYSTATIC_STORAGE=github is set (used
-// once to run Keystatic's GitHub App onboarding, which only works in dev).
+// This file is imported in both the server and the browser, so only
+// Vite-inlined env vars may be read here. Local storage in `astro dev`
+// unless PUBLIC_KEYSTATIC_STORAGE=github is set (used once to run
+// Keystatic's GitHub App onboarding, which only works in dev).
 const useLocal =
-  process.env.NODE_ENV === "development" &&
-  process.env.KEYSTATIC_STORAGE !== "github";
+  import.meta.env.DEV && import.meta.env.PUBLIC_KEYSTATIC_STORAGE !== "github";
 
 export default config({
   storage: useLocal
