@@ -1,13 +1,9 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
 title: "Canada Invites FSWP Candidates for the First Time Since 2020"
 pubDate: 2022-07-06
-updatedDate: 2022-07-06
 description: "Canada resumed invitations for Federal Skilled Worker Program candidates, issuing 1,500 ITAs in its first FSWP draw since December 2020."
-author: "Brigitte Khayat"
-image:
-  url: "/blog/canada-resumes-fswp-express-entry-draws-2022.webp"
-  alt: "Immigration paperwork, passport, and invitation-themed documents representing the return of Federal Skilled Worker Program draws in Canada"
+image: /src/assets/blog/canada-resumes-fswp-express-entry-draws-2022/image.webp
+imageAlt: "Immigration paperwork, passport, and invitation-themed documents representing the return of Federal Skilled Worker Program draws in Canada"
 tags:
   [
     "Express Entry",

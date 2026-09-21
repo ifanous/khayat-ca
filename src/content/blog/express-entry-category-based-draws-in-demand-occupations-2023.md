@@ -1,13 +1,9 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
 title: "Canada to Target In-Demand Occupations in Express Entry"
 pubDate: 2023-01-13
-updatedDate: 2023-01-13
 description: "IRCC announced new Express Entry authorities to invite candidates based on in-demand occupations instead of only highest CRS scores."
-author: "Brigitte Khayat"
-image:
-  url: "/blog/express-entry-category-based-draws-in-demand-occupations-2023.webp"
-  alt: "Workforce-related objects and immigration documents representing Canada’s focus on in-demand occupations in Express Entry"
+image: /src/assets/blog/express-entry-category-based-draws-in-demand-occupations-2023/image.webp
+imageAlt: "Workforce-related objects and immigration documents representing Canada’s focus on in-demand occupations in Express Entry"
 tags:
   [
     "Express Entry",

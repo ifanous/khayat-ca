@@ -1,12 +1,9 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
 title: "Canada Removes Extra CRS Points for Job Offers"
 pubDate: 2025-03-26
 description: "IRCC removed extra CRS points for valid job offers in Express Entry, changing how candidates are ranked in the pool."
-author: "Brigitte Khayat"
-image:
-  url: "/blog/express-entry-removes-job-offer-crs-points-2025.webp"
-  alt: "Canadian immigration paperwork and job offer documents on a desk representing Express Entry CRS changes"
+image: /src/assets/blog/express-entry-removes-job-offer-crs-points-2025/image.webp
+imageAlt: "Canadian immigration paperwork and job offer documents on a desk representing Express Entry CRS changes"
 tags:
   [
     "Express Entry",

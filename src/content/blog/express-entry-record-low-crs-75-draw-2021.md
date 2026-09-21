@@ -1,13 +1,9 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
 title: "A Record Breaking Express Entry Draw With a Minimum CRS of 75"
 pubDate: 2021-02-28
-updatedDate: 2021-02-28
 description: "IRCC invited 27,332 Canadian Experience Class candidates in a record Express Entry draw with a historic CRS cut-off of just 75."
-author: "Brigitte Khayat"
-image:
-  url: "/blog/express-entry-record-low-crs-75-draw-2021.webp"
-  alt: "Immigration documents and a score-chart concept representing a record-breaking Express Entry draw with a low CRS cutoff"
+image: /src/assets/blog/express-entry-record-low-crs-75-draw-2021/image.webp
+imageAlt: "Immigration documents and a score-chart concept representing a record-breaking Express Entry draw with a low CRS cutoff"
 tags:
   [
     "Express Entry",

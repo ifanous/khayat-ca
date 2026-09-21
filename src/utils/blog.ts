@@ -1,57 +1,27 @@
-import type { BlogFrontmatter, BlogPostPreview } from "../types/blog";
+import { getCollection } from "astro:content";
 
-const blogImages = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/assets/blog/*.webp",
-  { eager: true },
-);
-
-export const getBlogImageSource = (slug: string): ImageMetadata | undefined => {
-  const key = `/src/assets/blog/${slug}.webp`;
-
-  return blogImages[key]?.default;
-};
+import type { BlogPostPreview } from "../types/blog";
 
 export const formatBlogDate = (value: BlogPostPreview["pubDate"]): string =>
-  new Date(value).toLocaleDateString("en-CA", {
+  value.toLocaleDateString("en-CA", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
 
-interface MarkdownModule {
-  frontmatter: BlogFrontmatter;
-}
-
-const blogModules = import.meta.glob<MarkdownModule>("/src/pages/blog/*.md");
-
 const byNewestFirst = (left: BlogPostPreview, right: BlogPostPreview): number =>
-  new Date(right.pubDate).getTime() - new Date(left.pubDate).getTime();
-
-let cachedPosts: BlogPostPreview[] | null = null;
+  right.pubDate.getTime() - left.pubDate.getTime();
 
 const loadBlogPosts = async (): Promise<BlogPostPreview[]> => {
-  if (cachedPosts) return cachedPosts;
+  const entries = await getCollection("blog");
 
-  const entries = await Promise.all(
-    Object.entries(blogModules).map(async ([path, loader]) => {
-      const module = await loader();
-      const slug = path.split("/").pop()?.replace(/\.md$/, "");
-
-      if (!slug) {
-        throw new Error(`Could not derive blog slug from path: ${path}`);
-      }
-
-      return {
-        ...module.frontmatter,
-        href: `/blog/${slug}`,
-        slug,
-      } satisfies BlogPostPreview;
-    }),
-  );
-
-  cachedPosts = entries.sort(byNewestFirst);
-
-  return cachedPosts;
+  return entries
+    .map((post) => ({
+      ...post.data,
+      href: `/blog/${post.id}`,
+      slug: post.id,
+    }))
+    .sort(byNewestFirst);
 };
 
 export const getAllBlogPosts = (): Promise<BlogPostPreview[]> =>

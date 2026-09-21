@@ -12,6 +12,9 @@ export interface LayoutProps {
    * When omitted, falls back to the site-wide `/og-image.png`.
    */
   ogImage?: string;
+  ogImageAlt?: string;
+  ogImageHeight?: number;
+  ogImageWidth?: number;
   ogType?: "article" | "website";
   title: string;
   noIndex?: boolean;

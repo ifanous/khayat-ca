@@ -8,6 +8,15 @@ cannot be represented in `DESIGN.md`; never edit it by hand. After changing the
 design system, update the implementation and `DESIGN.md`, then regenerate the
 sidecar with Impeccable.
 
+## Blog content
+
+Blog posts live in `src/content/blog/` and are managed through Keystatic at
+`/keystatic`. Keep `keystatic.config.ts` and `src/content.config.ts` in sync
+when adding or changing blog fields. Existing post filenames are public URL
+slugs, so rename them only when intentionally changing a URL. Inline images
+inserted in the Keystatic body editor are stored next to the post in
+`src/content/blog/`; cover images live in `src/assets/blog/<slug>/`.
+
 ## mise
 
 This project uses [mise](https://mise.jdx.dev/) as the task runner. mise

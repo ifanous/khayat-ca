@@ -1,9 +1,15 @@
 {
   "$schema": "./node_modules/fallow/schema.json",
+  "dynamicallyLoaded": ["keystatic.config.ts"],
   "ignoreDependencies": [
+    "@astrojs/netlify",
+    "@astrojs/react",
     "@iconify-json/lucide",
     "@iconify-json/mdi",
     "@iconify-json/simple-icons",
+    "@keystatic/astro",
+    "@keystatic/core",
+    "lightningcss",
     "netlify-cli",
     "sort-package-json"
   ]

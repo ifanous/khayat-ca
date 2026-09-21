@@ -1,13 +1,9 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
 title: "Bill C-71 and Canadian Citizenship by Descent Changes"
 pubDate: 2024-05-24
-updatedDate: 2024-05-24
 description: "The federal government introduced Bill C-71, which would change Canadian citizenship by descent rules."
-author: "Brigitte Khayat"
-image:
-  url: "/blog/bill-c-71-citizenship-by-descent-changes.webp"
-  alt: "Canadian passport and legal documents with a family lineage motif representing citizenship by descent reform under Bill C-71"
+image: /src/assets/blog/bill-c-71-citizenship-by-descent-changes/image.webp
+imageAlt: "Canadian passport and legal documents with a family lineage motif representing citizenship by descent reform under Bill C-71"
 tags:
   [
     "Canadian citizenship",

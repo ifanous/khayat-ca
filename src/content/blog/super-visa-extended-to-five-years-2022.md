@@ -1,13 +1,9 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
 title: "Parents and Grandparents Super Visa Expands to 5 Years"
 pubDate: 2022-06-10
-updatedDate: 2022-06-10
 description: "Canada expanded the Super Visa program, increasing stays to five years per entry and allowing eligible extensions from within Canada."
-author: "Brigitte Khayat"
-image:
-  url: "/blog/super-visa-extended-to-five-years-2022.webp"
-  alt: "Travel documents and family reunion visuals representing Canada’s extended Parents and Grandparents Super Visa stay period"
+image: /src/assets/blog/super-visa-extended-to-five-years-2022/image.webp
+imageAlt: "Travel documents and family reunion visuals representing Canada’s extended Parents and Grandparents Super Visa stay period"
 tags:
   [
     "Super Visa",

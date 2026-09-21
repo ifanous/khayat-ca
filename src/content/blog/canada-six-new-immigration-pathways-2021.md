@@ -1,13 +1,9 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
 title: "Canada Launches 6 New Immigration Programs in 2021"
 pubDate: 2021-05-03
-updatedDate: 2021-05-03
 description: "IRCC launched six temporary immigration pathways for essential workers, international graduates, and French-speaking applicants in Canada."
-author: "Brigitte Khayat"
-image:
-  url: "/blog/canada-six-new-immigration-pathways-2021.webp"
-  alt: "Organized immigration application materials with multiple pathway cues representing Canada’s six new immigration programs"
+image: /src/assets/blog/canada-six-new-immigration-pathways-2021/image.webp
+imageAlt: "Organized immigration application materials with multiple pathway cues representing Canada’s six new immigration programs"
 tags:
   [
     "Permanent residence",

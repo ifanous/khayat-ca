@@ -4,8 +4,17 @@ import Header from "../components/Header.astro";
 import type { LayoutProps } from "../types/layout";
 import BaseLayout from "./BaseLayout.astro";
 
-const { title, description, noIndex, ogType, ogImage, article } =
-  Astro.props as LayoutProps;
+const {
+  title,
+  description,
+  noIndex,
+  ogType,
+  ogImage,
+  ogImageAlt,
+  ogImageHeight,
+  ogImageWidth,
+  article,
+} = Astro.props as LayoutProps;
 ---
 
 <BaseLayout
@@ -14,6 +23,9 @@ const { title, description, noIndex, ogType, ogImage, article } =
   description={description}
   noIndex={noIndex}
   ogImage={ogImage}
+  ogImageAlt={ogImageAlt}
+  ogImageHeight={ogImageHeight}
+  ogImageWidth={ogImageWidth}
   ogType={ogType}
 >
   <!-- Skip Link -->

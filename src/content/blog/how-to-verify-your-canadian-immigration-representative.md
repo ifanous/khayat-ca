@@ -1,13 +1,9 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
 title: "How to Verify Your Immigration Representative and Avoid Fraud"
 pubDate: 2021-03-30
-updatedDate: 2021-03-30
 description: "Learn how to verify your immigration representative and protect yourself from fraud when dealing with Canadian immigration matters."
-author: "Brigitte Khayat"
-image:
-  url: "/blog/how-to-verify-your-canadian-immigration-representative.webp"
-  alt: "Immigration papers, magnifying glass, and verification cues representing protection against immigration fraud and the need to verify legal representatives"
+image: /src/assets/blog/how-to-verify-your-canadian-immigration-representative/image.webp
+imageAlt: "Immigration papers, magnifying glass, and verification cues representing protection against immigration fraud and the need to verify legal representatives"
 tags:
   [
     "Immigration fraud",
