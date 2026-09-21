@@ -5,7 +5,7 @@ title: >-
 description: >-
   Canada's Super Visa income rules now allow more flexibility when assessing
   sponsor, co-signer, and visiting parent or grandparent income.
-pubDate: 2026-09-21
+pubDate: 2026-04-21
 image: >-
   /src/assets/blog/parents-grandparents-super-visa-income-rule-changes-2026/image.webp
 imageAlt: A family of adults and children holding hands on a beach beside the sea
