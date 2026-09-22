@@ -111,7 +111,6 @@ import { Icon } from "astro-icon/components";
           class="btn-primary focus-ring inline-flex min-h-13 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-transparent px-4 py-4 font-semibold text-white transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60"
           id="submit-btn"
           type="submit"
-          disabled
         >
           <span id="btn-text">Send Message</span>
           <Icon
@@ -144,8 +143,7 @@ import { Icon } from "astro-icon/components";
     );
 
     const getCaptchaResponse = (): string => {
-      const grecaptcha = (window as unknown as { grecaptcha?: Grecaptcha })
-        .grecaptcha;
+      const grecaptcha = getGrecaptcha();
 
       if (grecaptcha && typeof grecaptcha.getResponse === "function") {
         try {
@@ -162,57 +160,52 @@ import { Icon } from "astro-icon/components";
       return responseField?.value ?? "";
     };
 
+    const getGrecaptcha = (): Grecaptcha | undefined =>
+      (window as unknown as { grecaptcha?: Grecaptcha }).grecaptcha;
+
     const setSubmitEnabled = (enabled: boolean) => {
       if (!submitButton) return;
       submitButton.disabled = !enabled;
     };
 
-    let captchaWired = false;
-
-    // Watch for the captcha response field appearing and changing.
-    const wireCaptchaObserver = () => {
-      if (captchaWired) return true;
-
-      const responseField = contactForm.querySelector<HTMLTextAreaElement>(
-        'textarea[name="g-recaptcha-response"]',
-      );
-
-      if (!responseField) return false;
-
-      const sync = () => setSubmitEnabled(getCaptchaResponse().length > 0);
-
-      sync();
-
-      const observer = new MutationObserver(sync);
-
-      observer.observe(responseField, {
-        attributes: true,
-        attributeFilter: ["value"],
-        characterData: true,
-        childList: true,
-        subtree: true,
-      });
-
-      contactForm.addEventListener("click", sync);
-      contactForm.addEventListener("focusout", sync);
-      captchaWired = true;
-
-      return true;
+    const resetCaptcha = () => {
+      try {
+        getGrecaptcha()?.reset();
+      } catch {
+        // ignore — widget may not be ready
+      }
     };
 
-    if (!wireCaptchaObserver()) {
-      let readyPollAttempts = 0;
-      const readyPoll = window.setInterval(() => {
-        readyPollAttempts += 1;
+    let isSubmitting = false;
 
-        if (wireCaptchaObserver() || readyPollAttempts >= 30) {
-          window.clearInterval(readyPoll);
-        }
-      }, 300);
-    }
+    const syncCaptchaState = () => {
+      const hasCaptchaResponse = getCaptchaResponse().length > 0;
+
+      setSubmitEnabled(!isSubmitting && hasCaptchaResponse);
+
+      if (!statusMessage || isSubmitting) return;
+
+      const guidance = hasCaptchaResponse
+        ? ""
+        : "Complete the verification above to enable sending.";
+
+      if (statusMessage.textContent !== guidance) {
+        statusMessage.textContent = guidance;
+      }
+    };
+
+    // Set the initial state before polling. The HTML button stays usable for
+    // Netlify's no-JavaScript fallback, then JS gates it on verification.
+    syncCaptchaState();
+
+    // reCAPTCHA changes the response field's value property without emitting a
+    // DOM event, so periodically sync both successful and expired challenges.
+    window.setInterval(syncCaptchaState, 250);
 
     contactForm.addEventListener("submit", async (event) => {
       event.preventDefault();
+
+      if (isSubmitting) return;
 
       if (!submitButton || !submitButtonText || !statusMessage) return;
 
@@ -225,11 +218,17 @@ import { Icon } from "astro-icon/components";
       const submitButtonOriginalText = submitButtonText.textContent;
       const formData = new FormData(contactForm);
 
+      isSubmitting = true;
       contactForm.setAttribute("aria-busy", "true");
       submitButton.disabled = true;
-      submitButton.classList.add("opacity-70");
       submitButtonText.textContent = "Sending...";
       statusMessage.textContent = "Sending your message...";
+
+      let feedback = {
+        buttonText: "Sent!",
+        message: "Your message has been sent successfully.",
+        delay: 2000,
+      };
 
       try {
         const response = await fetch("/", {
@@ -246,40 +245,25 @@ import { Icon } from "astro-icon/components";
           );
         }
 
-        submitButtonText.textContent = "Sent!";
-        submitButton.classList.remove("opacity-70");
-        contactForm.setAttribute("aria-busy", "false");
-        statusMessage.textContent = "Your message has been sent successfully.";
-
-        setTimeout(() => {
-          submitButtonText.textContent = submitButtonOriginalText;
-          contactForm.reset();
-
-          const grecaptcha = (window as unknown as { grecaptcha?: Grecaptcha })
-            .grecaptcha;
-
-          try {
-            grecaptcha?.reset();
-          } catch {
-            // ignore — widget may not be ready
-          }
-
-          statusMessage.textContent = "";
-          setSubmitEnabled(false);
-        }, 2000);
+        contactForm.reset();
       } catch {
-        submitButtonText.textContent = "Failed to send.";
-        submitButton.classList.remove("opacity-70");
-        contactForm.setAttribute("aria-busy", "false");
-        statusMessage.textContent =
-          "Your message wasn't sent. Please try again.";
-
-        setTimeout(() => {
-          submitButtonText.textContent = submitButtonOriginalText;
-          setSubmitEnabled(getCaptchaResponse().length > 0);
-          statusMessage.textContent = "";
-        }, 3000);
+        feedback = {
+          buttonText: "Failed to send.",
+          message: "Your message wasn't sent. Please try again.",
+          delay: 3000,
+        };
       }
+
+      resetCaptcha();
+      submitButtonText.textContent = feedback.buttonText;
+      contactForm.setAttribute("aria-busy", "false");
+      statusMessage.textContent = feedback.message;
+
+      setTimeout(() => {
+        submitButtonText.textContent = submitButtonOriginalText;
+        isSubmitting = false;
+        syncCaptchaState();
+      }, feedback.delay);
     });
   }
 </script>
