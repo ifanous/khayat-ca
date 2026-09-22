@@ -112,7 +112,7 @@ import { Icon } from "astro-icon/components";
           id="submit-btn"
           type="submit"
         >
-          <span id="btn-text">Send Message</span>
+          <span>Send Message</span>
           <Icon
             class="h-4.5 w-4.5 shrink-0"
             name="lucide:send"
@@ -136,8 +136,6 @@ import { Icon } from "astro-icon/components";
     const submitButton = contactForm.querySelector<HTMLButtonElement>(
       'button[type="submit"]',
     );
-    const submitButtonText =
-      submitButton?.querySelector<HTMLSpanElement>("#btn-text");
     const statusMessage = contactForm.querySelector<HTMLParagraphElement>(
       "#contact-form-status",
     );
@@ -182,16 +180,6 @@ import { Icon } from "astro-icon/components";
       const hasCaptchaResponse = getCaptchaResponse().length > 0;
 
       setSubmitEnabled(!isSubmitting && hasCaptchaResponse);
-
-      if (!statusMessage || isSubmitting) return;
-
-      const guidance = hasCaptchaResponse
-        ? ""
-        : "Complete the verification above to enable sending.";
-
-      if (statusMessage.textContent !== guidance) {
-        statusMessage.textContent = guidance;
-      }
     };
 
     // Set the initial state before polling. The HTML button stays usable for
@@ -207,7 +195,7 @@ import { Icon } from "astro-icon/components";
 
       if (isSubmitting) return;
 
-      if (!submitButton || !submitButtonText || !statusMessage) return;
+      if (!submitButton || !statusMessage) return;
 
       if (!getCaptchaResponse()) {
         setSubmitEnabled(false);
@@ -215,20 +203,14 @@ import { Icon } from "astro-icon/components";
         return;
       }
 
-      const submitButtonOriginalText = submitButtonText.textContent;
       const formData = new FormData(contactForm);
 
       isSubmitting = true;
       contactForm.setAttribute("aria-busy", "true");
       submitButton.disabled = true;
-      submitButtonText.textContent = "Sending...";
       statusMessage.textContent = "Sending your message...";
 
-      let feedback = {
-        buttonText: "Sent!",
-        message: "Your message has been sent successfully.",
-        delay: 2000,
-      };
+      let feedbackMessage = "Your message has been sent successfully.";
 
       try {
         const response = await fetch("/", {
@@ -247,23 +229,14 @@ import { Icon } from "astro-icon/components";
 
         contactForm.reset();
       } catch {
-        feedback = {
-          buttonText: "Failed to send.",
-          message: "Your message wasn't sent. Please try again.",
-          delay: 3000,
-        };
+        feedbackMessage = "Your message failed to send. Please try again.";
       }
 
       resetCaptcha();
-      submitButtonText.textContent = feedback.buttonText;
       contactForm.setAttribute("aria-busy", "false");
-      statusMessage.textContent = feedback.message;
-
-      setTimeout(() => {
-        submitButtonText.textContent = submitButtonOriginalText;
-        isSubmitting = false;
-        syncCaptchaState();
-      }, feedback.delay);
+      statusMessage.textContent = feedbackMessage;
+      isSubmitting = false;
+      syncCaptchaState();
     });
   }
 </script>
